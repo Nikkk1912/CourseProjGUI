@@ -1,0 +1,144 @@
+---
+title: German Cars Tuning Parts Shop
+---
+classDiagram
+
+Product <|-- BodyKit
+Product <|-- Spoiler
+Product <|-- Wheels
+
+Cart o-- Product
+
+User <|-- Manager
+User <|-- Customer
+
+Customer <|-- Cart
+
+Manager o-- Cart
+
+BodyKit <|-- KitType
+BodyKit <|-- Brand
+
+Spoiler <|-- SpoilerMaterial
+
+Comment o-- Comment
+Comment o-- User
+
+WareHouse o-- Manager
+WareHouse o-- Product
+
+Wheels <|-- WheelsType
+
+
+class Manager {
+    -bool isAdmin
+    -ArrayList~Cart~ myResponsibleCarts
+}
+
+class User {
+    -int id
+    -String name
+    -String surname
+    -String login
+    -String password
+}
+
+class Customer {
+    -String cardNumber
+    -String shipAddress
+    -String billingAddress
+    -LocalDate birthdate
+}
+
+class Comment {
+    -int isAdmin
+    -String title
+    -String decription
+    -LocalDate dateWhenCreated
+    -User User
+    -ArrayList~Comment~ replies
+    -float raiting
+    addComent()
+    deleteComent()
+    replyToComent()
+}
+
+class WareHouse {
+    -ArrayList~Product~ stock
+    -ArrayList~Manager~ managers
+    -String address
+}
+
+class Cart {
+    -int id
+    -ArrayList~Product~ items
+    addItemToCart()
+    removeItemToCart()
+    clearCart()
+}
+
+class Product {
+    -int id
+    -int quantity
+    -float price
+    -String title
+    -String decription
+    -String manufacturerBrand
+    -String manufacturerCountry
+    addProduct()
+    removeProduct()
+    reenterProductInfo()
+}
+
+class BodyKit {
+    -Brand compatibleCars
+    -KitType kitType
+}
+
+class Spoiler {
+    -SpoilerMaterial material
+    -float weight
+}
+
+class Wheels {
+    -int wheelSize
+    -Color color
+    -float weight
+    -WheelsType wheelsType
+}
+
+class KitType {
+    <<Enumeration>>
+    BUMPERS
+    WINGS
+    ROOF
+    HOOD
+    FULLKIT
+}
+
+class Brand {
+    <<Enumeration>>
+    AUDI
+    BMW
+    MERCEDES
+    PORSCHE
+    SMART
+    OPEL
+}
+
+class SpoilerMaterial {
+    <<Enumeration>>
+    PLASTIC
+    CARBON
+    FIBERGLASS
+    ARMEDFIBERGLASS
+}
+
+class WheelsType {
+    <<Enumeration>>
+    CHROME
+    MAGNESIUM
+    STEEL
+    ALLOY
+    CARBON
+}

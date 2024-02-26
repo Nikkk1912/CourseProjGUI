@@ -8,6 +8,9 @@ module org.example.courseprojgui {
 
     opens org.example.courseprojgui to javafx.fxml;
     exports org.example.courseprojgui;
-    exports org.example.courseprojgui.fxControllers;
     opens org.example.courseprojgui.fxControllers to javafx.fxml;
+    exports org.example.courseprojgui.fxControllers;
+    exports org.example.courseprojgui.model;
+    exports org.example.courseprojgui.enums;
+
 }

@@ -172,7 +172,7 @@ public class MainWindow {
             productBrandField.setText(bodyKit.getBrand());
             productCompatibleCarsField.setText(bodyKit.getCompatibleCars());
             productCountryManufacturerField.setText(bodyKit.getCountryManufacturer());
-            productKitTypeComboBox.setItems(FXCollections.observableArrayList(bodyKit.getKitType()));
+            productKitTypeComboBox.setValue(bodyKit.getKitType());
 
         } else if (product instanceof Wheels) {
             productWheelsRadio.setSelected(true);
@@ -193,6 +193,7 @@ public class MainWindow {
         productSpoilerRadio.setSelected(false);
         productWheelsRadio.setSelected(false);
         productBodyKitRadio.setSelected(false);
+        disableFields();
         productTitleField.clear();
         productDescriptionField.clear();
         productQuantityField.clear();

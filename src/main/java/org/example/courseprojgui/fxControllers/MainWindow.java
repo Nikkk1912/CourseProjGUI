@@ -137,9 +137,33 @@ public class MainWindow {
         Product product = productAdminList.getSelectionModel().getSelectedItem();
         if (product instanceof Spoiler) {
             Spoiler spoiler = (Spoiler) product;
-            product.setTitle(productTitleField.getText());
-            //productDescriptionField.setText(plant.getDescription());
+            spoiler.setTitle(productTitleField.getText());
             spoiler.setDescription(productDescriptionField.getText());
+            spoiler.setPrice(Float.parseFloat(productPriceField.getText()));
+            spoiler.setQuantity(Integer.parseInt(productQuantityField.getText()));
+            spoiler.setMaterial(productMaterialField.getText());
+            spoiler.setWeight(Float.parseFloat(productWeightField.getText()));
+        }
+        else if (product instanceof BodyKit) {
+            BodyKit bodyKit = (BodyKit) product;
+            bodyKit.setTitle(productTitleField.getText());
+            bodyKit.setDescription(productDescriptionField.getText());
+            bodyKit.setPrice(Float.parseFloat(productPriceField.getText()));
+            bodyKit.setQuantity(Integer.parseInt(productQuantityField.getText()));
+            bodyKit.setCompatibleCars(productCompatibleCarsField.getText());
+            bodyKit.setCountryManufacturer(productCountryManufacturerField.getText());
+            bodyKit.setBrand(productBrandField.getText());
+            bodyKit.setKitType(productKitTypeComboBox.getValue());
+        }
+        else if (product instanceof Wheels) {
+            Wheels wheels = (Wheels) product;
+            wheels.setTitle(productTitleField.getText());
+            wheels.setDescription(productDescriptionField.getText());
+            wheels.setPrice(Float.parseFloat(productPriceField.getText()));
+            wheels.setQuantity(Integer.parseInt(productQuantityField.getText()));
+            wheels.setWheelSize(Integer.parseInt(productWheelSizeField.getText()));
+            wheels.setColor(productColorField.getText());
+            wheels.setWeight(Float.parseFloat(productWeightField.getText()));
         }
     }
     public void deleteRecord() {

@@ -4,11 +4,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.text.Font;
 import org.example.courseprojgui.enums.KitType;
 import org.example.courseprojgui.model.BodyKit;
 import org.example.courseprojgui.model.Product;
 import org.example.courseprojgui.model.Spoiler;
 import org.example.courseprojgui.model.Wheels;
+
+import java.util.Comparator;
 
 public class MainWindow {
     public ListView<Product> productAdminList;
@@ -39,12 +42,24 @@ public class MainWindow {
         productWheelSizeField.setDisable(true);
     }
 
-
     @FXML
     public void initialize() {
         ObservableList<KitType> kitTypes = FXCollections.observableArrayList(KitType.values());
         productKitTypeComboBox.setItems(kitTypes);
         turnOffAllFields();
+
+        productAdminList.setCellFactory(param -> new ListCell<>() {
+            @Override
+            protected void updateItem(Product product, boolean empty) {
+                super.updateItem(product, empty);
+                if (empty || product == null) {
+                    setText(null);
+                } else {
+                    setFont(Font.font(16));
+                    setText(product.getTitle() + " : " + product.getQuantity());
+                }
+            }
+        });
 
     }
 
@@ -131,6 +146,7 @@ public class MainWindow {
                     Float.parseFloat(productWeightField.getText())
             );
             productAdminList.getItems().add(wheels);
+            productAdminList.getItems().sort(Comparator.comparing(Product::getTitle));
         }
     }
     public void updateRecord() {
@@ -169,6 +185,7 @@ public class MainWindow {
     public void deleteRecord() {
         Product product = productAdminList.getSelectionModel().getSelectedItem();
         productAdminList.getItems().remove(product);
+        clearAllFields();
     }
     public void loadProductData() {
         Product product = productAdminList.getSelectionModel().getSelectedItem();

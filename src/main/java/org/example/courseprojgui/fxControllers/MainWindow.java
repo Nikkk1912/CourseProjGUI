@@ -48,7 +48,6 @@ public class MainWindow {
 
     }
 
-
     public void disableFields() {
         if (productSpoilerRadio.isSelected()) {
             neededFieldSpoiler();

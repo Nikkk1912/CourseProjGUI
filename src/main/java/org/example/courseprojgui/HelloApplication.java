@@ -1,6 +1,6 @@
 package org.example.courseprojgui;
 
-import atlantafx.base.theme.Dracula;
+import atlantafx.base.theme.NordDark;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -12,15 +12,15 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("main-window.fxml"));
-        Application.setUserAgentStylesheet(new Dracula().getUserAgentStylesheet());
-
+        Application.setUserAgentStylesheet(new NordDark().getUserAgentStylesheet());
 
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Shop!");
-        stage.setResizable(true);
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }
+
 
     public static void main(String[] args) {
         launch();

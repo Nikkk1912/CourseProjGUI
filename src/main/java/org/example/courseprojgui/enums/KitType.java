@@ -1,5 +1,5 @@
 package org.example.courseprojgui.enums;
 
 public enum KitType {
-    BUMPERS, WINGS, ROOF, HOOD, FULLKIT
+    Bumper, Wings, Roof, Hood, FullKit
 }

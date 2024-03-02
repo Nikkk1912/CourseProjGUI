@@ -32,8 +32,6 @@ public class MainWindow {
     public TextField productWeightField;
     public TextField productColorField;
     public TextField productWheelSizeField;
-    public VBox errorPopup;
-    public Button okButton;
 
     public void turnOffAllFields() {
         productBrandField.setDisable(true);

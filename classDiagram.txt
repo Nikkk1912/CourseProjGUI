@@ -1,5 +1,11 @@
+
+Link to class diagram:
+https://mermaid.live/edit#pako:eNqFVW1v2jAQ_iuWP0MVCuWtqFJfNlVau1WlU6WJLyYxYNWxs7MtljL623dOHIqh6kAC57nzc5fnzucNTXXG6Zi22-2ZssJKPibXDAx5ckqoJXlgYA2ZrnQxU5VPKpkxN4ItgeUzNVMPoDOXWjL5226TK52V34Q9QKeFFpLDAfq84lwaT4HxLNEIBbvHfhoOtd89U2zpd79D185YnXsMN4d1sCCVR8OmirXBQnK1Iy6eyoJ7HDl0nnNV5xDWMehDe8dnBvxWO8MrdJdZDO-9hf9WgjW-ZDNTBD_tudaSCHOZ5UIF6BKAlXfC2Def8RvJy0duCq2MmEvuIRRr-85YydHQCUxUZOFhasGXTrGcx4hxcAxKvdylEKAC-dcasijeTuhN7JwyyL67fO6FiIKtRHGZZcCNiQ1zISX-x7Y7nTJ5wyxHM9hVhqs4eqjGZy-c1j5Pvos_tPgOOIrnQ10Dx9-GrlI2bPmxVhzOm01YnEnI5IIAL6TgpjEupGaWALMY8DzK_b09NkelDs3yRlDc9OXIHNoGm6FeHEjJGg33lfKn6UOZPogqLM-DdVffdHe69libo_uZ_vZY-IynIAortNrb99sxP2rKSLgCRBqXvDmvB_12BUwdF75A3etj0khU-aHJKQsl6ugWLLUOdm0aJgB5aSbBXugwsQ5D59gkIJiMEl9zsVzZuODVaIu0WntoKl6PGlNq-B9dk2ngm0y-KIf1YV7Wi4savHJ50bzaMzIHFR61XtSrW62Dal-dlNWQxhC0RZEpZyLDO6Din1G74jgj6BiXGYOXGUVP9GPO6mmpUjpeMGl4i7rCH51wFezQgqlfWuOzBVc_0vGG_qHjUXLSO-t3O6NOMuwmw1GLlnTc7iW9k-GwNxiOut3TQa_T729b9LUi6JwMe51hMkqS037S7Q0GZy3KM2E13Nd3VnV1bf8BMBBMtQ
+
+Code for mermaid diagram:
+
 ---
-title: German Cars Tuning Parts Shop
+title: Cars Tuning Parts Shop
 ---
 classDiagram
 
@@ -17,9 +23,7 @@ Customer <|-- Cart
 Manager o-- Cart
 
 BodyKit <|-- KitType
-BodyKit <|-- Brand
 
-Spoiler <|-- SpoilerMaterial
 
 Comment o-- Comment
 Comment o-- User
@@ -27,7 +31,6 @@ Comment o-- User
 WareHouse o-- Manager
 WareHouse o-- Product
 
-Wheels <|-- WheelsType
 
 
 class Manager {
@@ -51,16 +54,13 @@ class Customer {
 }
 
 class Comment {
-    -int isAdmin
-    -String title
-    -String decription
-    -LocalDate dateWhenCreated
-    -User User
-    -ArrayList~Comment~ replies
-    -float raiting
-    addComent()
-    deleteComent()
-    replyToComent()
+    -int id
+    -String commentTitle
+    -String commentBody
+    -LocalDate dateCreated
+    -User commentOwner;
+    -List<Comment> replies;
+    -float rating;
 }
 
 class WareHouse {
@@ -71,74 +71,41 @@ class WareHouse {
 
 class Cart {
     -int id
-    -ArrayList~Product~ items
-    addItemToCart()
-    removeItemToCart()
-    clearCart()
+    -ArrayList~Product~ item
+    -Customer customer
 }
 
 class Product {
     -int id
-    -int quantity
-    -float price
     -String title
     -String decription
-    -String manufacturerBrand
-    -String manufacturerCountry
-    addProduct()
-    removeProduct()
-    reenterProductInfo()
+    -int quantity
+    -float price
 }
 
 class BodyKit {
-    -Brand compatibleCars
+    -String Brand
+    -String compatibleCars
+    -Brand countryManufacturer
     -KitType kitType
 }
 
 class Spoiler {
-    -SpoilerMaterial material
+    -String material
     -float weight
 }
 
 class Wheels {
     -int wheelSize
-    -Color color
+    -String color
     -float weight
-    -WheelsType wheelsType
 }
 
 class KitType {
     <<Enumeration>>
-    BUMPERS
-    WINGS
-    ROOF
-    HOOD
-    FULLKIT
-}
-
-class Brand {
-    <<Enumeration>>
-    AUDI
-    BMW
-    MERCEDES
-    PORSCHE
-    SMART
-    OPEL
-}
-
-class SpoilerMaterial {
-    <<Enumeration>>
-    PLASTIC
-    CARBON
-    FIBERGLASS
-    ARMEDFIBERGLASS
-}
-
-class WheelsType {
-    <<Enumeration>>
-    CHROME
-    MAGNESIUM
-    STEEL
-    ALLOY
-    CARBON
+    Bumper
+    Wings
+    Roof
+    Hood
+    FullKit
 }

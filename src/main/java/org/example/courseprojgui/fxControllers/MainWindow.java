@@ -3,7 +3,9 @@ package org.example.courseprojgui.fxControllers;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import org.example.courseprojgui.enums.KitType;
 import org.example.courseprojgui.model.BodyKit;
@@ -30,6 +32,8 @@ public class MainWindow {
     public TextField productWeightField;
     public TextField productColorField;
     public TextField productWheelSizeField;
+    public VBox errorPopup;
+    public Button okButton;
 
     public void turnOffAllFields() {
         productBrandField.setDisable(true);
@@ -41,6 +45,8 @@ public class MainWindow {
         productKitTypeComboBox.setDisable(true);
         productWheelSizeField.setDisable(true);
     }
+
+
 
     @FXML
     public void initialize() {
@@ -113,6 +119,14 @@ public class MainWindow {
 
 
     public void createRecord() {
+        
+        if (!allFieldsFilled()) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("error-popUp.fxml"));
+            ErrorPopUp errorWindow = loader.getController();
+            errorWindow.showErrorPopup();
+            return;
+        }
+
         if (productSpoilerRadio.isSelected()) {
             Spoiler spoiler = new Spoiler(
                     productTitleField.getText(),
@@ -246,5 +260,44 @@ public class MainWindow {
         productWheelSizeField.clear();
         productMaterialField.clear();
         productKitTypeComboBox.getSelectionModel().clearSelection();
+    }
+
+    private boolean allFieldsFilled() {
+        if (productSpoilerRadio.isSelected()) {
+            return allSpoilerFieldsFilled();
+        } else if (productBodyKitRadio.isSelected()) {
+            return allBodyKitFieldsFilled();
+        } else if (productWheelsRadio.isSelected()) {
+            return allWheelsFieldsFilled();
+        } else {
+            return false;
+        }
+    }
+    private boolean allSpoilerFieldsFilled() {
+        return !productTitleField.getText().isEmpty() &&
+                !productDescriptionField.getText().isEmpty() &&
+                !productQuantityField.getText().isEmpty() &&
+                !productPriceField.getText().isEmpty() &&
+                !productMaterialField.getText().isEmpty() &&
+                !productWeightField.getText().isEmpty();
+    }
+    private boolean allBodyKitFieldsFilled() {
+        return !productTitleField.getText().isEmpty() &&
+                !productDescriptionField.getText().isEmpty() &&
+                !productQuantityField.getText().isEmpty() &&
+                !productPriceField.getText().isEmpty() &&
+                !productBrandField.getText().isEmpty() &&
+                !productCompatibleCarsField.getText().isEmpty() &&
+                !productCountryManufacturerField.getText().isEmpty() &&
+                productKitTypeComboBox.getValue() != null;
+    }
+    private boolean allWheelsFieldsFilled() {
+        return !productTitleField.getText().isEmpty() &&
+                !productDescriptionField.getText().isEmpty() &&
+                !productQuantityField.getText().isEmpty() &&
+                !productPriceField.getText().isEmpty() &&
+                !productWheelSizeField.getText().isEmpty() &&
+                !productColorField.getText().isEmpty() &&
+                !productWeightField.getText().isEmpty();
     }
 }

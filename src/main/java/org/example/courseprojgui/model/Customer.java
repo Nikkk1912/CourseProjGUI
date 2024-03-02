@@ -30,16 +30,4 @@ public class Customer extends User {
 
     }
 
-    public void printInfo() {
-        System.out.println("Customer Info:");
-        System.out.println("id: " + getId());
-        System.out.println("name: " + getName());
-        System.out.println("surname: " + getSurname());
-        System.out.println("login: " + getLogin());
-        System.out.println("password: " + getPassword());
-        System.out.println("cardNumber: " + cardNumber);
-        System.out.println("shippingAddress: " + shippingAddress);
-        System.out.println("billingAddress: " + billingAddress);
-        System.out.println("birthDate: " + birthDate + "\n");
-    }
 }

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="errorBody" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.courseprojgui.fxControllers.ErrorPopUp">
+   <children>
+      <Text layoutX="14.0" layoutY="102.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Not all needed fileds filed" wrappingWidth="272.60546875">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <Text layoutX="112.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Error">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Text>
+      <Button fx:id="okButton" layoutX="99.0" layoutY="134.0" mnemonicParsing="false" onAction="#closeErrorWindow" prefHeight="38.0" prefWidth="103.0" text="OK" />
+   </children>
+</AnchorPane>

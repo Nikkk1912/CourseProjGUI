@@ -4,11 +4,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="errorBody" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.courseprojgui.fxControllers.ErrorPopUp">
+<AnchorPane fx:id="errorBody" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.courseprojgui.fxControllers.ErrorNotFilledPopUp">
    <children>
-      <Text layoutX="14.0" layoutY="102.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Not all needed fileds filed" wrappingWidth="272.60546875">
+      <Text layoutX="11.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Not all product info provided" wrappingWidth="278.60546875">
          <font>
-            <Font size="24.0" />
+            <Font size="21.0" />
          </font>
       </Text>
       <Text layoutX="112.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Error">

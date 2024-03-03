@@ -4,8 +4,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import org.example.courseprojgui.enums.KitType;
 import org.example.courseprojgui.model.BodyKit;
@@ -32,18 +33,7 @@ public class MainWindow {
     public TextField productWeightField;
     public TextField productColorField;
     public TextField productWheelSizeField;
-
-    public void turnOffAllFields() {
-        productBrandField.setDisable(true);
-        productCompatibleCarsField.setDisable(true);
-        productCountryManufacturerField.setDisable(true);
-        productMaterialField.setDisable(true);
-        productWeightField.setDisable(true);
-        productColorField.setDisable(true);
-        productKitTypeComboBox.setDisable(true);
-        productWheelSizeField.setDisable(true);
-    }
-
+    public AnchorPane root;
 
 
     @FXML
@@ -67,60 +57,68 @@ public class MainWindow {
 
     }
 
-    public void disableFields() {
+    public void neededFieldsForProducts() {
+        turnOffAllFields();
         if (productSpoilerRadio.isSelected()) {
-            neededFieldSpoiler();
-        } else if (productBodyKitRadio.isSelected()) {
-            neededFieldBodyKit();
-        } else if (productWheelsRadio.isSelected()) {
-            neededFieldWheels();
-        } else {
-            turnOffAllFields();
+
+            productTitleField.setDisable(false);
+            productDescriptionField.setDisable(false);
+            productQuantityField.setDisable(false);
+            productPriceField.setDisable(false);
+
+            productMaterialField.setDisable(false);
+            productWeightField.setDisable(false);
+            productBrandField.clear();
+            productCompatibleCarsField.clear();
+            productCountryManufacturerField.clear();
+            productColorField.clear();
+            productWeightField.clear();
+            productWheelSizeField.clear();
+            productKitTypeComboBox.getSelectionModel().clearSelection();
+        }
+        else if (productBodyKitRadio.isSelected()) {
+
+            productTitleField.setDisable(false);
+            productDescriptionField.setDisable(false);
+            productQuantityField.setDisable(false);
+            productPriceField.setDisable(false);
+
+            productBrandField.setDisable(false);
+            productCompatibleCarsField.setDisable(false);
+            productCountryManufacturerField.setDisable(false);
+            productKitTypeComboBox.setDisable(false);
+            productMaterialField.clear();
+            productWeightField.clear();
+            productWeightField.clear();
+            productColorField.clear();
+            productWheelSizeField.clear();
+        }
+        else if (productWheelsRadio.isSelected()) {
+
+            productTitleField.setDisable(false);
+            productDescriptionField.setDisable(false);
+            productQuantityField.setDisable(false);
+            productPriceField.setDisable(false);
+
+            productWeightField.setDisable(false);
+            productColorField.setDisable(false);
+            productWheelSizeField.setDisable(false);
+            productBrandField.clear();
+            productCompatibleCarsField.clear();
+            productCountryManufacturerField.clear();
+            productKitTypeComboBox.getSelectionModel().clearSelection();
+            productMaterialField.clear();
+            productWeightField.clear();
         }
     }
-    public void neededFieldSpoiler() {
-        turnOffAllFields();
-        productMaterialField.setDisable(false);
-        productWeightField.setDisable(false);
-        productBrandField.clear();
-        productCompatibleCarsField.clear();
-        productCountryManufacturerField.clear();
-        productColorField.clear();
-        productWeightField.clear();
-        productWheelSizeField.clear();
-        productKitTypeComboBox.getSelectionModel().clearSelection();
-    }
-    public void neededFieldBodyKit() {
-        turnOffAllFields();
-        productBrandField.setDisable(false);
-        productCompatibleCarsField.setDisable(false);
-        productCountryManufacturerField.setDisable(false);
-        productKitTypeComboBox.setDisable(false);
-        productMaterialField.clear();
-        productWeightField.clear();
-        productWeightField.clear();
-        productColorField.clear();
-        productWheelSizeField.clear();
-    }
-    public void neededFieldWheels() {
-        turnOffAllFields();
-        productWeightField.setDisable(false);
-        productColorField.setDisable(false);
-        productWheelSizeField.setDisable(false);
-        productBrandField.clear();
-        productCompatibleCarsField.clear();
-        productCountryManufacturerField.clear();
-        productKitTypeComboBox.getSelectionModel().clearSelection();
-        productMaterialField.clear();
-        productWeightField.clear();
-    }
+
 
 
     public void createRecord() {
-        
+
         if (!allFieldsFilled()) {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("error-popUp.fxml"));
-            ErrorPopUp errorWindow = loader.getController();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("errorNotFilledPopUp.fxml"));
+            ErrorNotFilledPopUp errorWindow = loader.getController();
             errorWindow.showErrorPopup();
             return;
         }
@@ -135,7 +133,7 @@ public class MainWindow {
                     Float.parseFloat(productWeightField.getText())
             );
             productAdminList.getItems().add(spoiler);
-        } else if(productBodyKitRadio.isSelected()) {
+        } else if (productBodyKitRadio.isSelected()) {
             BodyKit bodyKit = new BodyKit(
                     productTitleField.getText(),
                     productDescriptionField.getText(),
@@ -147,7 +145,7 @@ public class MainWindow {
                     productKitTypeComboBox.getValue()
             );
             productAdminList.getItems().add(bodyKit);
-        } else if(productWheelsRadio.isSelected()) {
+        } else if (productWheelsRadio.isSelected()) {
             Wheels wheels = new Wheels(
                     productTitleField.getText(),
                     productDescriptionField.getText(),
@@ -161,8 +159,17 @@ public class MainWindow {
             productAdminList.getItems().sort(Comparator.comparing(Product::getTitle));
         }
     }
+
     public void updateRecord() {
+        if (!allFieldsFilled()) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("errorNotFilledPopUp.fxml"));
+            ErrorNotFilledPopUp errorWindow = loader.getController();
+            errorWindow.showErrorPopup();
+            return;
+        }
+
         Product product = productAdminList.getSelectionModel().getSelectedItem();
+
         if (product instanceof Spoiler) {
             Spoiler spoiler = (Spoiler) product;
             spoiler.setTitle(productTitleField.getText());
@@ -171,8 +178,7 @@ public class MainWindow {
             spoiler.setQuantity(Integer.parseInt(productQuantityField.getText()));
             spoiler.setMaterial(productMaterialField.getText());
             spoiler.setWeight(Float.parseFloat(productWeightField.getText()));
-        }
-        else if (product instanceof BodyKit) {
+        } else if (product instanceof BodyKit) {
             BodyKit bodyKit = (BodyKit) product;
             bodyKit.setTitle(productTitleField.getText());
             bodyKit.setDescription(productDescriptionField.getText());
@@ -182,8 +188,7 @@ public class MainWindow {
             bodyKit.setCountryManufacturer(productCountryManufacturerField.getText());
             bodyKit.setBrand(productBrandField.getText());
             bodyKit.setKitType(productKitTypeComboBox.getValue());
-        }
-        else if (product instanceof Wheels) {
+        } else if (product instanceof Wheels) {
             Wheels wheels = (Wheels) product;
             wheels.setTitle(productTitleField.getText());
             wheels.setDescription(productDescriptionField.getText());
@@ -194,17 +199,27 @@ public class MainWindow {
             wheels.setWeight(Float.parseFloat(productWeightField.getText()));
         }
     }
+
     public void deleteRecord() {
-        Product product = productAdminList.getSelectionModel().getSelectedItem();
-        productAdminList.getItems().remove(product);
-        clearAllFields();
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("deleteConfirm.fxml"));
+        DeleteConfirm deleteConfirm = loader.getController();
+        deleteConfirm.deleteConfirmation();
+
+        if(deleteConfirm.deleteAccept()) {
+            Product product = productAdminList.getSelectionModel().getSelectedItem();
+            productAdminList.getItems().remove(product);
+            clearAllFields();
+        }
+
     }
+
     public void loadProductData() {
         Product product = productAdminList.getSelectionModel().getSelectedItem();
 
         if (product instanceof Spoiler) {
             productSpoilerRadio.setSelected(true);
-            neededFieldSpoiler();
+            neededFieldsForProducts();
             Spoiler spoiler = (Spoiler) product;
             productTitleField.setText(spoiler.getTitle());
             productDescriptionField.setText(spoiler.getDescription());
@@ -215,7 +230,7 @@ public class MainWindow {
 
         } else if (product instanceof BodyKit) {
             productBodyKitRadio.setSelected(true);
-            neededFieldBodyKit();
+            neededFieldsForProducts();
             BodyKit bodyKit = (BodyKit) product;
             productTitleField.setText(bodyKit.getTitle());
             productDescriptionField.setText(bodyKit.getDescription());
@@ -228,7 +243,7 @@ public class MainWindow {
 
         } else if (product instanceof Wheels) {
             productWheelsRadio.setSelected(true);
-            neededFieldWheels();
+            neededFieldsForProducts();
             Wheels wheels = (Wheels) product;
             productTitleField.setText(wheels.getTitle());
             productDescriptionField.setText(wheels.getDescription());
@@ -241,11 +256,12 @@ public class MainWindow {
     }
 
 
+
     public void clearAllFields() {
         productSpoilerRadio.setSelected(false);
         productWheelsRadio.setSelected(false);
         productBodyKitRadio.setSelected(false);
-        disableFields();
+        turnOffAllFields();
         productTitleField.clear();
         productDescriptionField.clear();
         productQuantityField.clear();
@@ -259,43 +275,52 @@ public class MainWindow {
         productMaterialField.clear();
         productKitTypeComboBox.getSelectionModel().clearSelection();
     }
+    public void turnOffAllFields() {
+        productTitleField.setDisable(true);
+        productDescriptionField.setDisable(true);
+        productQuantityField.setDisable(true);
+        productPriceField.setDisable(true);
+        productBrandField.setDisable(true);
+        productCompatibleCarsField.setDisable(true);
+        productCountryManufacturerField.setDisable(true);
+        productMaterialField.setDisable(true);
+        productWeightField.setDisable(true);
+        productColorField.setDisable(true);
+        productKitTypeComboBox.setDisable(true);
+        productWheelSizeField.setDisable(true);
+    }
+
 
     private boolean allFieldsFilled() {
         if (productSpoilerRadio.isSelected()) {
-            return allSpoilerFieldsFilled();
-        } else if (productBodyKitRadio.isSelected()) {
-            return allBodyKitFieldsFilled();
-        } else if (productWheelsRadio.isSelected()) {
-            return allWheelsFieldsFilled();
-        } else {
+            return !productTitleField.getText().isEmpty() &&
+                    !productDescriptionField.getText().isEmpty() &&
+                    !productQuantityField.getText().isEmpty() &&
+                    !productPriceField.getText().isEmpty() &&
+                    !productMaterialField.getText().isEmpty() &&
+                    !productWeightField.getText().isEmpty();
+        }
+        else if (productBodyKitRadio.isSelected()) {
+            return !productTitleField.getText().isEmpty() &&
+                    !productDescriptionField.getText().isEmpty() &&
+                    !productQuantityField.getText().isEmpty() &&
+                    !productPriceField.getText().isEmpty() &&
+                    !productBrandField.getText().isEmpty() &&
+                    !productCompatibleCarsField.getText().isEmpty() &&
+                    !productCountryManufacturerField.getText().isEmpty() &&
+                    productKitTypeComboBox.getValue() != null;
+        }
+        else if (productWheelsRadio.isSelected()) {
+            return !productTitleField.getText().isEmpty() &&
+                    !productDescriptionField.getText().isEmpty() &&
+                    !productQuantityField.getText().isEmpty() &&
+                    !productPriceField.getText().isEmpty() &&
+                    !productWheelSizeField.getText().isEmpty() &&
+                    !productColorField.getText().isEmpty() &&
+                    !productWeightField.getText().isEmpty();
+        }
+        else {
             return false;
         }
-    }
-    private boolean allSpoilerFieldsFilled() {
-        return !productTitleField.getText().isEmpty() &&
-                !productDescriptionField.getText().isEmpty() &&
-                !productQuantityField.getText().isEmpty() &&
-                !productPriceField.getText().isEmpty() &&
-                !productMaterialField.getText().isEmpty() &&
-                !productWeightField.getText().isEmpty();
-    }
-    private boolean allBodyKitFieldsFilled() {
-        return !productTitleField.getText().isEmpty() &&
-                !productDescriptionField.getText().isEmpty() &&
-                !productQuantityField.getText().isEmpty() &&
-                !productPriceField.getText().isEmpty() &&
-                !productBrandField.getText().isEmpty() &&
-                !productCompatibleCarsField.getText().isEmpty() &&
-                !productCountryManufacturerField.getText().isEmpty() &&
-                productKitTypeComboBox.getValue() != null;
-    }
-    private boolean allWheelsFieldsFilled() {
-        return !productTitleField.getText().isEmpty() &&
-                !productDescriptionField.getText().isEmpty() &&
-                !productQuantityField.getText().isEmpty() &&
-                !productPriceField.getText().isEmpty() &&
-                !productWheelSizeField.getText().isEmpty() &&
-                !productColorField.getText().isEmpty() &&
-                !productWeightField.getText().isEmpty();
     }
 }

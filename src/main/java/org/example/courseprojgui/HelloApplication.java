@@ -1,6 +1,6 @@
 package org.example.courseprojgui;
 
-import atlantafx.base.theme.NordDark;
+import atlantafx.base.theme.PrimerDark;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -12,7 +12,7 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("main-window.fxml"));
-        Application.setUserAgentStylesheet(new NordDark().getUserAgentStylesheet());
+        Application.setUserAgentStylesheet(new PrimerDark().getUserAgentStylesheet());
 
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Shop!");

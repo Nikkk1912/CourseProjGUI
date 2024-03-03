@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="errorBody" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.courseprojgui.fxControllers.DeleteConfirm">
+    <children>
+        <Text layoutX="11.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Are you sure you want to remove product?" wrappingWidth="278.60546875" AnchorPane.leftAnchor="35.0" AnchorPane.rightAnchor="10.0">
+            <font>
+                <Font size="21.0" />
+            </font>
+        </Text>
+        <Button fx:id="confirmButton" layoutX="26.0" layoutY="134.0" mnemonicParsing="false" onAction="#deleteAccept" prefHeight="38.0" prefWidth="103.0" text="Yes" AnchorPane.leftAnchor="35.0" />
+      <Button fx:id="rejectButton" layoutX="172.0" layoutY="134.0" mnemonicParsing="false" onAction="#closeDeleteWindow" prefHeight="38.0" prefWidth="103.0" text="No" AnchorPane.rightAnchor="35.0" />
+    </children>
+</AnchorPane>

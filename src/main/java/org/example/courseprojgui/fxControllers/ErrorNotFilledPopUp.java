@@ -1,6 +1,5 @@
 package org.example.courseprojgui.fxControllers;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -10,13 +9,12 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class ErrorPopUp {
-
+public class ErrorNotFilledPopUp {
     public Button okButton;
 
     public static void showErrorPopup() {
         try {
-            FXMLLoader loader = new FXMLLoader(ErrorPopUp.class.getResource("/org/example/courseprojgui/error-popUp.fxml"));
+            FXMLLoader loader = new FXMLLoader(ErrorNotFilledPopUp.class.getResource("/org/example/courseprojgui/errorNotFilledPopUp.fxml"));
             Parent root = loader.load();
 
             Stage stage = new Stage();

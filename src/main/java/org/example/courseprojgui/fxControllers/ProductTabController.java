@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
@@ -13,9 +14,13 @@ import org.example.courseprojgui.model.Product;
 import org.example.courseprojgui.model.Spoiler;
 import org.example.courseprojgui.model.Wheels;
 
+import java.net.URL;
 import java.util.Comparator;
+import java.util.ResourceBundle;
 
-public class MainWindow {
+public class ProductTabController implements Initializable {
+
+    public AnchorPane productsRoot;
     public ListView<Product> productAdminList;
     public TextField productTitleField;
     public TextArea productDescriptionField;
@@ -32,11 +37,10 @@ public class MainWindow {
     public TextField productWeightField;
     public TextField productColorField;
     public TextField productWheelSizeField;
-    public AnchorPane root;
 
 
-    @FXML
-    public void initialize() {
+
+    @Override public void initialize(URL location, ResourceBundle resources) {
         ObservableList<KitType> kitTypes = FXCollections.observableArrayList(KitType.values());
         productKitTypeComboBox.setItems(kitTypes);
         turnOffAllFields();

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="root" prefHeight="200.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.courseprojgui.fxControllers.MainController">
+   <children>
+      <TabPane fx:id="tabsPane" prefHeight="698.0" prefWidth="979.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+
+          <Tab fx:id="stopTab" text="Shop">
+              <fx:include  source="shopTab.fxml"/>
+          </Tab>
+
+          <Tab fx:id="usersTab" text="Users" >
+              <fx:include  source="usersTab.fxml"/>
+          </Tab>
+
+            <Tab fx:id="productsTab" text="Products">
+               <fx:include  source="productsTab.fxml"/>
+            </Tab>
+
+            <Tab fx:id="wareHousesTab" text="Warehouses">
+                <fx:include  source="wareHousesTab.fxml"/>
+            </Tab>
+
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>

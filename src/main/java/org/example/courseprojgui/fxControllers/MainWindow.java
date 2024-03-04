@@ -4,7 +4,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
@@ -202,15 +201,9 @@ public class MainWindow {
 
     public void deleteRecord() {
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("deleteConfirm.fxml"));
-        DeleteConfirm deleteConfirm = loader.getController();
-        deleteConfirm.deleteConfirmation();
-
-        if(deleteConfirm.deleteAccept()) {
-            Product product = productAdminList.getSelectionModel().getSelectedItem();
-            productAdminList.getItems().remove(product);
-            clearAllFields();
-        }
+                Product product = productAdminList.getSelectionModel().getSelectedItem();
+                productAdminList.getItems().remove(product);
+                clearAllFields();
 
     }
 

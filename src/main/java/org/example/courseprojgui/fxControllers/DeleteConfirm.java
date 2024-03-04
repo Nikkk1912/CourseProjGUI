@@ -1,28 +1,24 @@
 package org.example.courseprojgui.fxControllers;
 
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
+import java.util.function.Consumer;
 
 public class DeleteConfirm {
 
     public AnchorPane errorBody;
     public Button confirmButton;
     public Button rejectButton;
+    private boolean confirmationResult;
 
-
-    public static void deleteConfirmation() {
+    public void deleteConfirmation(Consumer<Boolean> callback) {
         try {
             FXMLLoader loader = new FXMLLoader(ErrorNotFilledPopUp.class.getResource("/org/example/courseprojgui/deleteConfirm.fxml"));
             Parent root = loader.load();
@@ -33,6 +29,7 @@ public class DeleteConfirm {
             stage.setTitle("Are you sure?");
             stage.setScene(scene);
             stage.show();
+            callback.accept(confirmationResult);
 
 
         } catch (IOException e) {

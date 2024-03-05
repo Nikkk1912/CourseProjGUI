@@ -1,6 +1,7 @@
 package org.example.courseprojgui.fxControllers;
 
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -8,9 +9,15 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class ErrorNotFilledPopUp {
+public class ErrorNotFilledPopUp implements Initializable {
     public Button okButton;
+
+    @Override public void initialize(URL location, ResourceBundle resources) {
+
+    }
 
     public static void showErrorPopup() {
         try {

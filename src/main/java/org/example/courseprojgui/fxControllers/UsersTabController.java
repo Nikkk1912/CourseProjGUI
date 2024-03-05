@@ -136,6 +136,8 @@ public class UsersTabController implements Initializable {
                 currnetText = currnetText + " " + this.currentUser.getName() + " " + this.currentUser.getSurname();
                 userStatusText.setText(currnetText);
                 isVisible(true);
+                fillFields();
+
             } else {
                 System.out.println("not valid");
             }
@@ -155,6 +157,24 @@ public class UsersTabController implements Initializable {
         userStatusText.setText("User`s page:");
         isVisible(false);
 
+    }
+
+    private void fillFields() {
+        userNameField.setText(this.currentUser.getName());
+        userSurnameField.setText(this.currentUser.getSurname());
+
+        if (currentUser instanceof Manager) {
+            userStatusField.setText("Admin");
+
+        } else if(currentUser instanceof Customer) {
+            userStatusField.setText("Customer");
+            userShippingAdrField.setText(((Customer) currentUser).getShippingAddress());
+            userBillingAdrField.setText(((Customer) currentUser).getBillingAddress());
+            userCardNumField.setText(((Customer) currentUser).getCardNumber());
+            userBirthDateField.setText(String.valueOf(((Customer) currentUser).getBirthDate()));
+        } else {
+            System.out.println("current - null");
+        }
     }
 }
 

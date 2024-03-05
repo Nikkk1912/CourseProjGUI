@@ -55,10 +55,13 @@ public class ProductTabController implements Initializable {
                     setFont(Font.font(16));
                     setText(product.getTitle() + " : " + product.getQuantity());
                 }
+
+
             }
         });
 
     }
+
 
     public void neededFieldsForProducts() {
         turnOffAllFields();

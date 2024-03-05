@@ -5,7 +5,7 @@
 
 <AnchorPane fx:id="root" prefHeight="200.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.courseprojgui.fxControllers.MainController">
    <children>
-      <TabPane fx:id="tabsPane" prefHeight="698.0" prefWidth="979.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane fx:id="tabsPane" prefHeight="700.0" prefWidth="980.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
 
           <Tab fx:id="stopTab" text="Shop">

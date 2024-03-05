@@ -18,7 +18,7 @@ public class HelloApplication extends Application {
 
         stage.setTitle("Shop!");
         stage.setResizable(false);
-        stage.setScene(new Scene(root, 979.0,698.0));
+        stage.setScene(new Scene(root, 980.0,700.0));
         stage.show();
     }
 

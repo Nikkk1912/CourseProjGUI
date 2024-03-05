@@ -18,12 +18,12 @@ public class Customer extends User {
         super(name, surname, login, password);
     }
 
-    public Customer(String name, String surname, String login, String password, String cardNumber, String shippingAddress, String billingAddress, LocalDate birthDate) {
+    public Customer(String name, String surname, String login, String password, String cardNumber, String shippingAddress, String billingAddress, int birthDate) {
         super(name, surname, login, password);
         this.cardNumber = cardNumber;
         this.shippingAddress = shippingAddress;
         this.billingAddress = billingAddress;
-        this.birthDate = birthDate;
+        this.birthDate = LocalDate.ofEpochDay(birthDate);
     }
 
     public Customer() {

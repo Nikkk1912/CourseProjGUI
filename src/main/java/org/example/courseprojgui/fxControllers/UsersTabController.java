@@ -3,8 +3,10 @@ package org.example.courseprojgui.fxControllers;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import org.example.courseprojgui.model.Customer;
 import org.example.courseprojgui.model.Manager;
@@ -39,13 +41,32 @@ public class UsersTabController implements Initializable {
     public Text userCardText;
     public Text userBirthText;
     public Text userStatText;
-    public ListView userList;
+    public ListView<User> userList;
+
+    private MainController mainController;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        mainController = MainController.getInstance();
         isVisible(false);
+        isEditable(false);
         userGenList.add(new Manager("admin", "admin", "admin", "test", true));
         userGenList.add(new Customer("cust", "test", "cust", "cust", "1234", "home", "bank", 2004-12-19));
+
+            userList.setCellFactory(param -> new ListCell<>() {
+                @Override
+                protected void updateItem(User user, boolean empty) {
+                    super.updateItem(user, empty);
+                    if (empty || user == null) {
+                        setText(null);
+                    } else {
+                        setFont(Font.font(16));
+                        setText(user.getName() + " : " + user.getSurname());
+                    }
+                }
+            });
+        userList.getItems().addAll(userGenList);
+
     }
 
     private void isEditable(boolean val) {
@@ -137,6 +158,7 @@ public class UsersTabController implements Initializable {
                 userStatusText.setText(currnetText);
                 isVisible(true);
                 fillFields();
+                mainController.openAllTabs();
 
             } else {
                 System.out.println("not valid");
@@ -144,7 +166,6 @@ public class UsersTabController implements Initializable {
         }
 
     }
-
     @FXML
     private void logOff() {
         this.currentUser = null;
@@ -156,6 +177,7 @@ public class UsersTabController implements Initializable {
         submitEnterInfoButton.setVisible(true);
         userStatusText.setText("User`s page:");
         isVisible(false);
+        mainController.closeAllTabs();
 
     }
 

@@ -8,6 +8,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import lombok.Getter;
+import lombok.Setter;
 import org.example.courseprojgui.model.Customer;
 import org.example.courseprojgui.model.Manager;
 import org.example.courseprojgui.model.User;
@@ -16,9 +18,14 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+
+
 public class UsersTabController implements Initializable {
+    @Getter
+    @Setter
 
     private ArrayList<User> userGenList = new ArrayList<>();
+    @Getter
     private User currentUser;
     public Text userStatusText;
     public TextField loginTextField;
@@ -42,8 +49,19 @@ public class UsersTabController implements Initializable {
     public Text userBirthText;
     public Text userStatText;
     public ListView<User> userList;
-
     private MainController mainController;
+    @Getter
+    private static UsersTabController instance;
+
+    private boolean isAdminNow = false;
+
+    public boolean getIsAdminNow() {
+        return isAdminNow;
+    }
+
+    public UsersTabController() {
+        instance = this;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -141,7 +159,10 @@ public class UsersTabController implements Initializable {
 
         for (var i = 0; i < userGenList.size(); i++) {
             if (userGenList.get(i).getLogin().equals(login) && userGenList.get(i).getPassword().equals(password)) {
-                if (userGenList.get(i) instanceof Manager) currentUser = userGenList.get(i);
+                if (userGenList.get(i) instanceof Manager) {
+                    currentUser = userGenList.get(i);
+                    isAdminNow = true;
+                }
                 if (userGenList.get(i) instanceof Customer) currentUser = userGenList.get(i);
                 this.currentUser = currentUser;
                 loginTextField.setDisable(true);
@@ -158,7 +179,7 @@ public class UsersTabController implements Initializable {
                 userStatusText.setText(currnetText);
                 isVisible(true);
                 fillFields();
-                mainController.openAllTabs();
+                mainController.openAllTabs(isAdminNow);
 
             } else {
                 System.out.println("not valid");
@@ -178,7 +199,7 @@ public class UsersTabController implements Initializable {
         userStatusText.setText("User`s page:");
         isVisible(false);
         mainController.closeAllTabs();
-
+        isAdminNow = false;
     }
 
     private void fillFields() {

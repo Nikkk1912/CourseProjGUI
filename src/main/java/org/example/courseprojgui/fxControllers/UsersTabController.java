@@ -69,7 +69,7 @@ public class UsersTabController implements Initializable {
         isVisible(false);
         isEditable(false);
         userGenList.add(new Manager("admin", "admin", "admin", "test", true));
-        userGenList.add(new Customer("cust", "test", "cust", "cust", "1234", "home", "bank", 2004-12-19));
+        userGenList.add(new Customer("cust", "test", "cust", "cust", "1234", "home", "bank", "19 12 2004"));
 
             userList.setCellFactory(param -> new ListCell<>() {
                 @Override

@@ -43,8 +43,7 @@ public class MainController implements Initializable {
 
     public void openAllTabs(boolean isAdminNow) {
         stopTab.setDisable(false);
-        productsTab.setDisable(false);
-        wareHousesTab.setDisable(false);
+
 
         FXMLLoader loader = new FXMLLoader();
         try {
@@ -55,6 +54,8 @@ public class MainController implements Initializable {
         }
 
         if(isAdminNow) {
+            productsTab.setDisable(false);
+            wareHousesTab.setDisable(false);
 
             loader = new FXMLLoader();
             try {

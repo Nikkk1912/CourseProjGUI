@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @Getter
 @Setter
@@ -18,12 +19,13 @@ public class Customer extends User {
         super(name, surname, login, password);
     }
 
-    public Customer(String name, String surname, String login, String password, String cardNumber, String shippingAddress, String billingAddress, int birthDate) {
+    public Customer(String name, String surname, String login, String password, String cardNumber, String shippingAddress, String billingAddress, String birthDate) {
         super(name, surname, login, password);
         this.cardNumber = cardNumber;
         this.shippingAddress = shippingAddress;
         this.billingAddress = billingAddress;
-        this.birthDate = LocalDate.ofEpochDay(birthDate);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MM yyyy");
+        this.birthDate = LocalDate.parse(birthDate, formatter);
     }
 
     public Customer() {

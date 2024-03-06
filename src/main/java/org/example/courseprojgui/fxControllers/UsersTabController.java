@@ -66,9 +66,9 @@ public class UsersTabController implements Initializable {
     private static UsersTabController instance;
     private boolean isAdminNow = false;
 
-    public void addNewUserToList (Customer customer) {
-       userGenList.add(customer);
-       userList.getItems().add(customer);
+    public void addNewUserToList (User user) {
+       userGenList.add(user);
+       userList.getItems().add(user);
     }
 
     public UsersTabController() {

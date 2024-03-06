@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane prefHeight="660.0" prefWidth="980.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.courseprojgui.fxControllers.userCreationController">
+<AnchorPane fx:id="userCreatiomIsAdmin" prefHeight="660.0" prefWidth="980.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.courseprojgui.fxControllers.userCreationController">
    <children>
       <TextField fx:id="userCreationNameField" layoutX="50.0" layoutY="157.0" prefHeight="40.0" prefWidth="170.0" promptText="Name:" />
       <TextField fx:id="userCreationSurnameField" layoutX="307.0" layoutY="157.0" prefHeight="40.0" prefWidth="170.0" promptText="Surname:" />
@@ -25,10 +25,15 @@
             <Font size="29.0" />
          </font>
       </Text>
-      <Button fx:id="userCreationAddButton" onAction="#saveUser" layoutX="696.0" layoutY="191.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="112.0" text="Add" />
-      <Button fx:id="userCreationClearButton" onAction="#clearFields" layoutX="696.0" layoutY="304.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="112.0" text="Clear" />
-      <Button fx:id="userCreationBackButton" onAction="#closeWindow" layoutX="696.0" layoutY="414.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="112.0" text="Back" />
+      <Button fx:id="userCreationAddButton" layoutX="696.0" layoutY="157.0" mnemonicParsing="false" onAction="#saveUser" prefHeight="41.0" prefWidth="112.0" text="Add" />
+      <Button fx:id="userCreationClearButton" layoutX="696.0" layoutY="250.0" mnemonicParsing="false" onAction="#clearFields" prefHeight="41.0" prefWidth="112.0" text="Clear" />
+      <Button fx:id="userCreationBackButton" layoutX="696.0" layoutY="360.0" mnemonicParsing="false" onAction="#closeWindow" prefHeight="41.0" prefWidth="112.0" text="Back" />
       <TextField fx:id="userCreationLoginField" layoutX="50.0" layoutY="475.0" prefHeight="40.0" prefWidth="170.0" promptText="Login:" />
       <TextField fx:id="userCreationPasswordField" layoutX="307.0" layoutY="475.0" prefHeight="40.0" prefWidth="170.0" promptText="Password:" />
+      <RadioButton fx:id="userCreationIsAdmin" onAction="#hideNonAdminFields" layoutX="705.0" layoutY="480.0" mnemonicParsing="false" text="Admin">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </RadioButton>
    </children>
 </AnchorPane>

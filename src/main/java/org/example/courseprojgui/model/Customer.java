@@ -24,8 +24,14 @@ public class Customer extends User {
         this.cardNumber = cardNumber;
         this.shippingAddress = shippingAddress;
         this.billingAddress = billingAddress;
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MM yyyy");
-        this.birthDate = LocalDate.parse(birthDate, formatter);
+        if(birthDate.equals("")) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            this.birthDate = LocalDate.parse("2000-10-20", formatter);
+        } else {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            this.birthDate = LocalDate.parse(birthDate, formatter);
+        }
+
     }
 
     public Customer() {
@@ -33,7 +39,7 @@ public class Customer extends User {
     }
 
     public void setBirthDate(String birthDate) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MM yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         this.birthDate = LocalDate.parse(birthDate, formatter);
     }
 }

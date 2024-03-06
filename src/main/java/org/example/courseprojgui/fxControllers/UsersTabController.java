@@ -1,14 +1,21 @@
 package org.example.courseprojgui.fxControllers;
 
 import javafx.animation.PauseTransition;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,6 +23,7 @@ import org.example.courseprojgui.model.Customer;
 import org.example.courseprojgui.model.Manager;
 import org.example.courseprojgui.model.User;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -24,6 +32,8 @@ import java.util.ResourceBundle;
 
 public class UsersTabController implements Initializable {
     public Text userEditingStatusText;
+    public AnchorPane userCreationAncrPaneBase;
+    public Button createNewUserButton;
     @Getter
     @Setter
     private ArrayList<User> userGenList = new ArrayList<>();
@@ -56,6 +66,10 @@ public class UsersTabController implements Initializable {
     private static UsersTabController instance;
     private boolean isAdminNow = false;
 
+    public void addNewUserToList (Customer customer) {
+       userGenList.add(customer);
+       userList.getItems().add(customer);
+    }
 
     public UsersTabController() {
         instance = this;
@@ -67,7 +81,7 @@ public class UsersTabController implements Initializable {
         isVisible(false);
         isEditable(false);
         userGenList.add(new Manager("admin", "admin", "admin", "test", true));
-        userGenList.add(new Customer("cust", "test", "cust", "cust", "1234", "home", "bank", "19 12 2004"));
+        userGenList.add(new Customer("cust", "test", "cust", "cust", "1234", "home", "bank", "2004-12-19"));
 
             userList.setCellFactory(param -> new ListCell<>() {
                 @Override
@@ -152,7 +166,6 @@ public class UsersTabController implements Initializable {
             userList.setDisable(true);
         }
     }
-
     private void clearAllFields() {
         userNameField.clear();
         userSurnameField.clear();
@@ -163,8 +176,7 @@ public class UsersTabController implements Initializable {
         userStatusField.clear();
     }
 
-    @FXML
-    private void login() {
+    @FXML private void login() {
         String login = loginTextField.getText();
         String password = passwordTextField1.getText();
         User currentUser = null;
@@ -191,6 +203,7 @@ public class UsersTabController implements Initializable {
                 userStatusText.setText(curentText);
 
                 isVisible(true);
+                clearAllFields();
 
                 userNameField.setText(this.currentUser.getName());
                 userSurnameField.setText(this.currentUser.getSurname());
@@ -209,15 +222,16 @@ public class UsersTabController implements Initializable {
                 }
 
                 mainController.openAllTabs(isAdminNow);
-
+                createNewUserButton.setVisible(false);
+                createNewUserButton.setDisable(true);
             } else {
                 System.out.println("not valid");
             }
         }
 
     }
-    @FXML
-    private void logOff() {
+
+    @FXML private void logOff() {
         this.currentUser = null;
         loginTextField.setDisable(false);
         passwordTextField1.setDisable(false);
@@ -229,6 +243,8 @@ public class UsersTabController implements Initializable {
         isVisible(false);
         mainController.closeAllTabs();
         isAdminNow = false;
+        createNewUserButton.setVisible(true);
+        createNewUserButton.setDisable(false);
     }
 
     @FXML private void loadUserData() {
@@ -312,6 +328,20 @@ public class UsersTabController implements Initializable {
         pause.play();
     }
 
+    @FXML private void openCreateNewUserMenu() {
+        try {
 
+            FXMLLoader loader = new FXMLLoader(ErrorNotFilledPopUp.class.getResource("/org/example/courseprojgui/userCreationWindow.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("New Customer");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            System.out.println("File not found");
+        }
+    }
 }
 

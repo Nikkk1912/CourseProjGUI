@@ -48,7 +48,7 @@
       </font>
    </Text>
    <Button fx:id="logOffButton" layoutX="874.0" layoutY="598.0" mnemonicParsing="false" onAction="#logOff" prefHeight="41.0" prefWidth="74.0" text="Log off" />
-   <Button fx:id="editButton" onAction="#startEditInfo" layoutX="32.0" layoutY="598.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="133.0" text="Edit profile" />
+   <Button fx:id="editButton" layoutX="32.0" layoutY="598.0" mnemonicParsing="false" onAction="#startEditInfo" prefHeight="41.0" prefWidth="133.0" text="Edit profile" />
    <TextField fx:id="userNameField" layoutX="293.0" layoutY="98.0" prefHeight="40.0" prefWidth="170.0" promptText="Name" AnchorPane.leftAnchor="295.0" AnchorPane.topAnchor="100.0" />
    <TextField fx:id="userSurnameField" layoutX="293.0" layoutY="157.0" prefHeight="40.0" prefWidth="170.0" promptText="Surname" AnchorPane.leftAnchor="295.0" AnchorPane.topAnchor="160.0" />
    <TextField fx:id="userShippingAdrField" layoutX="293.0" layoutY="217.0" prefHeight="40.0" prefWidth="170.0" promptText="Shipping address" AnchorPane.leftAnchor="295.0" AnchorPane.topAnchor="220.0" />
@@ -61,12 +61,14 @@
       </font>
    </Text>
    <TextField fx:id="userStatusField" layoutX="295.0" layoutY="449.0" prefHeight="40.0" prefWidth="170.0" promptText="Status" AnchorPane.leftAnchor="295.0" AnchorPane.topAnchor="460.0" />
-   <Button fx:id="saveChangesButton" onAction="#saveEditInfo" layoutX="197.0" layoutY="598.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="61.0" text="Save" />
+   <Button fx:id="saveChangesButton" layoutX="197.0" layoutY="598.0" mnemonicParsing="false" onAction="#saveEditInfo" prefHeight="41.0" prefWidth="61.0" text="Save" />
    <ListView fx:id="userList" layoutX="748.0" layoutY="98.0" onMouseClicked="#loadUserData" prefHeight="450.0" prefWidth="200.0" />
       <Text fx:id="userEditingStatusText" layoutX="32.0" layoutY="573.0" strokeType="OUTSIDE" strokeWidth="0.0" text="You can change info in fields " wrappingWidth="292.7205810546875">
          <font>
             <Font size="20.0" />
          </font>
       </Text>
+      <Button fx:id="createNewUserButton"  layoutX="270.0" layoutY="20.0" mnemonicParsing="false" onAction="#openCreateNewUserMenu" prefHeight="41.0" prefWidth="133.0" text="Create new user" />
+
    </children>
 </AnchorPane>

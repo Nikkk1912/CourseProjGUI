@@ -32,4 +32,8 @@ public class Customer extends User {
 
     }
 
+    public void setBirthDate(String birthDate) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MM yyyy");
+        this.birthDate = LocalDate.parse(birthDate, formatter);
+    }
 }

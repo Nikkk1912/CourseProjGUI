@@ -1,5 +1,6 @@
 package org.example.courseprojgui.fxControllers;
 
+import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -8,6 +9,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 import lombok.Getter;
 import lombok.Setter;
 import org.example.courseprojgui.model.Customer;
@@ -21,9 +23,9 @@ import java.util.ResourceBundle;
 
 
 public class UsersTabController implements Initializable {
+    public Text userEditingStatusText;
     @Getter
     @Setter
-
     private ArrayList<User> userGenList = new ArrayList<>();
     @Getter
     private User currentUser;
@@ -52,12 +54,8 @@ public class UsersTabController implements Initializable {
     private MainController mainController;
     @Getter
     private static UsersTabController instance;
-
     private boolean isAdminNow = false;
 
-    public boolean getIsAdminNow() {
-        return isAdminNow;
-    }
 
     public UsersTabController() {
         instance = this;
@@ -84,6 +82,7 @@ public class UsersTabController implements Initializable {
                 }
             });
         userList.getItems().addAll(userGenList);
+        userEditingStatusText.setVisible(false);
 
     }
 
@@ -94,19 +93,22 @@ public class UsersTabController implements Initializable {
         userBillingAdrField.setEditable(val);
         userCardNumField.setEditable(val);
         userBirthDateField.setEditable(val);
-        userStatusField.setEditable(val);
+        userStatusField.setEditable(false);
     }
+    private void neededFields(boolean isAdmin) {
 
-    private void isDisable(boolean val) {
-        userNameField.setDisable(val);
-        userSurnameField.setDisable(val);
-        userShippingAdrField.setDisable(val);
-        userBillingAdrField.setDisable(val);
-        userCardNumField.setDisable(val);
-        userBirthDateField.setDisable(val);
-        userStatusField.setDisable(val);
+        if(!isAdmin) {
+            userShippingAdrField.setDisable(false);
+            userBillingAdrField.setDisable(false);
+            userCardNumField.setDisable(false);
+            userBirthDateField.setDisable(false);
+        } else if (isAdmin) {
+            userShippingAdrField.setDisable(true);
+            userBillingAdrField.setDisable(true);
+            userCardNumField.setDisable(true);
+            userBirthDateField.setDisable(true);
+        }
     }
-
     private void isVisible(boolean val) {
         logOffButton.setVisible(val);
         logOffButton.setDisable(!val);
@@ -151,6 +153,16 @@ public class UsersTabController implements Initializable {
         }
     }
 
+    private void clearAllFields() {
+        userNameField.clear();
+        userSurnameField.clear();
+        userShippingAdrField.clear();
+        userBillingAdrField.clear();
+        userCardNumField.clear();
+        userBirthDateField.clear();
+        userStatusField.clear();
+    }
+
     @FXML
     private void login() {
         String login = loginTextField.getText();
@@ -164,6 +176,7 @@ public class UsersTabController implements Initializable {
                     isAdminNow = true;
                 }
                 if (userGenList.get(i) instanceof Customer) currentUser = userGenList.get(i);
+
                 this.currentUser = currentUser;
                 loginTextField.setDisable(true);
                 loginTextField.clear();
@@ -174,11 +187,27 @@ public class UsersTabController implements Initializable {
                 passwordTextField1.setVisible(false);
                 submitEnterInfoButton.setVisible(false);
 
-                String currnetText = userStatusText.getText();
-                currnetText = currnetText + " " + this.currentUser.getName() + " " + this.currentUser.getSurname();
-                userStatusText.setText(currnetText);
+                String curentText = "User`s page: " + this.currentUser.getName() + " " + this.currentUser.getSurname();
+                userStatusText.setText(curentText);
+
                 isVisible(true);
-                fillFields();
+
+                userNameField.setText(this.currentUser.getName());
+                userSurnameField.setText(this.currentUser.getSurname());
+
+                if (currentUser instanceof Manager) {
+                    userStatusField.setText("Manager");
+
+                } else if(currentUser instanceof Customer) {
+                    userStatusField.setText("Customer");
+                    userShippingAdrField.setText(((Customer) currentUser).getShippingAddress());
+                    userBillingAdrField.setText(((Customer) currentUser).getBillingAddress());
+                    userCardNumField.setText(((Customer) currentUser).getCardNumber());
+                    userBirthDateField.setText(String.valueOf(((Customer) currentUser).getBirthDate()));
+                } else {
+                    System.out.println("current - null");
+                }
+
                 mainController.openAllTabs(isAdminNow);
 
             } else {
@@ -202,22 +231,87 @@ public class UsersTabController implements Initializable {
         isAdminNow = false;
     }
 
-    private void fillFields() {
-        userNameField.setText(this.currentUser.getName());
-        userSurnameField.setText(this.currentUser.getSurname());
+    @FXML private void loadUserData() {
+        User user = userList.getSelectionModel().getSelectedItem();
 
-        if (currentUser instanceof Manager) {
-            userStatusField.setText("Admin");
-
-        } else if(currentUser instanceof Customer) {
+        if (user instanceof Manager) {
+            clearAllFields();
+            neededFields(true);
+            userNameField.setText(user.getName());
+            userSurnameField.setText(user.getSurname());
+            userStatusField.setText("Manager");
+        } else if (user instanceof Customer) {
+            clearAllFields();
+            neededFields(false);
+            userNameField.setText(user.getName());
+            userSurnameField.setText(user.getSurname());
             userStatusField.setText("Customer");
-            userShippingAdrField.setText(((Customer) currentUser).getShippingAddress());
-            userBillingAdrField.setText(((Customer) currentUser).getBillingAddress());
-            userCardNumField.setText(((Customer) currentUser).getCardNumber());
-            userBirthDateField.setText(String.valueOf(((Customer) currentUser).getBirthDate()));
-        } else {
-            System.out.println("current - null");
+            userShippingAdrField.setText(((Customer) user).getShippingAddress());
+            userBillingAdrField.setText(((Customer) user).getBillingAddress());
+            userCardNumField.setText(((Customer) user).getCardNumber());
+            userBirthDateField.setText(String.valueOf(((Customer) user).getBirthDate()));
+
         }
     }
+
+    @FXML private void startEditInfo() {
+        userEditingStatusText.setVisible(true);
+        userEditingStatusText.setText("You can change user info");
+
+
+        if(currentUser instanceof Manager) {
+            if(userList.getSelectionModel().getSelectedItem() != currentUser) {
+                userEditingStatusText.setText("You can only own info");
+                PauseTransition pause = new PauseTransition(Duration.seconds(2));
+                pause.setOnFinished(e -> userEditingStatusText.setVisible(false));
+                pause.play();
+                return;
+            }
+            neededFields(true);
+            isEditable(true);
+
+        } else if (currentUser instanceof Customer) {
+            neededFields(false);
+            isEditable(true);
+        }
+    }
+
+    @FXML private void saveEditInfo() {
+        int userIndex = 0;
+        for (var i = 0; i < userGenList.size(); i++) {
+            if(userGenList.get(i).getName() == currentUser.getName() && userGenList.get(i).getSurname() == currentUser.getSurname()) {
+                userIndex = i;
+            }
+        }
+        currentUser.setName(userNameField.getText());
+        currentUser.setSurname(userSurnameField.getText());
+
+        if(currentUser instanceof Manager) {
+            neededFields(true);
+            isEditable(false);
+
+        } else if (currentUser instanceof Customer) {
+            neededFields(false);
+            isEditable(false);
+
+            ((Customer) currentUser).setBillingAddress(userBillingAdrField.getText());
+            ((Customer) currentUser).setShippingAddress(userShippingAdrField.getText());
+            ((Customer) currentUser).setCardNumber(userCardNumField.getText());
+            ((Customer) currentUser).setBirthDate(userBirthDateField.getText());
+        }
+        String curentText = "User`s page: " + currentUser.getName() + " " + currentUser.getSurname();
+        userStatusText.setText(curentText);
+
+        userList.getItems().clear();
+        userGenList.set(userIndex, currentUser);
+        userList.getItems().addAll(userGenList);
+
+        userEditingStatusText.setText("Saved");
+        PauseTransition pause = new PauseTransition(Duration.seconds(2));
+        pause.setOnFinished(e -> userEditingStatusText.setVisible(false));
+        pause.play();
+    }
+
+
 }
 

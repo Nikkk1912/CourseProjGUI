@@ -65,7 +65,6 @@ public class userCreationController implements Initializable {
         String password = userCreationPasswordField.getText();
         if(login.isEmpty() && password.isEmpty()) {
             userCreationText1.setText("Login and password cant be empty");
-            System.out.println("Empty login or password");
             return;
         }
 

@@ -209,9 +209,11 @@ public class UsersTabController implements Initializable {
                 userSurnameField.setText(this.currentUser.getSurname());
 
                 if (currentUser instanceof Manager) {
+                    neededFields(true);
                     userStatusField.setText("Manager");
 
                 } else if(currentUser instanceof Customer) {
+                    neededFields(false);
                     userStatusField.setText("Customer");
                     userShippingAdrField.setText(((Customer) currentUser).getShippingAddress());
                     userBillingAdrField.setText(((Customer) currentUser).getBillingAddress());
@@ -225,7 +227,7 @@ public class UsersTabController implements Initializable {
                 createNewUserButton.setVisible(false);
                 createNewUserButton.setDisable(true);
             } else {
-                System.out.println("not valid");
+                System.out.println("Not found");
             }
         }
 

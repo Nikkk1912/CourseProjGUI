@@ -26,8 +26,11 @@ public class Customer extends User {
         this.billingAddress = billingAddress;
         if(birthDate.equals("")) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            this.birthDate = LocalDate.parse("2000-10-20", formatter);
-        } else {
+            this.birthDate = LocalDate.parse("2000-01-01", formatter);
+        } else if(!birthDate.matches("\\d{4}-((0[1-9])|(1[0-2]))-((0[1-9])|([12]\\d)|(3[01]))")) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            this.birthDate = LocalDate.parse("2000-01-01", formatter);
+        }else {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             this.birthDate = LocalDate.parse(birthDate, formatter);
         }

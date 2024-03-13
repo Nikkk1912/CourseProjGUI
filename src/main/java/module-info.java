@@ -3,7 +3,8 @@ module org.example.courseprojgui {
     requires javafx.fxml;
     requires lombok;
     requires atlantafx.base;
-
+    requires mysql.connector.j;
+    requires java.sql;
     requires org.kordamp.bootstrapfx.core;
 
     opens org.example.courseprojgui to javafx.fxml;

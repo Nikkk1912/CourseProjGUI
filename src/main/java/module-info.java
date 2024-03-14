@@ -6,6 +6,8 @@ module org.example.courseprojgui {
     requires mysql.connector.j;
     requires java.sql;
     requires org.kordamp.bootstrapfx.core;
+    requires jakarta.persistence;
+    requires org.hibernate.orm.core;
 
     opens org.example.courseprojgui to javafx.fxml;
     exports org.example.courseprojgui;

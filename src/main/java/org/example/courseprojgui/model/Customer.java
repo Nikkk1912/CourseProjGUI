@@ -1,6 +1,9 @@
 package org.example.courseprojgui.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,6 +11,7 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Setter
 @Getter
@@ -20,6 +24,10 @@ public class Customer extends User {
     private String shippingAddress;
     private String billingAddress;
     private LocalDate birthDate;
+    @OneToOne
+    private Cart cart;
+    @OneToMany(mappedBy = "commentOwner", cascade = CascadeType.ALL)
+    private List<Comment> myComments;
 
     public Customer(String name, String surname, String login, String password) {
         super(name, surname, login, password);

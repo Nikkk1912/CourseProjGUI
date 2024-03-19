@@ -1,6 +1,8 @@
 package org.example.courseprojgui.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +18,7 @@ public class BodyKit extends Product {
     private String brand;
     private String compatibleCars;
     private String countryManufacturer;
+    @Enumerated(EnumType.STRING)
     private KitType kitType;
 
     public BodyKit(String title, String description, int quantity, float price, String brand, String compatibleCars, String countryManufacturer, KitType kitType) {

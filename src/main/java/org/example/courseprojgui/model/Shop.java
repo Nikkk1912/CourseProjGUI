@@ -19,9 +19,9 @@ public class Shop implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @OneToMany
+    @OneToMany(mappedBy = "shop", cascade = CascadeType.ALL)
     public List<User> sysUsers;
-    @OneToMany
+    @OneToMany(mappedBy = "shop", cascade = CascadeType.ALL)
     public List<Product> sysProducts;
 
 }

@@ -1,15 +1,13 @@
 package org.example.courseprojgui.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Setter
 @Getter
@@ -25,6 +23,8 @@ public abstract class User implements Serializable {
     private String surname;
     private String login;
     private String password;
+    @ManyToOne
+    private Shop shop;
 
 
     public User(String name, String surname, String login, String password) {

@@ -22,11 +22,13 @@ public class Comment {
     private String commentTitle;
     private String commentBody;
     private LocalDate dateCreated;
-
-    @OneToOne
-    private User commentOwner;
-    @OneToMany
+    @ManyToOne()
+    private Product whichProductCommented;
+    @ManyToOne()
+    private Customer commentOwner;
+    @OneToMany(mappedBy = "parentComment", cascade = CascadeType.ALL)
     private List<Comment> replies;
-
+    @ManyToOne()
+    private Comment parentComment;
     private float rating;
 }

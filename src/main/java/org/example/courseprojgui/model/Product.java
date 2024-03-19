@@ -25,9 +25,12 @@ public class Product implements Serializable {
     protected float price;
     @ManyToOne()
     private Warehouse warehouse;
-
+    @OneToMany(mappedBy = "whichProductCommented", cascade = CascadeType.ALL )
     protected List<Comment> comments;
+    @ManyToOne
     private Cart cart;
+    @ManyToOne
+    private Shop shop;
 
     public Product(String title, String description, int quantity, float price) {
         this.title = title;

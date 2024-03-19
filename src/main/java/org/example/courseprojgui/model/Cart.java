@@ -18,9 +18,9 @@ public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @OneToMany(mappedBy = "warehouse", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
     private List<Product> item;
-    @OneToOne
+    @OneToOne(mappedBy = "cart", cascade = CascadeType.ALL)
     private Customer customer;
 
 }

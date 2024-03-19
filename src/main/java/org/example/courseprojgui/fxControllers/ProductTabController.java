@@ -2,7 +2,6 @@ package org.example.courseprojgui.fxControllers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -55,8 +54,6 @@ public class ProductTabController implements Initializable {
                     setFont(Font.font(16));
                     setText(product.getTitle() + " : " + product.getQuantity());
                 }
-
-
             }
         });
 

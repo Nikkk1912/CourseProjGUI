@@ -2,14 +2,12 @@ package org.example.courseprojgui.model;
 
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.ArrayList;
-
+@Setter
+@Getter
 public class Manager extends User {
     private boolean isAdmin;
-    @Setter
-    @Getter
-    private ArrayList<Cart> myResponsibleCarts = new ArrayList<Cart>();
+
+    //private ArrayList<Cart> myResponsibleCarts = new ArrayList<Cart>();
 
     public Manager(String login, String password, String name, String surname, boolean isAdmin) {
         super(name, surname, login, password);

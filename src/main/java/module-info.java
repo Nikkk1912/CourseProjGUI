@@ -13,7 +13,7 @@ module org.example.courseprojgui {
     opens org.example.courseprojgui to javafx.fxml;
     exports org.example.courseprojgui;
     opens org.example.courseprojgui.fxControllers to javafx.fxml;
-    opens org.example.courseprojgui.model to org.hibernate.orm.core;
+    opens org.example.courseprojgui.model to org.hibernate.orm.core, javafx.fxml, jakarta.persistence;
     exports org.example.courseprojgui.fxControllers;
     exports org.example.courseprojgui.model;
     exports org.example.courseprojgui.enums;

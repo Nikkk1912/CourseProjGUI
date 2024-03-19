@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import java.io.Serializable;
 import java.util.List;
@@ -26,6 +28,7 @@ public class Product implements Serializable {
     @ManyToOne()
     private Warehouse warehouse;
     @OneToMany(mappedBy = "whichProductCommented", cascade = CascadeType.ALL )
+    @LazyCollection(LazyCollectionOption.FALSE)
     protected List<Comment> comments;
     @ManyToOne
     private Cart cart;

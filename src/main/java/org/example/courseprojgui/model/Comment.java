@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -26,9 +28,12 @@ public class Comment {
     private Product whichProductCommented;
     @ManyToOne()
     private Customer commentOwner;
-    @OneToMany(mappedBy = "parentComment", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "parentComment", cascade = CascadeType.ALL, orphanRemoval = true)
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Comment> replies;
     @ManyToOne()
     private Comment parentComment;
     private float rating;
+    @ManyToOne
+    private Cart chat;
 }

@@ -8,10 +8,12 @@ module org.example.courseprojgui {
     requires org.kordamp.bootstrapfx.core;
     requires jakarta.persistence;
     requires org.hibernate.orm.core;
+    requires java.naming;
 
     opens org.example.courseprojgui to javafx.fxml;
     exports org.example.courseprojgui;
     opens org.example.courseprojgui.fxControllers to javafx.fxml;
+    opens org.example.courseprojgui.model to org.hibernate.orm.core;
     exports org.example.courseprojgui.fxControllers;
     exports org.example.courseprojgui.model;
     exports org.example.courseprojgui.enums;

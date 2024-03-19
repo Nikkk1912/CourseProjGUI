@@ -4,6 +4,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import org.example.courseprojgui.model.Manager;
@@ -23,10 +24,18 @@ public class WareHouseTabController implements Initializable {
     public Text warehouseAddressText;
     public ListView<Manager> warehouseListAdmins;
     public ListView<Product> warehouseListProducts;
+    public TextField warehouseAdminLogField;
+    public TextField warehouseAdminPassFiled;
+    public Button warehouseAssignAdminButton;
+    public Text warehouseAssignStatusText;
+    private UsersTabController usersTabController;
 
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
+        usersTabController = UsersTabController.getInstance();
+        warehouseAssignStatusText.setVisible(false);
+
         warehouseListOfWarehouses.setCellFactory(param -> new ListCell<>() {
             @Override
             protected void updateItem(Warehouse warehouse, boolean empty) {
@@ -90,6 +99,28 @@ public class WareHouseTabController implements Initializable {
         warehouseListProducts.getItems().addAll(warehouse.getStock());
         warehouseListAdmins.getItems().clear();
         warehouseListAdmins.getItems().addAll(warehouse.getManagers());
+
+    }
+
+    public void assignAdminToWarehouse() {
+        String login = warehouseAdminLogField.getText();
+        String password = warehouseAdminPassFiled.getText();
+        boolean loginSuccess = false;
+        Manager manager = new Manager();
+
+        for (var i = 0; i < usersTabController.getUserGenList().size(); i++) {
+            if (usersTabController.getUserGenList().get(i).getLogin().equals(login) && usersTabController.getUserGenList().get(i).getPassword().equals(password)) {
+                loginSuccess = true;
+                manager = (Manager) usersTabController.getUserGenList().get(i);
+
+            }
+        }
+        if(loginSuccess) {
+            warehouseListAdmins.getItems().add(manager);
+        } else {
+            warehouseAssignStatusText.setVisible(true);
+            warehouseAssignStatusText.setText("No such manager");
+        }
 
     }
 }

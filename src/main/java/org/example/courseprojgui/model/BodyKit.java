@@ -1,6 +1,5 @@
 package org.example.courseprojgui.model;
 
-import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,7 +12,6 @@ import org.example.courseprojgui.enums.KitType;
 @NoArgsConstructor
 
 @Entity
-@DiscriminatorValue("BodyKit")
 public class BodyKit extends Product {
     private String brand;
     private String compatibleCars;

@@ -1,5 +1,7 @@
 package org.example.courseprojgui.fxControllers;
 
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -23,6 +25,8 @@ public class MainController implements Initializable {
     @FXML Tab productsTab;
     @FXML Tab wareHousesTab;
 
+    private EntityManagerFactory entityManagerFactory;
+
     public MainController() {
         instance = this;
     }
@@ -30,6 +34,8 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        entityManagerFactory = Persistence.createEntityManagerFactory("Shop");
+
         closeAllTabs();
         FXMLLoader loader = new FXMLLoader();
         try {

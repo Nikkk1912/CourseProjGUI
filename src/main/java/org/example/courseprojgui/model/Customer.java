@@ -1,14 +1,20 @@
 package org.example.courseprojgui.model;
 
+import jakarta.persistence.Entity;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-@Getter
 @Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 
+@Entity
 public class Customer extends User {
     private String cardNumber;
     private String shippingAddress;
@@ -34,10 +40,6 @@ public class Customer extends User {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             this.birthDate = LocalDate.parse(birthDate, formatter);
         }
-
-    }
-
-    public Customer() {
 
     }
 

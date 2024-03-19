@@ -1,26 +1,27 @@
 package org.example.courseprojgui.model;
 
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
-@Getter
 @Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 
+@Entity
 public class Shop implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    @OneToMany
     public List<User> sysUsers;
+    @OneToMany
     public List<Product> sysProducts;
 
-    public Shop(List<User> sysUsers, List<Product> sysProducts) {
-        this.sysUsers = sysUsers;
-        this.sysProducts = sysProducts;
-    }
-
-    public Shop() {
-        this.sysUsers = new ArrayList<>();
-        this.sysProducts = new ArrayList<>();
-    }
 }

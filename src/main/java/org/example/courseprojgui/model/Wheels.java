@@ -1,6 +1,5 @@
 package org.example.courseprojgui.model;
 
-import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,7 +12,6 @@ import lombok.Setter;
 @NoArgsConstructor
 
 @Entity
-@DiscriminatorValue("Wheels")
 public class Wheels extends Product{
     private int wheelSize;
     private String color;

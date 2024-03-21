@@ -26,9 +26,6 @@ public class Customer extends User {
     private String shippingAddress;
     private String billingAddress;
     private LocalDate birthDate;
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
-    @LazyCollection(LazyCollectionOption.FALSE)
-    private List<Cart> myPurchases;
     @OneToMany(mappedBy = "commentOwner", cascade = CascadeType.ALL)
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Comment> myComments;

@@ -35,6 +35,7 @@ public class UsersTabController implements Initializable {
     public Text userEditingStatusText;
     public AnchorPane userCreationAncrPaneBase;
     public Button createNewUserButton;
+    @Getter
     private User currentUser;
     public Text userStatusText;
     public TextField loginTextField;
@@ -204,6 +205,7 @@ public class UsersTabController implements Initializable {
                 String curentText = "User`s page: " + this.currentUser.getName() + " " + this.currentUser.getSurname();
                 userStatusText.setText(curentText);
 
+
                 isVisible(true);
                 clearAllFields();
 
@@ -234,7 +236,6 @@ public class UsersTabController implements Initializable {
                 System.out.println("Not found");
             }
         }
-        //shopTabController.updateShopList();
     }
 
     @FXML private void logOff() {

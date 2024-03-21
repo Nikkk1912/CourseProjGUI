@@ -21,7 +21,7 @@
             <Font size="24.0" />
          </font>
       </Text>
-      <ListView fx:id="shopProductList" layoutX="27.0" layoutY="115.0" prefHeight="513.0" prefWidth="220.0" />
+      <ListView fx:id="shopProductList" onMouseClicked="#loadProductData" layoutX="27.0" layoutY="115.0" prefHeight="513.0" prefWidth="220.0" />
       <Text layoutX="91.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Products">
          <font>
             <Font size="24.0" />
@@ -63,12 +63,12 @@
             <Font size="14.0" />
          </font>
       </TextField>
-      <TextField fx:id="shopTotalPriceField" layoutX="503.0" layoutY="498.0">
+      <TextField fx:id="shopTotalPriceField" onMouseClicked="#calcTotalPrice" layoutX="503.0" layoutY="498.0">
          <font>
             <Font size="14.0" />
          </font>
       </TextField>
-      <Button fx:id="shopAddButton" layoutX="420.0" layoutY="558.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="167.0" text="Add to cart">
+      <Button fx:id="shopAddButton" onAction="#addToCart" layoutX="420.0" layoutY="558.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="167.0" text="Add to cart">
          <font>
             <Font size="20.0" />
          </font>

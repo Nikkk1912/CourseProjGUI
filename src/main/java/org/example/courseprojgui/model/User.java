@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import java.io.Serializable;
 import java.util.List;
@@ -25,6 +27,9 @@ public abstract class User implements Serializable {
     private String password;
     @ManyToOne
     private Shop shop;
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Cart> myPurchases;
 
 
     public User(String name, String surname, String login, String password) {

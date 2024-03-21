@@ -1,14 +1,103 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.example.courseprojgui.fxControllers.ShopTabController"
-            prefHeight="400.0" prefWidth="600.0">
 
+<AnchorPane prefHeight="660.0" prefWidth="980.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.courseprojgui.fxControllers.ShopTabController">
+   <children>
+      <Text layoutX="20.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Shop">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <Text fx:id="shopUserText" layoutX="149.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User: ">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <ListView fx:id="shopProductList" layoutX="27.0" layoutY="115.0" prefHeight="513.0" prefWidth="220.0" />
+      <Text layoutX="91.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Products">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <Text layoutX="281.0" layoutY="140.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Selected product:" AnchorPane.topAnchor="110.0">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <Text layoutX="373.0" layoutY="207.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Amount:" AnchorPane.topAnchor="210.0">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <Text layoutX="409.0" layoutY="321.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Price:" AnchorPane.topAnchor="310.0">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <Text layoutX="351.0" layoutY="523.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total price:">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <Separator layoutX="279.0" layoutY="478.0" prefHeight="7.0" prefWidth="422.0" />
+      <TextField fx:id="shopAmountField" layoutX="503.0" layoutY="211.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="shopCurrentProdField" layoutX="503.0" layoutY="111.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="shopPriceField" layoutX="503.0" layoutY="313.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="shopTotalPriceField" layoutX="503.0" layoutY="498.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </TextField>
+      <Button fx:id="shopAddButton" layoutX="420.0" layoutY="558.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="167.0" text="Add to cart">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+      <ListView fx:id="shopCartList" layoutX="739.0" layoutY="113.0" prefHeight="372.0" prefWidth="220.0" />
+      <Button fx:id="shopCompleteButton" layoutX="766.0" layoutY="492.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="167.0" text="Complete order">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+      <Button fx:id="shopRemoveButton" layoutX="766.0" layoutY="547.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="167.0" text="Remove product">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Button>
+      <Button fx:id="shopClearButton" layoutX="766.0" layoutY="602.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="167.0" text="Clear">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+      <Text layoutX="803.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cart">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <Button fx:id="shopShowButton" onAction="#showShopProductList" layoutX="54.0" layoutY="300.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="167.0" text="Show products">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+   </children>
 </AnchorPane>

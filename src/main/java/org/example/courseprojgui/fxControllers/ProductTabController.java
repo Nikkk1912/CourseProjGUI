@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
+import lombok.Getter;
 import org.example.courseprojgui.enums.KitType;
 import org.example.courseprojgui.hibernate.GenericHibernate;
 import org.example.courseprojgui.model.BodyKit;
@@ -21,6 +22,7 @@ import java.util.ResourceBundle;
 public class ProductTabController implements Initializable {
 
     public AnchorPane productsRoot;
+    @Getter
     public ListView<Product> productAdminList;
     public TextField productTitleField;
     public TextArea productDescriptionField;
@@ -39,11 +41,17 @@ public class ProductTabController implements Initializable {
     public TextField productWheelSizeField;
     private MainController mainController;
     private GenericHibernate genericHibernate;
+    @Getter
+    private static ProductTabController instance;
+    private static ShopTabController shopTabController;
 
-
+    public ProductTabController() {
+        instance = this;
+    }
 
     @Override public void initialize(URL location, ResourceBundle resources) {
         mainController = MainController.getInstance();
+        shopTabController = ShopTabController.getInstance();
         genericHibernate = new GenericHibernate(mainController.getEntityManagerFactory());
         ObservableList<KitType> kitTypes = FXCollections.observableArrayList(KitType.values());
         productKitTypeComboBox.setItems(kitTypes);
@@ -168,8 +176,9 @@ public class ProductTabController implements Initializable {
             );
             genericHibernate.create(wheels);
             productAdminList.getItems().add(wheels);
-            productAdminList.getItems().sort(Comparator.comparing(Product::getTitle));
         }
+        productAdminList.getItems().sort(Comparator.comparing(Product::getTitle));
+        shopTabController.updateShopList();
     }
 
     public void updateRecord() {
@@ -213,6 +222,7 @@ public class ProductTabController implements Initializable {
             wheels.setWeight(Float.parseFloat(productWeightField.getText()));
             genericHibernate.update(wheels);
         }
+        shopTabController.updateShopList();
     }
 
     public void deleteRecord() {
@@ -221,6 +231,7 @@ public class ProductTabController implements Initializable {
                 productAdminList.getItems().remove(product);
                 genericHibernate.delete(product);
                 clearAllFields();
+                shopTabController.updateShopList();
 
     }
 

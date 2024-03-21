@@ -35,7 +35,6 @@ public class UsersTabController implements Initializable {
     public Text userEditingStatusText;
     public AnchorPane userCreationAncrPaneBase;
     public Button createNewUserButton;
-    //private ArrayList<User> userGenList = new ArrayList<>();
     private User currentUser;
     public Text userStatusText;
     public TextField loginTextField;
@@ -65,6 +64,7 @@ public class UsersTabController implements Initializable {
     private static UsersTabController instance;
     private boolean isAdminNow = false;
     private GenericHibernate genericHibernate;
+    private ShopTabController shopTabController;
 
     public void addNewUserToList (User user) {
        userList.getItems().add(user);
@@ -78,6 +78,7 @@ public class UsersTabController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         mainController = MainController.getInstance();
+        shopTabController = ShopTabController.getInstance();
         genericHibernate = new GenericHibernate(mainController.getEntityManagerFactory());
         isVisible(false);
         isEditable(false);
@@ -206,6 +207,8 @@ public class UsersTabController implements Initializable {
                 isVisible(true);
                 clearAllFields();
 
+
+
                 userNameField.setText(this.currentUser.getName());
                 userSurnameField.setText(this.currentUser.getSurname());
 
@@ -231,7 +234,7 @@ public class UsersTabController implements Initializable {
                 System.out.println("Not found");
             }
         }
-
+        //shopTabController.updateShopList();
     }
 
     @FXML private void logOff() {
@@ -321,7 +324,6 @@ public class UsersTabController implements Initializable {
         String curentText = "User`s page: " + currentUser.getName() + " " + currentUser.getSurname();
         userStatusText.setText(curentText);
 
-        //userList.getItems().clear();
         userList.getItems().set(userIndex, currentUser);
         genericHibernate.update(currentUser);
 

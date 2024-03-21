@@ -23,9 +23,9 @@ public class MainController implements Initializable {
     @Setter
     private static MainController instance;
 
+    @FXML Tab productsTab;
     @FXML Tab stopTab;
     @FXML Tab usersTab;
-    @FXML Tab productsTab;
     @FXML Tab wareHousesTab;
 
     private EntityManagerFactory entityManagerFactory;
@@ -83,6 +83,8 @@ public class MainController implements Initializable {
                 System.out.println("File not found");
             }
         }
+
+
     }
 
     public void closeAllTabs() {

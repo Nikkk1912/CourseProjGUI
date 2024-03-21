@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import lombok.Getter;
 import lombok.Setter;
+import org.example.courseprojgui.hibernate.GenericHibernate;
 import org.example.courseprojgui.model.Customer;
 import org.example.courseprojgui.model.Manager;
 import org.example.courseprojgui.model.User;
@@ -28,15 +29,13 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 
-
+@Getter
+@Setter
 public class UsersTabController implements Initializable {
     public Text userEditingStatusText;
     public AnchorPane userCreationAncrPaneBase;
     public Button createNewUserButton;
-    @Getter
-    @Setter
-    private ArrayList<User> userGenList = new ArrayList<>();
-    @Getter
+    //private ArrayList<User> userGenList = new ArrayList<>();
     private User currentUser;
     public Text userStatusText;
     public TextField loginTextField;
@@ -59,15 +58,17 @@ public class UsersTabController implements Initializable {
     public Text userCardText;
     public Text userBirthText;
     public Text userStatText;
+    @Getter
     public ListView<User> userList;
     private MainController mainController;
     @Getter
     private static UsersTabController instance;
     private boolean isAdminNow = false;
+    private GenericHibernate genericHibernate;
 
     public void addNewUserToList (User user) {
-       userGenList.add(user);
        userList.getItems().add(user);
+       genericHibernate.create(user);
     }
 
     public UsersTabController() {
@@ -77,10 +78,9 @@ public class UsersTabController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         mainController = MainController.getInstance();
+        genericHibernate = new GenericHibernate(mainController.getEntityManagerFactory());
         isVisible(false);
         isEditable(false);
-        userGenList.add(new Manager("admin", "admin", "admin", "test", true));
-        userGenList.add(new Customer("cust", "test", "cust", "cust", "1234", "home", "bank", "2004-12-19"));
 
             userList.setCellFactory(param -> new ListCell<>() {
                 @Override
@@ -94,7 +94,9 @@ public class UsersTabController implements Initializable {
                     }
                 }
             });
-        userList.getItems().addAll(userGenList);
+
+        userList.getItems().addAll(genericHibernate.getAllRecords(User.class));
+
         userEditingStatusText.setVisible(false);
 
     }
@@ -180,13 +182,13 @@ public class UsersTabController implements Initializable {
         String password = passwordTextField1.getText();
         User currentUser = null;
 
-        for (var i = 0; i < userGenList.size(); i++) {
-            if (userGenList.get(i).getLogin().equals(login) && userGenList.get(i).getPassword().equals(password)) {
-                if (userGenList.get(i) instanceof Manager) {
-                    currentUser = userGenList.get(i);
+        for (var i = 0; i < userList.getItems().size(); i++) {
+            if (userList.getItems().get(i).getLogin().equals(login) && userList.getItems().get(i).getPassword().equals(password)) {
+                if (userList.getItems().get(i) instanceof Manager) {
+                    currentUser = userList.getItems().get(i);
                     isAdminNow = true;
                 }
-                if (userGenList.get(i) instanceof Customer) currentUser = userGenList.get(i);
+                if (userList.getItems().get(i) instanceof Customer) currentUser = userList.getItems().get(i);
 
                 this.currentUser = currentUser;
                 loginTextField.setDisable(true);
@@ -295,8 +297,8 @@ public class UsersTabController implements Initializable {
 
     @FXML private void saveEditInfo() {
         int userIndex = 0;
-        for (var i = 0; i < userGenList.size(); i++) {
-            if(userGenList.get(i).getName() == currentUser.getName() && userGenList.get(i).getSurname() == currentUser.getSurname()) {
+        for (var i = 0; i < userList.getItems().size(); i++) {
+            if(userList.getItems().get(i).getName() == currentUser.getName() && userList.getItems().get(i).getSurname() == currentUser.getSurname()) {
                 userIndex = i;
             }
         }
@@ -319,9 +321,9 @@ public class UsersTabController implements Initializable {
         String curentText = "User`s page: " + currentUser.getName() + " " + currentUser.getSurname();
         userStatusText.setText(curentText);
 
-        userList.getItems().clear();
-        userGenList.set(userIndex, currentUser);
-        userList.getItems().addAll(userGenList);
+        //userList.getItems().clear();
+        userList.getItems().set(userIndex, currentUser);
+        genericHibernate.update(currentUser);
 
         userEditingStatusText.setText("Saved");
         PauseTransition pause = new PauseTransition(Duration.seconds(2));

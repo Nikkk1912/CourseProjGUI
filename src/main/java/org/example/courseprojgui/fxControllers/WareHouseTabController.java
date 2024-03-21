@@ -108,10 +108,10 @@ public class WareHouseTabController implements Initializable {
         boolean loginSuccess = false;
         Manager manager = new Manager();
 
-        for (var i = 0; i < usersTabController.getUserGenList().size(); i++) {
-            if (usersTabController.getUserGenList().get(i).getLogin().equals(login) && usersTabController.getUserGenList().get(i).getPassword().equals(password)) {
+        for (var i = 0; i < usersTabController.getUserList().getItems().size(); i++) {
+            if (usersTabController.getUserList().getItems().get(i).getLogin().equals(login) && usersTabController.getUserList().getItems().get(i).getPassword().equals(password)) {
                 loginSuccess = true;
-                manager = (Manager) usersTabController.getUserGenList().get(i);
+                manager = (Manager) usersTabController.getUserList().getItems().get(i);
 
             }
         }

@@ -14,8 +14,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+@Getter
+@Setter
 
 public class MainController implements Initializable {
+
     @Getter
     @Setter
     private static MainController instance;
@@ -29,12 +32,13 @@ public class MainController implements Initializable {
 
     public MainController() {
         instance = this;
+        entityManagerFactory = Persistence.createEntityManagerFactory("Shop");
     }
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        entityManagerFactory = Persistence.createEntityManagerFactory("Shop");
+
 
         closeAllTabs();
         FXMLLoader loader = new FXMLLoader();

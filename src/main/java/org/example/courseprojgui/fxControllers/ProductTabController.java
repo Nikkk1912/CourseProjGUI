@@ -8,6 +8,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import org.example.courseprojgui.enums.KitType;
+import org.example.courseprojgui.hibernate.GenericHibernate;
 import org.example.courseprojgui.model.BodyKit;
 import org.example.courseprojgui.model.Product;
 import org.example.courseprojgui.model.Spoiler;
@@ -36,13 +37,18 @@ public class ProductTabController implements Initializable {
     public TextField productWeightField;
     public TextField productColorField;
     public TextField productWheelSizeField;
+    private MainController mainController;
+    private GenericHibernate genericHibernate;
 
 
 
     @Override public void initialize(URL location, ResourceBundle resources) {
+        mainController = MainController.getInstance();
+        genericHibernate = new GenericHibernate(mainController.getEntityManagerFactory());
         ObservableList<KitType> kitTypes = FXCollections.observableArrayList(KitType.values());
         productKitTypeComboBox.setItems(kitTypes);
         turnOffAllFields();
+
 
         productAdminList.setCellFactory(param -> new ListCell<>() {
             @Override
@@ -57,6 +63,7 @@ public class ProductTabController implements Initializable {
             }
         });
 
+        productAdminList.getItems().addAll(genericHibernate.getAllRecords(Product.class));
     }
 
 
@@ -118,7 +125,6 @@ public class ProductTabController implements Initializable {
 
 
     public void createRecord() {
-
         if (!allFieldsFilled()) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("errorNotFilledPopUp.fxml"));
             ErrorNotFilledPopUp errorWindow = loader.getController();
@@ -135,6 +141,7 @@ public class ProductTabController implements Initializable {
                     productMaterialField.getText(),
                     Float.parseFloat(productWeightField.getText())
             );
+            genericHibernate.create(spoiler);
             productAdminList.getItems().add(spoiler);
         } else if (productBodyKitRadio.isSelected()) {
             BodyKit bodyKit = new BodyKit(
@@ -147,6 +154,7 @@ public class ProductTabController implements Initializable {
                     productCountryManufacturerField.getText(),
                     productKitTypeComboBox.getValue()
             );
+            genericHibernate.create(bodyKit);
             productAdminList.getItems().add(bodyKit);
         } else if (productWheelsRadio.isSelected()) {
             Wheels wheels = new Wheels(
@@ -158,6 +166,7 @@ public class ProductTabController implements Initializable {
                     productColorField.getText(),
                     Float.parseFloat(productWeightField.getText())
             );
+            genericHibernate.create(wheels);
             productAdminList.getItems().add(wheels);
             productAdminList.getItems().sort(Comparator.comparing(Product::getTitle));
         }
@@ -181,6 +190,7 @@ public class ProductTabController implements Initializable {
             spoiler.setQuantity(Integer.parseInt(productQuantityField.getText()));
             spoiler.setMaterial(productMaterialField.getText());
             spoiler.setWeight(Float.parseFloat(productWeightField.getText()));
+            genericHibernate.update(spoiler);
         } else if (product instanceof BodyKit) {
             BodyKit bodyKit = (BodyKit) product;
             bodyKit.setTitle(productTitleField.getText());
@@ -191,6 +201,7 @@ public class ProductTabController implements Initializable {
             bodyKit.setCountryManufacturer(productCountryManufacturerField.getText());
             bodyKit.setBrand(productBrandField.getText());
             bodyKit.setKitType(productKitTypeComboBox.getValue());
+            genericHibernate.update(bodyKit);
         } else if (product instanceof Wheels) {
             Wheels wheels = (Wheels) product;
             wheels.setTitle(productTitleField.getText());
@@ -200,6 +211,7 @@ public class ProductTabController implements Initializable {
             wheels.setWheelSize(Integer.parseInt(productWheelSizeField.getText()));
             wheels.setColor(productColorField.getText());
             wheels.setWeight(Float.parseFloat(productWeightField.getText()));
+            genericHibernate.update(wheels);
         }
     }
 
@@ -207,6 +219,7 @@ public class ProductTabController implements Initializable {
 
                 Product product = productAdminList.getSelectionModel().getSelectedItem();
                 productAdminList.getItems().remove(product);
+                genericHibernate.delete(product);
                 clearAllFields();
 
     }

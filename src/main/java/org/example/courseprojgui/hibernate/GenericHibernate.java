@@ -2,6 +2,7 @@ package org.example.courseprojgui.hibernate;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Query;
 import jakarta.persistence.criteria.CriteriaQuery;
 
@@ -37,7 +38,7 @@ public class GenericHibernate {
             entityManager.merge(entity);
             entityManager.getTransaction().commit();
         }catch (Exception e) {
-
+            e.printStackTrace();
         } finally {
             if(entityManager != null) {
                 entityManager.close();
@@ -54,12 +55,35 @@ public class GenericHibernate {
             Query q = entityManager.createQuery(query);
             listOfRecords = q.getResultList();
         }catch (Exception e) {
-
+            e.printStackTrace();
         } finally {
             if(entityManager != null) {
                 entityManager.close();
             }
         }
         return listOfRecords;
+    }
+
+    public <T> void delete(T entity) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = null;
+        try {
+            transaction = entityManager.getTransaction();
+            transaction.begin();
+            if (!entityManager.contains(entity)) {
+                entity = entityManager.merge(entity);
+            }
+            entityManager.remove(entity);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null && transaction.isActive()) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            if (entityManager != null) {
+                entityManager.close();
+            }
+        }
     }
 }

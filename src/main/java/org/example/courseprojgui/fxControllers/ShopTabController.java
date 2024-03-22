@@ -9,10 +9,10 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import lombok.Getter;
 import org.example.courseprojgui.hibernate.GenericHibernate;
-import org.example.courseprojgui.model.Cart;
-import org.example.courseprojgui.model.Product;
+import org.example.courseprojgui.model.*;
 
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class ShopTabController implements Initializable {
@@ -28,6 +28,9 @@ public class ShopTabController implements Initializable {
     public Button shopRemoveButton;
     public Button shopClearButton;
     public Button shopShowButton;
+    public TextField shopAmountInStockField;
+    public TextField shopPriceField1;
+    public TextField shopDescriptionField;
     private ProductTabController productTabController;
     private UsersTabController usersTabController;
     private GenericHibernate genericHibernate;
@@ -68,14 +71,17 @@ public class ShopTabController implements Initializable {
                     setText(null);
                 } else {
                     setFont(Font.font(16));
-                    setText(product.getClass().getSimpleName() +" | "+ product.getTitle());
+                    setText(product.getClass().getSimpleName() +" | "+ product.getTitle() + " | " + product.getQuantity());
                 }
             }
         });
 
-        shopProductList.setVisible(false);
         shopCurrentProdField.setEditable(false);
         shopPriceField.setEditable(false);
+        shopAmountInStockField.setEditable(false);
+        shopDescriptionField.setEditable(false);
+
+        shopProductList.getItems().setAll(genericHibernate.getAllRecords(Product.class));
     }
 
     public void updateShopList() {
@@ -89,23 +95,30 @@ public class ShopTabController implements Initializable {
 
     }
 
-    public void showShopProductList() {
-        shopUserText.setText("User: "+ usersTabController.getCurrentUser().getName() + " " + usersTabController.getCurrentUser().getSurname());
-        shopProductList.setVisible(true);
-        shopShowButton.setDisable(true);
-        shopShowButton.setVisible(false);
-        updateShopList();
-    }
-
     public void loadProductData() {
+        shopUserText.setText("User: "+ usersTabController.getCurrentUser().getName() + " " + usersTabController.getCurrentUser().getSurname());
         Product product = shopProductList.getSelectionModel().getSelectedItem();
         shopCurrentProdField.setText(product.getTitle());
         shopPriceField.setText(String.valueOf(product.getPrice()));
+        shopAmountInStockField.setText(String.valueOf(product.getQuantity()));
+        if (product instanceof Spoiler) {
+            shopDescriptionField.setText(((Spoiler) product).genText());
+        } else if (product instanceof Wheels) {
+            shopDescriptionField.setText(((Wheels) product).genText());
+        } else if (product instanceof BodyKit) {
+            shopDescriptionField.setText(((BodyKit) product).genText());
+        }
+
     }
 
     public void calcTotalPrice() {
         Product product = shopProductList.getSelectionModel().getSelectedItem();
-        float totalPrice = product.getPrice() * Float.parseFloat(shopAmountField.getText());
+        float totalPrice;
+        if (!Objects.equals(shopAmountField.getText(), "")) {
+            totalPrice = product.getPrice() * Float.parseFloat(shopAmountField.getText());
+        } else {
+            return;
+        }
         shopTotalPriceField.setText(String.valueOf(totalPrice));
     }
 
@@ -113,29 +126,27 @@ public class ShopTabController implements Initializable {
         if(cart == null){
             createCart();
         }
-        Product product = shopProductList.getSelectionModel().getSelectedItem();
-        product.setQuantity(Integer.parseInt(shopAmountField.getText()));
-        cart.addItemToCart(product);
-        shopCartList.getItems().add(product);
+        Product selectedProduct = shopProductList.getSelectionModel().getSelectedItem();
+        Product productToAdd = new Product(selectedProduct);
+
+        productToAdd.setQuantity(Integer.parseInt(shopAmountField.getText()));
+        int quant = (selectedProduct.getQuantity() - productToAdd.getQuantity());
+        System.out.println(selectedProduct.getQuantity());
+        System.out.println(productToAdd.getQuantity());
+        System.out.println(quant);
+        selectedProduct.setQuantity(quant);
+
+        cart.addItemToCart(productToAdd);
+        //genericHibernate.update(cart);
+        genericHibernate.update(selectedProduct);
+        shopCartList.getItems().setAll(cart.getItemsToBuy());
 
     }
 
     private void createCart() {
         cart = new Cart();
         cart.setCustomer(usersTabController.getCurrentUser());
-//        int currentCartSize = 0;
-//        int i = 0;
-//        for(var t = 0; i < usersTabController.userList.getItems().size(); t++) {
-//            if(usersTabController.userList.getItems().get(t-1) instanceof Manager) {
-//                int cartSize = ((Manager) usersTabController.userList.getItems().get(t)).getMyResponsibleCarts().size();
-//                if (cartSize < currentCartSize) {
-//                    currentCartSize = cartSize;
-//                    i = t;
-//                }
-//            }
-//        }
-//        if(usersTabController.userList.getItems().get(i) instanceof Manager) {
-//            ((Manager) usersTabController.userList.getItems().get(i)).getMyResponsibleCarts().add(cart);
-//        }
+        genericHibernate.create(cart);
+
     }
 }

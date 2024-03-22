@@ -41,4 +41,11 @@ public class Product implements Serializable {
         this.quantity = quantity;
         this.price = price;
     }
+
+    public Product(Product toCopy) {
+        this.title = toCopy.getTitle();
+        this.description = toCopy.getDescription();
+        this.quantity = toCopy.getQuantity();
+        this.price = toCopy.getPrice();
+    }
 }

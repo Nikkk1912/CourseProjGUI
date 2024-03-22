@@ -21,4 +21,14 @@ public class Spoiler extends Product{
         this.material = material;
         this.weight = weight;
     }
+
+    public Spoiler(Spoiler toCopy) {
+        super(toCopy);
+        this.material = toCopy.getMaterial();
+        this.weight = toCopy.getWeight();
+    }
+
+    public String genText() {
+        return "Material: " + material + " | Weight: " + weight + "\nProduct info: " + description;
+    }
 }

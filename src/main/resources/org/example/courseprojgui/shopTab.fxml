@@ -8,7 +8,6 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <AnchorPane prefHeight="660.0" prefWidth="980.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.courseprojgui.fxControllers.ShopTabController">
    <children>
       <Text layoutX="20.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Shop">
@@ -21,7 +20,7 @@
             <Font size="24.0" />
          </font>
       </Text>
-      <ListView fx:id="shopProductList" onMouseClicked="#loadProductData" layoutX="27.0" layoutY="115.0" prefHeight="513.0" prefWidth="220.0" />
+      <ListView fx:id="shopProductList" layoutX="27.0" layoutY="115.0" onMouseClicked="#loadProductData" prefHeight="513.0" prefWidth="220.0" />
       <Text layoutX="91.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Products">
          <font>
             <Font size="24.0" />
@@ -32,12 +31,12 @@
             <Font size="24.0" />
          </font>
       </Text>
-      <Text layoutX="373.0" layoutY="207.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Amount:" AnchorPane.topAnchor="210.0">
+      <Text layoutX="373.0" layoutY="478.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Amount:" AnchorPane.topAnchor="452.1015625">
          <font>
             <Font size="24.0" />
          </font>
       </Text>
-      <Text layoutX="409.0" layoutY="321.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Price:" AnchorPane.topAnchor="310.0">
+      <Text layoutX="409.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Price:" AnchorPane.topAnchor="229.1015625">
          <font>
             <Font size="24.0" />
          </font>
@@ -47,28 +46,28 @@
             <Font size="24.0" />
          </font>
       </Text>
-      <Separator layoutX="279.0" layoutY="478.0" prefHeight="7.0" prefWidth="422.0" />
-      <TextField fx:id="shopAmountField" layoutX="503.0" layoutY="211.0">
+      <Separator layoutX="287.0" layoutY="429.0" prefHeight="7.0" prefWidth="422.0" />
+      <TextField fx:id="shopAmountField" layoutX="503.0" layoutY="453.0" prefHeight="30.0" prefWidth="201.0" promptText="Enter amount you want">
          <font>
             <Font size="14.0" />
          </font>
       </TextField>
-      <TextField fx:id="shopCurrentProdField" layoutX="503.0" layoutY="111.0">
+      <TextField fx:id="shopCurrentProdField" layoutX="503.0" layoutY="111.0" prefHeight="30.0" prefWidth="201.0">
          <font>
             <Font size="14.0" />
          </font>
       </TextField>
-      <TextField fx:id="shopPriceField" layoutX="503.0" layoutY="313.0">
+      <TextField fx:id="shopPriceField" layoutX="503.0" layoutY="232.0" prefHeight="30.0" prefWidth="201.0">
          <font>
             <Font size="14.0" />
          </font>
       </TextField>
-      <TextField fx:id="shopTotalPriceField" onMouseClicked="#calcTotalPrice" layoutX="503.0" layoutY="498.0">
+      <TextField fx:id="shopTotalPriceField" layoutX="503.0" layoutY="498.0" onMouseClicked="#calcTotalPrice" prefHeight="30.0" prefWidth="201.0" promptText="Click to calculate total price">
          <font>
             <Font size="14.0" />
          </font>
       </TextField>
-      <Button fx:id="shopAddButton" onAction="#addToCart" layoutX="420.0" layoutY="558.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="167.0" text="Add to cart">
+      <Button fx:id="shopAddButton" layoutX="420.0" layoutY="558.0" mnemonicParsing="false" onAction="#addToCart" prefHeight="61.0" prefWidth="167.0" text="Add to cart">
          <font>
             <Font size="20.0" />
          </font>
@@ -94,10 +93,25 @@
             <Font size="24.0" />
          </font>
       </Text>
-      <Button fx:id="shopShowButton" onAction="#showShopProductList" layoutX="54.0" layoutY="300.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="167.0" text="Show products">
+      <Text layoutX="288.0" layoutY="199.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Amount in stock:">
          <font>
-            <Font size="20.0" />
+            <Font size="24.0" />
          </font>
-      </Button>
+      </Text>
+      <TextField fx:id="shopAmountInStockField" layoutX="503.0" layoutY="174.0" prefHeight="30.0" prefWidth="201.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </TextField>
+      <Text layoutX="409.0" layoutY="308.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Product info:">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <TextField fx:id="shopDescriptionField" layoutX="287.0" layoutY="324.0" prefHeight="85.0" prefWidth="422.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </TextField>
    </children>
 </AnchorPane>

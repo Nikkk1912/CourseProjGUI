@@ -23,4 +23,16 @@ public class Wheels extends Product{
         this.color = color;
         this.weight = weight;
     }
+
+    public Wheels(Wheels toCopy) {
+        super(toCopy);
+        this.wheelSize = toCopy.getWheelSize();
+        this.color = toCopy.getColor();
+        this.weight = toCopy.getWeight();
+    }
+
+    public String genText() {
+        return "Wheels size: " + wheelSize + " | Color: " + color + " | Weight: " + weight + "\nProduct info: " + description;
+    }
+
 }

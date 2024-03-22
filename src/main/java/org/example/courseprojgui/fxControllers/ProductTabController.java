@@ -71,7 +71,7 @@ public class ProductTabController implements Initializable {
             }
         });
 
-        productAdminList.getItems().addAll(genericHibernate.getAllRecords(Product.class));
+        productAdminList.getItems().setAll(genericHibernate.getAllRecords(Product.class));
     }
 
 

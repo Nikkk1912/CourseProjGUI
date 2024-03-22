@@ -28,4 +28,16 @@ public class BodyKit extends Product {
         this.countryManufacturer = countryManufacturer;
         this.kitType = kitType;
     }
+
+    public BodyKit (BodyKit toCopy) {
+        super(toCopy);
+        this.brand = toCopy.getBrand();
+        this.compatibleCars = toCopy.getCompatibleCars();
+        this.countryManufacturer = toCopy.getCountryManufacturer();
+        this.kitType = toCopy.getKitType();
+    }
+
+    public String genText() {
+        return "Brand: " + brand + " | Country: " + countryManufacturer + " | Kit type: " + kitType + "\nCompatible cars: " + compatibleCars + "\nProduct info: " + description;
+    }
 }

@@ -44,6 +44,8 @@ public class UsersTabController implements Initializable {
     public Button logOffButton;
     public Button editButton;
     public Button saveChangesButton;
+    public TableColumn managerTableColumnName;
+    public TableColumn managerTableColumnSurname;
     @Getter
     private MainController mainController;
     @Getter

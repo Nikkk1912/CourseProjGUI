@@ -102,25 +102,4 @@ public class WareHouseTabController implements Initializable {
 
     }
 
-    public void assignAdminToWarehouse() {
-        String login = warehouseAdminLogField.getText();
-        String password = warehouseAdminPassFiled.getText();
-        boolean loginSuccess = false;
-        Manager manager = new Manager();
-
-        for (var i = 0; i < usersTabController.getUserList().getItems().size(); i++) {
-            if (usersTabController.getUserList().getItems().get(i).getLogin().equals(login) && usersTabController.getUserList().getItems().get(i).getPassword().equals(password)) {
-                loginSuccess = true;
-                manager = (Manager) usersTabController.getUserList().getItems().get(i);
-
-            }
-        }
-        if(loginSuccess) {
-            warehouseListAdmins.getItems().add(manager);
-        } else {
-            warehouseAssignStatusText.setVisible(true);
-            warehouseAssignStatusText.setText("No such manager");
-        }
-
-    }
 }

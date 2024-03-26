@@ -95,21 +95,6 @@ public class ShopTabController implements Initializable {
 
     }
 
-    public void loadProductData() {
-        shopUserText.setText("User: "+ usersTabController.getCurrentUser().getName() + " " + usersTabController.getCurrentUser().getSurname());
-        Product product = shopProductList.getSelectionModel().getSelectedItem();
-        shopCurrentProdField.setText(product.getTitle());
-        shopPriceField.setText(String.valueOf(product.getPrice()));
-        shopAmountInStockField.setText(String.valueOf(product.getQuantity()));
-        if (product instanceof Spoiler) {
-            shopDescriptionField.setText(((Spoiler) product).genText());
-        } else if (product instanceof Wheels) {
-            shopDescriptionField.setText(((Wheels) product).genText());
-        } else if (product instanceof BodyKit) {
-            shopDescriptionField.setText(((BodyKit) product).genText());
-        }
-
-    }
 
     public void calcTotalPrice() {
         Product product = shopProductList.getSelectionModel().getSelectedItem();
@@ -122,31 +107,4 @@ public class ShopTabController implements Initializable {
         shopTotalPriceField.setText(String.valueOf(totalPrice));
     }
 
-    public void addToCart() {
-        if(cart == null){
-            createCart();
-        }
-        Product selectedProduct = shopProductList.getSelectionModel().getSelectedItem();
-        Product productToAdd = new Product(selectedProduct);
-
-        productToAdd.setQuantity(Integer.parseInt(shopAmountField.getText()));
-        int quant = (selectedProduct.getQuantity() - productToAdd.getQuantity());
-        System.out.println(selectedProduct.getQuantity());
-        System.out.println(productToAdd.getQuantity());
-        System.out.println(quant);
-        selectedProduct.setQuantity(quant);
-
-        cart.addItemToCart(productToAdd);
-        //genericHibernate.update(cart);
-        genericHibernate.update(selectedProduct);
-        shopCartList.getItems().setAll(cart.getItemsToBuy());
-
-    }
-
-    private void createCart() {
-        cart = new Cart();
-        cart.setCustomer(usersTabController.getCurrentUser());
-        genericHibernate.create(cart);
-
-    }
 }

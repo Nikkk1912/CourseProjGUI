@@ -57,7 +57,7 @@
             <Font size="18.0" />
          </font>
       </TextField>
-      <Button fx:id="warehouseAssignAdminButton" layoutX="747.0" layoutY="268.0" mnemonicParsing="false" onAction="#assignAdminToWarehouse" text="Assign to warehouse">
+      <Button fx:id="warehouseAssignAdminButton" layoutX="747.0" layoutY="268.0" mnemonicParsing="false" text="Assign to warehouse">
          <font>
             <Font size="19.0" />
          </font>

@@ -178,7 +178,6 @@ public class ProductTabController implements Initializable {
             productAdminList.getItems().add(wheels);
         }
         productAdminList.getItems().sort(Comparator.comparing(Product::getTitle));
-        shopTabController.updateShopList();
     }
 
     public void updateRecord() {
@@ -222,7 +221,6 @@ public class ProductTabController implements Initializable {
             wheels.setWeight(Float.parseFloat(productWeightField.getText()));
             genericHibernate.update(wheels);
         }
-        shopTabController.updateShopList();
     }
 
     public void deleteRecord() {
@@ -231,7 +229,6 @@ public class ProductTabController implements Initializable {
                 productAdminList.getItems().remove(product);
                 genericHibernate.delete(product);
                 clearAllFields();
-                shopTabController.updateShopList();
 
     }
 

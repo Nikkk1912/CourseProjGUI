@@ -15,6 +15,9 @@ public class GenericHibernate {
     public GenericHibernate(EntityManagerFactory entityManagerFactory) {
         this.entityManagerFactory = entityManagerFactory;
     }
+    EntityManager getEntityManager() {
+        return entityManagerFactory.createEntityManager();
+    }
 
     public <T> void create(T entity) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
@@ -85,5 +88,19 @@ public class GenericHibernate {
                 entityManager.close();
             }
         }
+    }
+
+    public <T> T getEntityById(Class<T> entityClass, int id) {
+        EntityManager em = null;
+        T result = null;
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+            result = em.find(entityClass, id);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 }

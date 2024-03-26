@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -16,9 +17,8 @@
       </font>
    </Text>
    <TextField fx:id="loginTextField" layoutX="473.0" layoutY="20.0" prefHeight="41.0" prefWidth="161.0" promptText="Login:" />
-   <TextField fx:id="passwordTextField1" layoutX="676.0" layoutY="20.0" prefHeight="41.0" prefWidth="172.0" promptText="Password:" />
-   <Button fx:id="submitEnterInfoButton" layoutX="874.0" layoutY="20.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="74.0" text="Submit" />
-   <Button fx:id="logOffButton" layoutX="874.0" layoutY="598.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="74.0" text="Log off" />
+   <Button fx:id="submitEnterInfoButton" onAction="#checkAndLogin" layoutX="874.0" layoutY="20.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="74.0" text="Submit" />
+   <Button fx:id="logOffButton" onAction="#logOff" layoutX="874.0" layoutY="598.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="74.0" text="Log off" />
    <Button fx:id="editButton" layoutX="32.0" layoutY="598.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="133.0" text="Edit profile" />
    <Button fx:id="saveChangesButton" layoutX="197.0" layoutY="598.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="61.0" text="Save" />
       <Text fx:id="userEditingStatusText" layoutX="32.0" layoutY="573.0" strokeType="OUTSIDE" strokeWidth="0.0" text="You can change info in fields " wrappingWidth="292.7205810546875">
@@ -35,6 +35,7 @@
             <TableColumn fx:id="managerTableColumnSurname" prefWidth="120.97100830078125" text="Surname" />
         </columns>
       </TableView>
+      <PasswordField fx:id="passwordTextField" layoutX="667.0" layoutY="20.0" prefHeight="41.0" prefWidth="172.0" promptText="Password" />
 
    </children>
 </AnchorPane>

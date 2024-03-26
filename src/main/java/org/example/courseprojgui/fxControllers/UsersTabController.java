@@ -7,10 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
@@ -19,6 +16,8 @@ import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
 import org.example.courseprojgui.hibernate.GenericHibernate;
+import org.example.courseprojgui.hibernate.HibernateShop;
+import org.example.courseprojgui.model.Customer;
 import org.example.courseprojgui.model.Manager;
 import org.example.courseprojgui.model.User;
 
@@ -31,21 +30,25 @@ import java.util.ResourceBundle;
 @Getter
 @Setter
 public class UsersTabController implements Initializable {
-    public Text userEditingStatusText;
-    public AnchorPane userCreationAnchorPaneBase;
-    public Button createNewUserButton;
+
+    private ObservableList<ManagerTableParameters> data = FXCollections.observableArrayList();
     public TableView<ManagerTableParameters> managerTable;
     public TableColumn<ManagerTableParameters, Integer> managerTableColumnId;
     public TableColumn<ManagerTableParameters, String> managerTableColumnLogin;
+    public TableColumn<ManagerTableParameters, String> managerTableColumnName;
+    public TableColumn<ManagerTableParameters, String> managerTableColumnSurname;
+
+    public Text userEditingStatusText;
+    public AnchorPane userCreationAnchorPaneBase;
+    public Button createNewUserButton;
     public Text userStatusText;
     public TextField loginTextField;
-    public TextField passwordTextField1;
+    public PasswordField passwordTextField;
     public Button submitEnterInfoButton;
     public Button logOffButton;
     public Button editButton;
     public Button saveChangesButton;
-    public TableColumn managerTableColumnName;
-    public TableColumn managerTableColumnSurname;
+
     @Getter
     private MainController mainController;
     @Getter
@@ -53,7 +56,8 @@ public class UsersTabController implements Initializable {
     private boolean isAdminNow = false;
     private GenericHibernate genericHibernate;
     private ShopTabController shopTabController;
-    private ObservableList<ManagerTableParameters> data = FXCollections.observableArrayList();
+    private User currentUser;
+
 
     public void addNewUserToList (User user) {
        genericHibernate.create(user);
@@ -68,7 +72,9 @@ public class UsersTabController implements Initializable {
         mainController = MainController.getInstance();
         shopTabController = ShopTabController.getInstance();
         genericHibernate = new GenericHibernate(mainController.getEntityManagerFactory());
-        userEditingStatusText.setVisible(false);
+
+        openLoginFields(true);
+
         managerTable.setEditable(true);
         managerTableColumnId.setCellValueFactory(new PropertyValueFactory<>("id"));
         managerTableColumnLogin.setCellValueFactory(new PropertyValueFactory<>("Login"));
@@ -81,6 +87,8 @@ public class UsersTabController implements Initializable {
             ManagerTableParameters managerTableParameters = new ManagerTableParameters();
             managerTableParameters.setId(m.getId());
             managerTableParameters.setLogin(m.getLogin());
+            managerTableParameters.setName(m.getName());
+            managerTableParameters.setSurname(m.getSurname());
             data.add(managerTableParameters);
         }
         managerTable.setItems(data);
@@ -100,6 +108,81 @@ public class UsersTabController implements Initializable {
         } catch (IOException e) {
             System.out.println("File not found");
         }
+    }
+
+    private void openManagerField(boolean val) {
+        userStatusText.setText("Manager");
+
+        editButton.setVisible(!val);
+        saveChangesButton.setVisible(!val);
+        createNewUserButton.setVisible(!val);
+        loginTextField.setVisible(!val);
+        passwordTextField.setVisible(!val);
+        submitEnterInfoButton.setVisible(!val);
+        userEditingStatusText.setVisible(!val);
+
+        managerTable.setVisible(val);
+        logOffButton.setVisible(val);
+    }
+
+    private void openCustomerField(boolean val) {
+        userStatusText.setText("Customer");
+
+        createNewUserButton.setVisible(!val);
+        loginTextField.setVisible(!val);
+        passwordTextField.setVisible(!val);
+        submitEnterInfoButton.setVisible(!val);
+        managerTable.setVisible(!val);
+        userEditingStatusText.setVisible(!val);
+
+        editButton.setVisible(val);
+        saveChangesButton.setVisible(val);
+        logOffButton.setVisible(val);
+    }
+
+    private void openLoginFields(boolean val) {
+        userStatusText.setText("Login");
+
+        createNewUserButton.setVisible(val);
+        loginTextField.setVisible(val);
+        passwordTextField.setVisible(val);
+        submitEnterInfoButton.setVisible(val);
+
+        logOffButton.setVisible(!val);
+        editButton.setVisible(!val);
+        saveChangesButton.setVisible(!val);
+        userEditingStatusText.setVisible(!val);
+        managerTable.setVisible(!val);
+
+    }
+
+    public void checkAndLogin() throws IOException {
+        HibernateShop hibernateShop = new HibernateShop(mainController.getEntityManagerFactory());
+        User user = hibernateShop.getUserByCredentials(loginTextField.getText(), passwordTextField.getText());
+        currentUser = user;
+        if(user != null) {
+            if (user instanceof Manager) {
+                openManagerField(true);
+                mainController.openAllTabs(true);
+            }else if (user instanceof Customer) {
+                openCustomerField(true);
+                mainController.openAllTabs(false);
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("System message");
+            alert.setHeaderText("Error during login");
+            alert.setContentText("No such user");
+            alert.showAndWait();
+        }
+    }
+
+    public void logOff() {
+        mainController.closeAllTabs();
+        openLoginFields(true);
+        currentUser=null;
+        loginTextField.clear();
+        passwordTextField.clear();
     }
 }
 

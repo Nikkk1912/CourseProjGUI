@@ -1,5 +1,6 @@
 package org.example.courseprojgui.fxControllers;
 
+import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -13,6 +14,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import lombok.Getter;
 import lombok.Setter;
 import org.example.courseprojgui.hibernate.GenericHibernate;
@@ -31,6 +33,18 @@ import java.util.ResourceBundle;
 @Setter
 public class UsersTabController implements Initializable {
 
+    public Text userNameText;
+    public Text userSurnameText;
+    public Text userShipText;
+    public Text userBillText;
+    public Text userCardText;
+    public Text userBirthText;
+    public TextField userNameField;
+    public TextField userSurnameField;
+    public TextField userShippingAdrField;
+    public TextField userBillingAdrField;
+    public TextField userCardNumField;
+    public TextField userBirthDateField;
     private ObservableList<ManagerTableParameters> data = FXCollections.observableArrayList();
     public TableView<ManagerTableParameters> managerTable;
     public TableColumn<ManagerTableParameters, Integer> managerTableColumnId;
@@ -73,6 +87,7 @@ public class UsersTabController implements Initializable {
         shopTabController = ShopTabController.getInstance();
         genericHibernate = new GenericHibernate(mainController.getEntityManagerFactory());
 
+        isEditable(false);
         openLoginFields(true);
 
         managerTable.setEditable(true);
@@ -81,8 +96,10 @@ public class UsersTabController implements Initializable {
 
     }
 
+    @FXML
     private void fillManagerTable() {
         List<Manager> managerList = genericHibernate.getAllRecords(Manager.class);
+        data.clear();
         for (Manager m:managerList) {
             ManagerTableParameters managerTableParameters = new ManagerTableParameters();
             managerTableParameters.setId(m.getId());
@@ -138,6 +155,25 @@ public class UsersTabController implements Initializable {
         editButton.setVisible(val);
         saveChangesButton.setVisible(val);
         logOffButton.setVisible(val);
+        userNameText.setVisible(val);
+        userSurnameText.setVisible(val);
+        userShipText.setVisible(val);
+        userBillText.setVisible(val);
+        userCardText.setVisible(val);
+        userBirthText.setVisible(val);
+        userNameField.setVisible(val);
+        userSurnameField.setVisible(val);
+        userShippingAdrField.setVisible(val);
+        userBillingAdrField.setVisible(val);
+        userCardNumField.setVisible(val);
+        userBirthDateField.setVisible(val);
+
+        userNameField.setText(currentUser.getName());
+        userSurnameField.setText(currentUser.getSurname());
+        userShippingAdrField.setText(((Customer) currentUser).getShippingAddress());
+        userBillingAdrField.setText(((Customer) currentUser).getBillingAddress());
+        userCardNumField.setText(((Customer) currentUser).getCardNumber());
+        userBirthDateField.setText(String.valueOf(((Customer) currentUser).getBirthDate()));
     }
 
     private void openLoginFields(boolean val) {
@@ -154,6 +190,18 @@ public class UsersTabController implements Initializable {
         userEditingStatusText.setVisible(!val);
         managerTable.setVisible(!val);
 
+        userNameText.setVisible(!val);
+        userSurnameText.setVisible(!val);
+        userShipText.setVisible(!val);
+        userBillText.setVisible(!val);
+        userCardText.setVisible(!val);
+        userBirthText.setVisible(!val);
+        userNameField.setVisible(!val);
+        userSurnameField.setVisible(!val);
+        userShippingAdrField.setVisible(!val);
+        userBillingAdrField.setVisible(!val);
+        userCardNumField.setVisible(!val);
+        userBirthDateField.setVisible(!val);
     }
 
     public void checkAndLogin() throws IOException {
@@ -184,5 +232,39 @@ public class UsersTabController implements Initializable {
         loginTextField.clear();
         passwordTextField.clear();
     }
+
+    private void isEditable(boolean val) {
+        userNameField.setEditable(val);
+        userSurnameField.setEditable(val);
+        userShippingAdrField.setEditable(val);
+        userBillingAdrField.setEditable(val);
+        userCardNumField.setEditable(val);
+        userBirthDateField.setEditable(val);
+    }
+
+    @FXML private void startEditInfo() {
+        userEditingStatusText.setVisible(true);
+        userEditingStatusText.setText("You can change user info");
+        isEditable(true);
+    }
+
+    @FXML private void saveEditInfo() {
+
+            isEditable(false);
+            currentUser.setName(userNameField.getText());
+            currentUser.setSurname(userSurnameField.getText());
+            ((Customer) currentUser).setBillingAddress(userBillingAdrField.getText());
+            ((Customer) currentUser).setShippingAddress(userShippingAdrField.getText());
+            ((Customer) currentUser).setCardNumber(userCardNumField.getText());
+            ((Customer) currentUser).setBirthDate(userBirthDateField.getText());
+            genericHibernate.update(currentUser);
+
+        userEditingStatusText.setText("Saved");
+        PauseTransition pause = new PauseTransition(Duration.seconds(2));
+        pause.setOnFinished(e -> userEditingStatusText.setVisible(false));
+        pause.play();
+    }
+
+
 }
 

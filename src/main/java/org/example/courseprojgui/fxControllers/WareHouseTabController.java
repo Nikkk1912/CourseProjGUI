@@ -8,6 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import org.example.courseprojgui.hibernate.GenericHibernate;
+import org.example.courseprojgui.hibernate.HibernateShop;
 import org.example.courseprojgui.model.Manager;
 import org.example.courseprojgui.model.Product;
 import org.example.courseprojgui.model.Warehouse;
@@ -29,6 +30,8 @@ public class WareHouseTabController implements Initializable {
     public TextField warehouseAdminPassFiled;
     public Button warehouseAssignAdminButton;
     public Text warehouseAssignStatusText;
+    public TextField warehouseAddressField;
+    public TextField warehouseIdField;
     private UsersTabController usersTabController;
     private MainController mainController;
     GenericHibernate genericHibernate;
@@ -40,6 +43,7 @@ public class WareHouseTabController implements Initializable {
         usersTabController = UsersTabController.getInstance();
         genericHibernate = new GenericHibernate(mainController.getEntityManagerFactory());
         warehouseAssignStatusText.setVisible(false);
+        warehouseIdField.setEditable(false);
         warehouseListOfWarehouses.getItems().setAll(genericHibernate.getAllRecords(Warehouse.class));
 
         warehouseListOfWarehouses.setCellFactory(param -> new ListCell<>() {
@@ -80,37 +84,64 @@ public class WareHouseTabController implements Initializable {
                 }
             }
         });
-
-
-//        Warehouse test1 = new Warehouse("Vilnius");
-//        warehouseListOfWarehouses.getItems().add(test1);
-//        Warehouse test2 = new Warehouse("Kaunas");
-//        warehouseListOfWarehouses.getItems().add(test2);
-//        genericHibernate.create(test1);
-//        genericHibernate.create(test2);
     }
 
     public void deleteWarehouse() {
+        Warehouse warehouse = warehouseListOfWarehouses.getSelectionModel().getSelectedItem();
+        warehouseListOfWarehouses.getItems().remove(warehouse);
+        genericHibernate.delete(warehouse);
+        warehouseListProducts.getItems().clear();
+        warehouseListAdmins.getItems().clear();
     }
 
     public void editWarehouse() {
+        Warehouse warehouse = warehouseListOfWarehouses.getSelectionModel().getSelectedItem();
+        if(warehouse != null) {
+            warehouse.setAddress(warehouseAddressField.getText());
+            genericHibernate.update(warehouse);
+            warehouseAddressField.clear();
+        }
+
     }
 
     public void createWarehouse() {
+        Warehouse warehouse = new Warehouse(warehouseAddressField.getText());
+        genericHibernate.create(warehouse);
+        warehouseListOfWarehouses.getItems().add(warehouse);
+        warehouseAddressField.clear();
     }
 
     public void loadWarehouse() {
 
         Warehouse warehouse = warehouseListOfWarehouses.getSelectionModel().getSelectedItem();
         if(warehouse != null) {
-            warehouseAddressText.setText("Address: " + warehouse.getAddress());
+            warehouseIdField.setText(String.valueOf(warehouse.getId()));
+            warehouseAddressField.setText(warehouse.getAddress());
             warehouseListProducts.getItems().clear();
             warehouseListProducts.getItems().addAll(genericHibernate.getEntityByWarehouseId(Product.class, warehouse.getId()));
-            System.out.println(warehouseListProducts.getItems());
             warehouseListAdmins.getItems().clear();
             warehouseListAdmins.getItems().addAll(genericHibernate.getEntityByWarehouseId(Manager.class, warehouse.getId()));
         }
 
     }
 
+    public void assignManagerToWarehouse() {
+        HibernateShop hibernateShop = new HibernateShop(mainController.getEntityManagerFactory());
+        Warehouse warehouse = warehouseListOfWarehouses.getSelectionModel().getSelectedItem();
+        Manager manager = (Manager) hibernateShop.getUserByCredentials(warehouseAdminLogField.getText(), warehouseAdminPassFiled.getText());
+        System.out.println(manager);
+        if (manager == null) {
+            warehouseAssignStatusText.setVisible(true);
+            warehouseAdminLogField.clear();
+            warehouseAdminPassFiled.clear();
+            return;
+        }
+        warehouseAssignStatusText.setVisible(false);
+
+        manager.setWarehouse(warehouse);
+        genericHibernate.update(manager);
+        warehouseListAdmins.getItems().add(manager);
+        warehouseAdminLogField.clear();
+        warehouseAdminPassFiled.clear();
+    }
 }

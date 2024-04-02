@@ -68,7 +68,7 @@ public class ProductTabController implements Initializable {
                     setText(null);
                 } else {
                     setFont(Font.font(16));
-                    setText(product.getTitle() + " : " + product.getQuantity());
+                    setText("Id: " + product.getId() + " | " + product.getTitle() + " : " + product.getQuantity());
                 }
             }
         });

@@ -2,6 +2,7 @@ package org.example.courseprojgui.fxControllers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -77,7 +78,7 @@ public class ProductTabController implements Initializable {
     }
 
 
-    public void neededFieldsForProducts() {
+    @FXML private void neededFieldsForProducts() {
         turnOffAllFields();
         if (productSpoilerRadio.isSelected()) {
 
@@ -133,12 +134,13 @@ public class ProductTabController implements Initializable {
         }
     }
 
-
-    public void createRecord() {
+    @FXML private void createRecord() {
         if (!allFieldsFilled()) {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("errorNotFilledPopUp.fxml"));
-            ErrorNotFilledPopUp errorWindow = loader.getController();
-            errorWindow.showErrorPopup();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("System message");
+            alert.setHeaderText("Error with creation or editing product");
+            alert.setContentText("Not all fields filled");
+            alert.showAndWait();
             return;
         }
 
@@ -185,11 +187,13 @@ public class ProductTabController implements Initializable {
         productAdminList.getItems().sort(Comparator.comparing(Product::getTitle));
     }
 
-    public void updateRecord() {
+    @FXML private void updateRecord() {
         if (!allFieldsFilled()) {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("errorNotFilledPopUp.fxml"));
-            ErrorNotFilledPopUp errorWindow = loader.getController();
-            errorWindow.showErrorPopup();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("System message");
+            alert.setHeaderText("Error with creation or editing product");
+            alert.setContentText("Not all fields filled");
+            alert.showAndWait();
             return;
         }
 
@@ -231,7 +235,7 @@ public class ProductTabController implements Initializable {
         }
     }
 
-    public void deleteRecord() {
+    @FXML private void deleteRecord() {
 
         Product product = productAdminList.getSelectionModel().getSelectedItem();
         productAdminList.getItems().remove(product);
@@ -240,7 +244,7 @@ public class ProductTabController implements Initializable {
 
     }
 
-    public void loadProductData() {
+    @FXML private void loadProductData() {
         Product product = productAdminList.getSelectionModel().getSelectedItem();
 
         if (product instanceof Spoiler) {
@@ -284,8 +288,7 @@ public class ProductTabController implements Initializable {
         }
     }
 
-
-    public void clearAllFields() {
+    @FXML private void clearAllFields() {
         productSpoilerRadio.setSelected(false);
         productWheelsRadio.setSelected(false);
         productBodyKitRadio.setSelected(false);
@@ -307,7 +310,7 @@ public class ProductTabController implements Initializable {
         productKitTypeComboBox.setPromptText("Kit type");
     }
 
-    public void turnOffAllFields() {
+    private void turnOffAllFields() {
         productTitleField.setDisable(true);
         productDescriptionField.setDisable(true);
         productQuantityField.setDisable(true);
@@ -322,7 +325,6 @@ public class ProductTabController implements Initializable {
         productWheelSizeField.setDisable(true);
         productWarehouseComboBox.setDisable(true);
     }
-
 
     private boolean allFieldsFilled() {
         if (productSpoilerRadio.isSelected()) {
@@ -358,7 +360,7 @@ public class ProductTabController implements Initializable {
         }
     }
 
-    public void loadWarehousesForComboBox() {
+    @FXML private void loadWarehousesForComboBox() {
         ObservableList<Warehouse> warehouses = FXCollections.observableArrayList(genericHibernate.getAllRecords(Warehouse.class));
         productWarehouseComboBox.setConverter(new StringConverter<Warehouse>() {
             @Override

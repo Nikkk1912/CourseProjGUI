@@ -61,12 +61,12 @@ public class UserCreationController implements Initializable {
         String surname = userCreationSurnameField.getText();
         String login = userCreationLoginField.getText();
         String password = userCreationPasswordField.getText();
-        if(login.isEmpty() && password.isEmpty()) {
+        if (login.isEmpty() && password.isEmpty()) {
             userCreationText1.setText("Login and password cant be empty");
             return;
         }
 
-        if(userCreationIsAdmin.isSelected()) {
+        if (userCreationIsAdmin.isSelected()) {
 
             Manager manager = new Manager(login, password, name, surname, true);
             usersTabController.addNewUserToList(manager);
@@ -86,6 +86,7 @@ public class UserCreationController implements Initializable {
             stage.close();
 
     }
+
     @FXML private void hideNonAdminFields() {
         if(userCreationIsAdmin.isSelected()) {
             userCreationShippingField.clear();

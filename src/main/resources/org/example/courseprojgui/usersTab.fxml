@@ -10,68 +10,83 @@
 <?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="660.0" prefWidth="980.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.courseprojgui.fxControllers.UsersTabController">
-   <children>
-   <Text fx:id="userStatusText" layoutX="14.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User`s page:">
-      <font>
-         <Font size="24.0" />
-      </font>
-   </Text>
-   <TextField fx:id="loginTextField" layoutX="473.0" layoutY="20.0" prefHeight="41.0" prefWidth="161.0" promptText="Login:" />
-   <Button fx:id="submitEnterInfoButton" layoutX="874.0" layoutY="20.0" mnemonicParsing="false" onAction="#checkAndLogin" prefHeight="41.0" prefWidth="74.0" text="Submit" />
-   <Button fx:id="logOffButton" layoutX="874.0" layoutY="598.0" mnemonicParsing="false" onAction="#logOff" prefHeight="41.0" prefWidth="74.0" text="Log off" />
-   <Button onAction="#startEditInfo" fx:id="editButton" layoutX="33.0" layoutY="578.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="133.0" text="Edit profile" />
-   <Button onAction="#saveEditInfo" fx:id="saveChangesButton" layoutX="198.0" layoutY="578.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="61.0" text="Save" />
-      <Text fx:id="userEditingStatusText" layoutX="33.0" layoutY="553.0" strokeType="OUTSIDE" strokeWidth="0.0" text="You can change info in fields " wrappingWidth="292.7205810546875">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Text>
-      <Button fx:id="createNewUserButton" layoutX="270.0" layoutY="20.0" mnemonicParsing="false" onAction="#openCreateNewUserMenu" prefHeight="41.0" prefWidth="133.0" text="Create new user" />
-      <TableView fx:id="managerTable" layoutX="33.0" layoutY="108.0" onMouseClicked="#fillManagerTable" prefHeight="398.0" prefWidth="931.0">
-        <columns>
-          <TableColumn fx:id="managerTableColumnId" prefWidth="64.36993408203125" text="Id" />
-          <TableColumn fx:id="managerTableColumnLogin" prefWidth="114.86712646484375" text="Login" />
-            <TableColumn fx:id="managerTableColumnName" prefWidth="107.09832763671875" text="Name" />
-            <TableColumn fx:id="managerTableColumnSurname" prefWidth="120.97100830078125" text="Surname" />
-        </columns>
-      </TableView>
-      <PasswordField fx:id="passwordTextField" layoutX="667.0" layoutY="20.0" prefHeight="41.0" prefWidth="172.0" promptText="Password" />
-       <Text fx:id="userNameText" layoutX="33.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name: " wrappingWidth="88.0" AnchorPane.leftAnchor="33.0" AnchorPane.topAnchor="131.41796875">
-           <font>
-               <Font size="20.0" />
-           </font>
-       </Text>
-       <Text fx:id="userSurnameText" layoutX="33.0" layoutY="215.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Surname:" wrappingWidth="221.13671875" AnchorPane.leftAnchor="33.0" AnchorPane.topAnchor="193.41796875">
-           <font>
-               <Font size="20.0" />
-           </font>
-       </Text>
-       <Text fx:id="userShipText" layoutX="33.0" layoutY="275.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Shipping address:" wrappingWidth="221.13671875" AnchorPane.leftAnchor="33.0" AnchorPane.topAnchor="253.41796875">
-           <font>
-               <Font size="20.0" />
-           </font>
-       </Text>
-       <Text fx:id="userBillText" layoutX="33.0" layoutY="337.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Billing address:" wrappingWidth="221.13671875" AnchorPane.leftAnchor="33.0" AnchorPane.topAnchor="315.41796875">
-           <font>
-               <Font size="20.0" />
-           </font>
-       </Text>
-       <Text fx:id="userCardText" layoutX="33.0" layoutY="395.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Card number:" wrappingWidth="221.13671875" AnchorPane.leftAnchor="33.0" AnchorPane.topAnchor="372.3388671875">
-           <font>
-               <Font size="21.0" />
-           </font>
-       </Text>
-       <Text fx:id="userBirthText" layoutX="33.0" layoutY="455.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Birth date:" wrappingWidth="221.13671875" AnchorPane.leftAnchor="33.0" AnchorPane.topAnchor="433.41796875">
-           <font>
-               <Font size="20.0" />
-           </font>
-       </Text>
-       <TextField fx:id="userNameField" layoutX="283.0" layoutY="127.0" prefHeight="40.0" prefWidth="170.0" promptText="Name" AnchorPane.leftAnchor="283.0" AnchorPane.topAnchor="127.0" />
-       <TextField fx:id="userSurnameField" layoutX="283.0" layoutY="187.0" prefHeight="40.0" prefWidth="170.0" promptText="Surname" AnchorPane.leftAnchor="283.0" AnchorPane.topAnchor="187.0" />
-       <TextField fx:id="userShippingAdrField" layoutX="283.0" layoutY="247.0" prefHeight="40.0" prefWidth="170.0" promptText="Shipping address" AnchorPane.leftAnchor="283.0" AnchorPane.topAnchor="247.0" />
-       <TextField fx:id="userBillingAdrField" layoutX="283.0" layoutY="307.0" prefHeight="40.0" prefWidth="170.0" promptText="Billing address" AnchorPane.leftAnchor="283.0" AnchorPane.topAnchor="307.0" />
-       <TextField fx:id="userCardNumField" layoutX="283.0" layoutY="367.0" prefHeight="40.0" prefWidth="170.0" promptText="Card number" AnchorPane.leftAnchor="283.0" AnchorPane.topAnchor="367.0" />
-       <TextField fx:id="userBirthDateField" layoutX="283.0" layoutY="427.0" prefHeight="40.0" prefWidth="170.0" promptText="Birth date" AnchorPane.leftAnchor="283.0" AnchorPane.topAnchor="427.0" />
+    <children>
+        <Text fx:id="userStatusText" layoutX="14.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User`s page:">
+            <font>
+                <Font size="24.0" />
+            </font>
+        </Text>
+        <TextField fx:id="loginTextField" layoutX="473.0" layoutY="20.0" prefHeight="41.0" prefWidth="161.0" promptText="Login:" />
+        <Button fx:id="submitEnterInfoButton" layoutX="874.0" layoutY="20.0" mnemonicParsing="false" onAction="#checkAndLogin" prefHeight="41.0" prefWidth="74.0" text="Submit" />
+        <Button fx:id="logOffButton" layoutX="874.0" layoutY="578.0" mnemonicParsing="false" onAction="#logOff" prefHeight="41.0" prefWidth="74.0" text="Log off" />
+        <Button fx:id="editButton" layoutX="33.0" layoutY="578.0" mnemonicParsing="false" onAction="#startEditInfo" prefHeight="41.0" prefWidth="133.0" text="Edit profile" />
+        <Button fx:id="saveChangesButton" layoutX="198.0" layoutY="578.0" mnemonicParsing="false" onAction="#saveEditInfo" prefHeight="41.0" prefWidth="61.0" text="Save" />
+        <Text fx:id="userEditingStatusText" layoutX="33.0" layoutY="553.0" strokeType="OUTSIDE" strokeWidth="0.0" text="You can change info in fields " wrappingWidth="292.7205810546875">
+            <font>
+                <Font size="20.0" />
+            </font>
+        </Text>
+        <Button fx:id="createNewUserButton" layoutX="270.0" layoutY="20.0" mnemonicParsing="false" onAction="#openCreateNewUserMenu" prefHeight="41.0" prefWidth="133.0" text="Create new user" />
+        <TableView fx:id="managerTable" layoutX="19.0" layoutY="81.0" prefHeight="453.0" prefWidth="945.0">
+            <columns>
+                <TableColumn fx:id="idCol" prefWidth="64.36993408203125" text="Id" />
+                <TableColumn fx:id="loginCol" prefWidth="114.86712646484375" text="Login" />
+                <TableColumn fx:id="nameCol" prefWidth="119.0" text="Name" />
+                <TableColumn fx:id="surnameCol" prefWidth="95.0" text="Surname" />
+                <TableColumn fx:id="statusCol" prefWidth="132.0" text="Status" />
+                <TableColumn fx:id="shippingCol" prefWidth="140.0" text="Shipping Addr" />
+                <TableColumn fx:id="billingCol" prefWidth="131.0" text="Billing Addr" />
+                <TableColumn fx:id="birthdayCol" prefWidth="146.0" text="Birthday" />
+            </columns>
+        </TableView>
+        <PasswordField fx:id="passwordTextField" layoutX="667.0" layoutY="20.0" prefHeight="41.0" prefWidth="172.0" promptText="Password" />
+        <Text fx:id="userNameText" layoutX="33.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name: " wrappingWidth="88.0" AnchorPane.leftAnchor="33.0" AnchorPane.topAnchor="131.41796875">
+            <font>
+                <Font size="20.0" />
+            </font>
+        </Text>
+        <Text fx:id="userSurnameText" layoutX="33.0" layoutY="215.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Surname:" wrappingWidth="221.13671875" AnchorPane.leftAnchor="33.0" AnchorPane.topAnchor="193.41796875">
+            <font>
+                <Font size="20.0" />
+            </font>
+        </Text>
+        <Text fx:id="userShipText" layoutX="33.0" layoutY="275.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Shipping address:" wrappingWidth="221.13671875" AnchorPane.leftAnchor="33.0" AnchorPane.topAnchor="253.41796875">
+            <font>
+                <Font size="20.0" />
+            </font>
+        </Text>
+        <Text fx:id="userBillText" layoutX="33.0" layoutY="337.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Billing address:" wrappingWidth="221.13671875" AnchorPane.leftAnchor="33.0" AnchorPane.topAnchor="315.41796875">
+            <font>
+                <Font size="20.0" />
+            </font>
+        </Text>
+        <Text fx:id="userCardText" layoutX="33.0" layoutY="395.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Card number:" wrappingWidth="221.13671875" AnchorPane.leftAnchor="33.0" AnchorPane.topAnchor="372.3388671875">
+            <font>
+                <Font size="21.0" />
+            </font>
+        </Text>
+        <Text fx:id="userBirthText" layoutX="33.0" layoutY="455.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Birth date:" wrappingWidth="221.13671875" AnchorPane.leftAnchor="33.0" AnchorPane.topAnchor="433.41796875">
+            <font>
+                <Font size="20.0" />
+            </font>
+        </Text>
+        <TextField fx:id="userNameField" layoutX="283.0" layoutY="127.0" prefHeight="40.0" prefWidth="170.0" promptText="Name" AnchorPane.leftAnchor="283.0" AnchorPane.topAnchor="127.0" />
+        <TextField fx:id="userSurnameField" layoutX="283.0" layoutY="187.0" prefHeight="40.0" prefWidth="170.0" promptText="Surname" AnchorPane.leftAnchor="283.0" AnchorPane.topAnchor="187.0" />
+        <TextField fx:id="userShippingAdrField" layoutX="283.0" layoutY="247.0" prefHeight="40.0" prefWidth="170.0" promptText="Shipping address" AnchorPane.leftAnchor="283.0" AnchorPane.topAnchor="247.0" />
+        <TextField fx:id="userBillingAdrField" layoutX="283.0" layoutY="307.0" prefHeight="40.0" prefWidth="170.0" promptText="Billing address" AnchorPane.leftAnchor="283.0" AnchorPane.topAnchor="307.0" />
+        <TextField fx:id="userCardNumField" layoutX="283.0" layoutY="367.0" prefHeight="40.0" prefWidth="170.0" promptText="Card number" AnchorPane.leftAnchor="283.0" AnchorPane.topAnchor="367.0" />
+        <TextField fx:id="userBirthDateField" layoutX="283.0" layoutY="427.0" prefHeight="40.0" prefWidth="170.0" promptText="Birth date" AnchorPane.leftAnchor="283.0" AnchorPane.topAnchor="427.0" />
+        <Button fx:id="removeMyWarehouseButton" layoutX="593.0" layoutY="578.0" mnemonicParsing="false" onAction="#deleteMeFromWarehouse" prefHeight="41.0" prefWidth="129.0" text="Remove my warehouse" />
+        <Text fx:id="myWarehouseText" layoutX="33.0" layoutY="605.0" strokeType="OUTSIDE" strokeWidth="0.0" text="My warehouse:">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Text>
+        <TextField fx:id="myWarehouseTextField" layoutX="194.0" layoutY="579.0" onMouseClicked="#loadMyWarehouse" prefHeight="39.0" prefWidth="367.0" promptText="My warehouse(click to show)">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </TextField>
 
-   </children>
+    </children>
 </AnchorPane>

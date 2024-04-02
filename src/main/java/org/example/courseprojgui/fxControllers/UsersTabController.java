@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -25,6 +26,7 @@ import org.example.courseprojgui.model.User;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -45,13 +47,19 @@ public class UsersTabController implements Initializable {
     public TextField userBillingAdrField;
     public TextField userCardNumField;
     public TextField userBirthDateField;
+    public TableColumn<ManagerTableParameters, String> statusCol;
+    public TableColumn<ManagerTableParameters, String> shippingCol;
+    public TableColumn<ManagerTableParameters, String> billingCol;
+    public TableColumn<ManagerTableParameters, String> birthdayCol;
+    public Button removeMyWarehouseButton;
+    public Text myWarehouseText;
+    public TextField myWarehouseTextField;
     private ObservableList<ManagerTableParameters> data = FXCollections.observableArrayList();
     public TableView<ManagerTableParameters> managerTable;
-    public TableColumn<ManagerTableParameters, Integer> managerTableColumnId;
-    public TableColumn<ManagerTableParameters, String> managerTableColumnLogin;
-    public TableColumn<ManagerTableParameters, String> managerTableColumnName;
-    public TableColumn<ManagerTableParameters, String> managerTableColumnSurname;
-
+    public TableColumn<ManagerTableParameters, Integer> idCol;
+    public TableColumn<ManagerTableParameters, String> loginCol;
+    public TableColumn<ManagerTableParameters, String> nameCol;
+    public TableColumn<ManagerTableParameters, String> surnameCol;
     public Text userEditingStatusText;
     public AnchorPane userCreationAnchorPaneBase;
     public Button createNewUserButton;
@@ -73,10 +81,6 @@ public class UsersTabController implements Initializable {
     private User currentUser;
 
 
-    public void addNewUserToList (User user) {
-       genericHibernate.create(user);
-    }
-
     public UsersTabController() {
         instance = this;
     }
@@ -91,22 +95,43 @@ public class UsersTabController implements Initializable {
         openLoginFields(true);
 
         managerTable.setEditable(true);
-        managerTableColumnId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        managerTableColumnLogin.setCellValueFactory(new PropertyValueFactory<>("Login"));
+        idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        loginCol.setCellValueFactory(new PropertyValueFactory<>("login"));
+        nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        surnameCol.setCellValueFactory(new PropertyValueFactory<>("surname"));
+        shippingCol.setCellValueFactory(new PropertyValueFactory<>("shippingAddress"));
+        billingCol.setCellValueFactory(new PropertyValueFactory<>("billingAddress"));
+        birthdayCol.setCellValueFactory(new PropertyValueFactory<>("birthDate"));
+        statusCol.setCellValueFactory(new PropertyValueFactory<>("status"));
+        fillManagerTable();
+        myWarehouseTextField.setEditable(false);
+        loadMyWarehouse();
 
     }
 
-    @FXML
-    private void fillManagerTable() {
-        List<Manager> managerList = genericHibernate.getAllRecords(Manager.class);
+
+    @FXML private void fillManagerTable() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd LLLL yyyy");
+        List<User> userList = genericHibernate.getAllRecords(User.class);
         data.clear();
-        for (Manager m:managerList) {
-            ManagerTableParameters managerTableParameters = new ManagerTableParameters();
-            managerTableParameters.setId(m.getId());
-            managerTableParameters.setLogin(m.getLogin());
-            managerTableParameters.setName(m.getName());
-            managerTableParameters.setSurname(m.getSurname());
-            data.add(managerTableParameters);
+        for (User m:userList) {
+            ManagerTableParameters tableParam = new ManagerTableParameters();
+            tableParam.setId(m.getId());
+            tableParam.setLogin(m.getLogin());
+            tableParam.setName(m.getName());
+            tableParam.setSurname(m.getSurname());
+            tableParam.setStatus(m.getClass().getSimpleName());
+            if (m instanceof Customer) {
+                Customer customer = (Customer) m;
+                tableParam.setBillingAddress(customer.getBillingAddress());
+                tableParam.setShippingAddress(customer.getShippingAddress());
+                tableParam.setBirthDate(customer.getBirthDate().format(formatter));
+            } else {
+                tableParam.setBillingAddress("");
+                tableParam.setShippingAddress("");
+                tableParam.setBirthDate("");
+            }
+            data.add(tableParam);
         }
         managerTable.setItems(data);
     }
@@ -114,7 +139,7 @@ public class UsersTabController implements Initializable {
     @FXML private void openCreateNewUserMenu() {
         try {
 
-            FXMLLoader loader = new FXMLLoader(ErrorNotFilledPopUp.class.getResource("/org/example/courseprojgui/userCreationWindow.fxml"));
+            FXMLLoader loader = new FXMLLoader(UserCreationController.class.getResource("/org/example/courseprojgui/userCreationWindow.fxml"));
             Parent root = loader.load();
 
             Stage stage = new Stage();
@@ -124,6 +149,52 @@ public class UsersTabController implements Initializable {
             stage.show();
         } catch (IOException e) {
             System.out.println("File not found");
+        }
+    }
+
+    @FXML private void deleteMeFromWarehouse() {
+        Manager manager = (Manager) currentUser;
+        manager.setWarehouse(null);
+        genericHibernate.update(manager);
+        currentUser = manager;
+        myWarehouseTextField.clear();
+    }
+
+    @FXML private void logOff() {
+        mainController.closeAllTabs();
+        openLoginFields(true);
+        currentUser=null;
+        loginTextField.clear();
+        passwordTextField.clear();
+    }
+
+    @FXML private void startEditInfo() {
+        userEditingStatusText.setVisible(true);
+        userEditingStatusText.setText("You can change user info");
+        isEditable(true);
+    }
+
+    @FXML private void saveEditInfo() {
+
+        isEditable(false);
+        currentUser.setName(userNameField.getText());
+        currentUser.setSurname(userSurnameField.getText());
+        ((Customer) currentUser).setBillingAddress(userBillingAdrField.getText());
+        ((Customer) currentUser).setShippingAddress(userShippingAdrField.getText());
+        ((Customer) currentUser).setCardNumber(userCardNumField.getText());
+        ((Customer) currentUser).setBirthDate(userBirthDateField.getText());
+        genericHibernate.update(currentUser);
+
+        userEditingStatusText.setText("Saved");
+        PauseTransition pause = new PauseTransition(Duration.seconds(2));
+        pause.setOnFinished(e -> userEditingStatusText.setVisible(false));
+        pause.play();
+    }
+
+    @FXML private void loadMyWarehouse() {
+        Manager manager = (Manager) currentUser;
+        if (manager != null && manager.getWarehouse() != null) {
+            myWarehouseTextField.setText("Id: " + ((Manager) currentUser).getWarehouse().getId() + " | " + ((Manager) currentUser).getWarehouse().getAddress());
         }
     }
 
@@ -140,6 +211,9 @@ public class UsersTabController implements Initializable {
 
         managerTable.setVisible(val);
         logOffButton.setVisible(val);
+        removeMyWarehouseButton.setVisible(val);
+        myWarehouseText.setVisible(val);
+        myWarehouseTextField.setVisible(val);
     }
 
     private void openCustomerField(boolean val) {
@@ -189,7 +263,6 @@ public class UsersTabController implements Initializable {
         saveChangesButton.setVisible(!val);
         userEditingStatusText.setVisible(!val);
         managerTable.setVisible(!val);
-
         userNameText.setVisible(!val);
         userSurnameText.setVisible(!val);
         userShipText.setVisible(!val);
@@ -202,6 +275,9 @@ public class UsersTabController implements Initializable {
         userBillingAdrField.setVisible(!val);
         userCardNumField.setVisible(!val);
         userBirthDateField.setVisible(!val);
+        removeMyWarehouseButton.setVisible(!val);
+        myWarehouseText.setVisible(!val);
+        myWarehouseTextField.setVisible(!val);
     }
 
     public void checkAndLogin() throws IOException {
@@ -225,14 +301,6 @@ public class UsersTabController implements Initializable {
         }
     }
 
-    public void logOff() {
-        mainController.closeAllTabs();
-        openLoginFields(true);
-        currentUser=null;
-        loginTextField.clear();
-        passwordTextField.clear();
-    }
-
     private void isEditable(boolean val) {
         userNameField.setEditable(val);
         userSurnameField.setEditable(val);
@@ -242,29 +310,10 @@ public class UsersTabController implements Initializable {
         userBirthDateField.setEditable(val);
     }
 
-    @FXML private void startEditInfo() {
-        userEditingStatusText.setVisible(true);
-        userEditingStatusText.setText("You can change user info");
-        isEditable(true);
+    public void addNewUserToList (User user) {
+        genericHibernate.create(user);
+        fillManagerTable();
     }
-
-    @FXML private void saveEditInfo() {
-
-            isEditable(false);
-            currentUser.setName(userNameField.getText());
-            currentUser.setSurname(userSurnameField.getText());
-            ((Customer) currentUser).setBillingAddress(userBillingAdrField.getText());
-            ((Customer) currentUser).setShippingAddress(userShippingAdrField.getText());
-            ((Customer) currentUser).setCardNumber(userCardNumField.getText());
-            ((Customer) currentUser).setBirthDate(userBirthDateField.getText());
-            genericHibernate.update(currentUser);
-
-        userEditingStatusText.setText("Saved");
-        PauseTransition pause = new PauseTransition(Duration.seconds(2));
-        pause.setOnFinished(e -> userEditingStatusText.setVisible(false));
-        pause.play();
-    }
-
 
 }
 

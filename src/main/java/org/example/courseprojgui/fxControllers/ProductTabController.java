@@ -7,16 +7,15 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
+import javafx.util.StringConverter;
 import lombok.Getter;
 import org.example.courseprojgui.enums.KitType;
 import org.example.courseprojgui.hibernate.GenericHibernate;
-import org.example.courseprojgui.model.BodyKit;
-import org.example.courseprojgui.model.Product;
-import org.example.courseprojgui.model.Spoiler;
-import org.example.courseprojgui.model.Wheels;
+import org.example.courseprojgui.model.*;
 
 import java.net.URL;
 import java.util.Comparator;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class ProductTabController implements Initializable {
@@ -39,6 +38,7 @@ public class ProductTabController implements Initializable {
     public TextField productWeightField;
     public TextField productColorField;
     public TextField productWheelSizeField;
+    public ComboBox productWarehouseComboBox;
     private MainController mainController;
     private GenericHibernate genericHibernate;
     @Getter
@@ -49,13 +49,15 @@ public class ProductTabController implements Initializable {
         instance = this;
     }
 
-    @Override public void initialize(URL location, ResourceBundle resources) {
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
         mainController = MainController.getInstance();
         shopTabController = ShopTabController.getInstance();
         genericHibernate = new GenericHibernate(mainController.getEntityManagerFactory());
         ObservableList<KitType> kitTypes = FXCollections.observableArrayList(KitType.values());
         productKitTypeComboBox.setItems(kitTypes);
         turnOffAllFields();
+        loadWarehousesForComboBox();
 
 
         productAdminList.setCellFactory(param -> new ListCell<>() {
@@ -83,7 +85,7 @@ public class ProductTabController implements Initializable {
             productDescriptionField.setDisable(false);
             productQuantityField.setDisable(false);
             productPriceField.setDisable(false);
-
+            productWarehouseComboBox.setDisable(false);
             productMaterialField.setDisable(false);
             productWeightField.setDisable(false);
             productBrandField.clear();
@@ -93,14 +95,14 @@ public class ProductTabController implements Initializable {
             productWeightField.clear();
             productWheelSizeField.clear();
             productKitTypeComboBox.getSelectionModel().clearSelection();
-        }
-        else if (productBodyKitRadio.isSelected()) {
+            productWarehouseComboBox.getSelectionModel().clearSelection();
+        } else if (productBodyKitRadio.isSelected()) {
 
             productTitleField.setDisable(false);
             productDescriptionField.setDisable(false);
             productQuantityField.setDisable(false);
             productPriceField.setDisable(false);
-
+            productWarehouseComboBox.setDisable(false);
             productBrandField.setDisable(false);
             productCompatibleCarsField.setDisable(false);
             productCountryManufacturerField.setDisable(false);
@@ -110,14 +112,14 @@ public class ProductTabController implements Initializable {
             productWeightField.clear();
             productColorField.clear();
             productWheelSizeField.clear();
-        }
-        else if (productWheelsRadio.isSelected()) {
+            productWarehouseComboBox.getSelectionModel().clearSelection();
+        } else if (productWheelsRadio.isSelected()) {
 
             productTitleField.setDisable(false);
             productDescriptionField.setDisable(false);
             productQuantityField.setDisable(false);
             productPriceField.setDisable(false);
-
+            productWarehouseComboBox.setDisable(false);
             productWeightField.setDisable(false);
             productColorField.setDisable(false);
             productWheelSizeField.setDisable(false);
@@ -125,11 +127,11 @@ public class ProductTabController implements Initializable {
             productCompatibleCarsField.clear();
             productCountryManufacturerField.clear();
             productKitTypeComboBox.getSelectionModel().clearSelection();
+            productWarehouseComboBox.getSelectionModel().clearSelection();
             productMaterialField.clear();
             productWeightField.clear();
         }
     }
-
 
 
     public void createRecord() {
@@ -147,7 +149,8 @@ public class ProductTabController implements Initializable {
                     Integer.parseInt(productQuantityField.getText()),
                     Float.parseFloat(productPriceField.getText()),
                     productMaterialField.getText(),
-                    Float.parseFloat(productWeightField.getText())
+                    Float.parseFloat(productWeightField.getText()),
+                    (Warehouse) productWarehouseComboBox.getSelectionModel().getSelectedItem()
             );
             genericHibernate.create(spoiler);
             productAdminList.getItems().add(spoiler);
@@ -160,7 +163,8 @@ public class ProductTabController implements Initializable {
                     productBrandField.getText(),
                     productCompatibleCarsField.getText(),
                     productCountryManufacturerField.getText(),
-                    productKitTypeComboBox.getValue()
+                    productKitTypeComboBox.getValue(),
+                    (Warehouse) productWarehouseComboBox.getSelectionModel().getSelectedItem()
             );
             genericHibernate.create(bodyKit);
             productAdminList.getItems().add(bodyKit);
@@ -172,7 +176,8 @@ public class ProductTabController implements Initializable {
                     Float.parseFloat(productPriceField.getText()),
                     Integer.parseInt(productWheelSizeField.getText()),
                     productColorField.getText(),
-                    Float.parseFloat(productWeightField.getText())
+                    Float.parseFloat(productWeightField.getText()),
+                    (Warehouse) productWarehouseComboBox.getSelectionModel().getSelectedItem()
             );
             genericHibernate.create(wheels);
             productAdminList.getItems().add(wheels);
@@ -198,6 +203,7 @@ public class ProductTabController implements Initializable {
             spoiler.setQuantity(Integer.parseInt(productQuantityField.getText()));
             spoiler.setMaterial(productMaterialField.getText());
             spoiler.setWeight(Float.parseFloat(productWeightField.getText()));
+            spoiler.setWarehouse((Warehouse) productWarehouseComboBox.getSelectionModel().getSelectedItem());
             genericHibernate.update(spoiler);
         } else if (product instanceof BodyKit) {
             BodyKit bodyKit = (BodyKit) product;
@@ -209,6 +215,7 @@ public class ProductTabController implements Initializable {
             bodyKit.setCountryManufacturer(productCountryManufacturerField.getText());
             bodyKit.setBrand(productBrandField.getText());
             bodyKit.setKitType(productKitTypeComboBox.getValue());
+            bodyKit.setWarehouse((Warehouse) productWarehouseComboBox.getSelectionModel().getSelectedItem());
             genericHibernate.update(bodyKit);
         } else if (product instanceof Wheels) {
             Wheels wheels = (Wheels) product;
@@ -219,16 +226,17 @@ public class ProductTabController implements Initializable {
             wheels.setWheelSize(Integer.parseInt(productWheelSizeField.getText()));
             wheels.setColor(productColorField.getText());
             wheels.setWeight(Float.parseFloat(productWeightField.getText()));
+            wheels.setWarehouse((Warehouse) productWarehouseComboBox.getSelectionModel().getSelectedItem());
             genericHibernate.update(wheels);
         }
     }
 
     public void deleteRecord() {
 
-                Product product = productAdminList.getSelectionModel().getSelectedItem();
-                productAdminList.getItems().remove(product);
-                genericHibernate.delete(product);
-                clearAllFields();
+        Product product = productAdminList.getSelectionModel().getSelectedItem();
+        productAdminList.getItems().remove(product);
+        genericHibernate.delete(product);
+        clearAllFields();
 
     }
 
@@ -245,6 +253,7 @@ public class ProductTabController implements Initializable {
             productQuantityField.setText(String.valueOf(spoiler.getQuantity()));
             productMaterialField.setText(spoiler.getMaterial());
             productWeightField.setText(String.valueOf(spoiler.getWeight()));
+            productWarehouseComboBox.setValue(spoiler.getWarehouse());
 
         } else if (product instanceof BodyKit) {
             productBodyKitRadio.setSelected(true);
@@ -258,6 +267,7 @@ public class ProductTabController implements Initializable {
             productCompatibleCarsField.setText(bodyKit.getCompatibleCars());
             productCountryManufacturerField.setText(bodyKit.getCountryManufacturer());
             productKitTypeComboBox.setValue(bodyKit.getKitType());
+            productWarehouseComboBox.setValue(bodyKit.getWarehouse());
 
         } else if (product instanceof Wheels) {
             productWheelsRadio.setSelected(true);
@@ -270,9 +280,9 @@ public class ProductTabController implements Initializable {
             productWheelSizeField.setText(String.valueOf(wheels.getWheelSize()));
             productColorField.setText(wheels.getColor());
             productWeightField.setText(String.valueOf(wheels.getWeight()));
+            productWarehouseComboBox.setValue(wheels.getWarehouse());
         }
     }
-
 
 
     public void clearAllFields() {
@@ -291,8 +301,12 @@ public class ProductTabController implements Initializable {
         productWeightField.clear();
         productWheelSizeField.clear();
         productMaterialField.clear();
-        productKitTypeComboBox.getSelectionModel().clearSelection();
+        productWarehouseComboBox.setValue(null);
+        productWarehouseComboBox.setPromptText("Warehouse");
+        productKitTypeComboBox.setValue(null);
+        productKitTypeComboBox.setPromptText("Kit type");
     }
+
     public void turnOffAllFields() {
         productTitleField.setDisable(true);
         productDescriptionField.setDisable(true);
@@ -306,6 +320,7 @@ public class ProductTabController implements Initializable {
         productColorField.setDisable(true);
         productKitTypeComboBox.setDisable(true);
         productWheelSizeField.setDisable(true);
+        productWarehouseComboBox.setDisable(true);
     }
 
 
@@ -316,9 +331,9 @@ public class ProductTabController implements Initializable {
                     !productQuantityField.getText().isEmpty() &&
                     !productPriceField.getText().isEmpty() &&
                     !productMaterialField.getText().isEmpty() &&
-                    !productWeightField.getText().isEmpty();
-        }
-        else if (productBodyKitRadio.isSelected()) {
+                    !productWeightField.getText().isEmpty() &&
+                    productWarehouseComboBox.getValue() != null;
+        } else if (productBodyKitRadio.isSelected()) {
             return !productTitleField.getText().isEmpty() &&
                     !productDescriptionField.getText().isEmpty() &&
                     !productQuantityField.getText().isEmpty() &&
@@ -326,19 +341,41 @@ public class ProductTabController implements Initializable {
                     !productBrandField.getText().isEmpty() &&
                     !productCompatibleCarsField.getText().isEmpty() &&
                     !productCountryManufacturerField.getText().isEmpty() &&
-                    productKitTypeComboBox.getValue() != null;
-        }
-        else if (productWheelsRadio.isSelected()) {
+                    productKitTypeComboBox.getValue() != null &&
+                    productWarehouseComboBox.getValue() != null;
+        } else if (productWheelsRadio.isSelected()) {
             return !productTitleField.getText().isEmpty() &&
                     !productDescriptionField.getText().isEmpty() &&
                     !productQuantityField.getText().isEmpty() &&
                     !productPriceField.getText().isEmpty() &&
                     !productWheelSizeField.getText().isEmpty() &&
                     !productColorField.getText().isEmpty() &&
-                    !productWeightField.getText().isEmpty();
-        }
-        else {
+                    !productWeightField.getText().isEmpty() &&
+                    productWarehouseComboBox.getValue() != null;
+        } else {
+
             return false;
         }
+    }
+
+    public void loadWarehousesForComboBox() {
+        ObservableList<Warehouse> warehouses = FXCollections.observableArrayList(genericHibernate.getAllRecords(Warehouse.class));
+        productWarehouseComboBox.setConverter(new StringConverter<Warehouse>() {
+            @Override
+            public String toString(Warehouse warehouse) {
+                if (warehouse != null) {
+                    return "id: " + warehouse.getId() + " | " + warehouse.getAddress();
+                } else {
+                    return null;
+                }
+            }
+
+            @Override
+            public Warehouse fromString(String s) {
+                return null;
+            }
+        });
+
+        productWarehouseComboBox.setItems(warehouses);
     }
 }

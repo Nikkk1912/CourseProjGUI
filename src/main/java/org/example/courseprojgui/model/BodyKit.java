@@ -21,8 +21,8 @@ public class BodyKit extends Product {
     @Enumerated(EnumType.STRING)
     private KitType kitType;
 
-    public BodyKit(String title, String description, int quantity, float price, String brand, String compatibleCars, String countryManufacturer, KitType kitType) {
-        super(title, description, quantity, price);
+    public BodyKit(String title, String description, int quantity, float price, String brand, String compatibleCars, String countryManufacturer, KitType kitType, Warehouse warehouse) {
+        super(title, description, quantity, price, warehouse);
         this.brand = brand;
         this.compatibleCars = compatibleCars;
         this.countryManufacturer = countryManufacturer;

@@ -1,10 +1,12 @@
 package org.example.courseprojgui.hibernate;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.EntityTransaction;
-import jakarta.persistence.Query;
+import jakarta.persistence.*;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.Root;
+import org.example.courseprojgui.model.User;
+import org.example.courseprojgui.model.Warehouse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -102,5 +104,28 @@ public class GenericHibernate {
             e.printStackTrace();
         }
         return result;
+    }
+
+    public <T> List<T> getEntityByWarehouseId(Class<T> entityClass, int warehouseId) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        List<T> listOfRecords = new ArrayList<>();
+        try {
+            CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+            CriteriaQuery<T> query = cb.createQuery(entityClass);
+            Root<T> root = query.from(entityClass);
+
+
+            //query.select(root).where(cb.equal(root.get("warehouse"), warehouseId));
+            Join<T, Warehouse> warehouseJoin = root.join("warehouse");
+            query.select(root).where(cb.equal(warehouseJoin.get("id"), warehouseId));
+
+            Query q = entityManager.createQuery(query);
+            listOfRecords = q.getResultList();
+            return listOfRecords;
+        } catch (NoResultException e) {
+            return null;
+        } finally {
+            if (entityManager != null) entityManager.close();
+        }
     }
 }

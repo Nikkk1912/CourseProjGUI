@@ -17,8 +17,8 @@ public class Wheels extends Product{
     private String color;
     private float weight;
 
-    public Wheels(String title, String description, int quantity, float price, int wheelSize, String color, float weight) {
-        super(title, description, quantity, price);
+    public Wheels(String title, String description, int quantity, float price, int wheelSize, String color, float weight, Warehouse warehouse) {
+        super(title, description, quantity, price, warehouse);
         this.wheelSize = wheelSize;
         this.color = color;
         this.weight = weight;

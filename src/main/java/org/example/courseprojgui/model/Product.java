@@ -35,11 +35,12 @@ public class Product implements Serializable {
     @ManyToOne
     private Shop shop;
 
-    public Product(String title, String description, int quantity, float price) {
+    public Product(String title, String description, int quantity, float price, Warehouse warehouse) {
         this.title = title;
         this.description = description;
         this.quantity = quantity;
         this.price = price;
+        this.warehouse = warehouse;
     }
 
     public Product(Product toCopy) {
@@ -47,5 +48,6 @@ public class Product implements Serializable {
         this.description = toCopy.getDescription();
         this.quantity = toCopy.getQuantity();
         this.price = toCopy.getPrice();
+        this.warehouse = toCopy.getWarehouse();
     }
 }

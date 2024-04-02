@@ -7,6 +7,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import org.example.courseprojgui.hibernate.GenericHibernate;
 import org.example.courseprojgui.model.Manager;
 import org.example.courseprojgui.model.Product;
 import org.example.courseprojgui.model.Warehouse;
@@ -29,12 +30,17 @@ public class WareHouseTabController implements Initializable {
     public Button warehouseAssignAdminButton;
     public Text warehouseAssignStatusText;
     private UsersTabController usersTabController;
+    private MainController mainController;
+    GenericHibernate genericHibernate;
 
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
+        mainController = MainController.getInstance();
         usersTabController = UsersTabController.getInstance();
+        genericHibernate = new GenericHibernate(mainController.getEntityManagerFactory());
         warehouseAssignStatusText.setVisible(false);
+        warehouseListOfWarehouses.getItems().setAll(genericHibernate.getAllRecords(Warehouse.class));
 
         warehouseListOfWarehouses.setCellFactory(param -> new ListCell<>() {
             @Override
@@ -44,7 +50,7 @@ public class WareHouseTabController implements Initializable {
                     setText(null);
                 } else {
                     setFont(Font.font(16));
-                    setText(warehouse.getAddress());
+                    setText("ID: " + warehouse.getId() + " | " + warehouse.getAddress());
                 }
             }
         });
@@ -76,10 +82,12 @@ public class WareHouseTabController implements Initializable {
         });
 
 
-        Warehouse test1 = new Warehouse("Vilnius");
-        warehouseListOfWarehouses.getItems().add(test1);
-        Warehouse test2 = new Warehouse("Kaunas");
-        warehouseListOfWarehouses.getItems().add(test2);
+//        Warehouse test1 = new Warehouse("Vilnius");
+//        warehouseListOfWarehouses.getItems().add(test1);
+//        Warehouse test2 = new Warehouse("Kaunas");
+//        warehouseListOfWarehouses.getItems().add(test2);
+//        genericHibernate.create(test1);
+//        genericHibernate.create(test2);
     }
 
     public void deleteWarehouse() {
@@ -92,13 +100,16 @@ public class WareHouseTabController implements Initializable {
     }
 
     public void loadWarehouse() {
-        Warehouse warehouse = warehouseListOfWarehouses.getSelectionModel().getSelectedItem();
 
-        warehouseAddressText.setText("Address: " + warehouse.getAddress());
-        warehouseListProducts.getItems().clear();
-        warehouseListProducts.getItems().addAll(warehouse.getStock());
-        warehouseListAdmins.getItems().clear();
-        warehouseListAdmins.getItems().addAll(warehouse.getManagers());
+        Warehouse warehouse = warehouseListOfWarehouses.getSelectionModel().getSelectedItem();
+        if(warehouse != null) {
+            warehouseAddressText.setText("Address: " + warehouse.getAddress());
+            warehouseListProducts.getItems().clear();
+            warehouseListProducts.getItems().addAll(genericHibernate.getEntityByWarehouseId(Product.class, warehouse.getId()));
+            System.out.println(warehouseListProducts.getItems());
+            warehouseListAdmins.getItems().clear();
+            warehouseListAdmins.getItems().addAll(genericHibernate.getEntityByWarehouseId(Manager.class, warehouse.getId()));
+        }
 
     }
 

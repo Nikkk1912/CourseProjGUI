@@ -12,6 +12,7 @@ import lombok.Setter;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 @Getter
@@ -42,10 +43,9 @@ public class MainController implements Initializable {
 
 
         closeAllTabs();
-        FXMLLoader loader = new FXMLLoader();
         try {
-            AnchorPane anch2 = loader.load(getClass().getResource("/org/example/courseprojgui/usersTab.fxml"));
-            usersTab.setContent(anch2);
+            AnchorPane anchor2 = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/org/example/courseprojgui/usersTab.fxml")));
+            usersTab.setContent(anchor2);
         } catch (IOException e) {
             System.out.println("File not found");
         }
@@ -54,21 +54,19 @@ public class MainController implements Initializable {
 
     public void openAllTabs(boolean isAdminNow) {
 
-        FXMLLoader loader = new FXMLLoader();
-
         stopTab.setDisable(false);
         ordersTab.setDisable(false);
 
         try {
-            AnchorPane anch3 = loader.load(getClass().getResource("/org/example/courseprojgui/shopTab.fxml"));
-            stopTab.setContent(anch3);
+            AnchorPane anchor3 = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/org/example/courseprojgui/shopTab.fxml")));
+            stopTab.setContent(anchor3);
         } catch (IOException e) {
             System.out.println("File not found");
         }
 
         try {
-            AnchorPane anch5 = loader.load(getClass().getResource("/org/example/courseprojgui/ordersTab.fxml"));
-            ordersTab.setContent(anch5);
+            AnchorPane anchor5 = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/org/example/courseprojgui/ordersTab.fxml")));
+            ordersTab.setContent(anchor5);
         } catch (IOException e) {
             System.out.println("File not found");
         }
@@ -79,15 +77,15 @@ public class MainController implements Initializable {
             wareHousesTab.setDisable(false);
 
             try {
-                AnchorPane anch1 = loader.load(getClass().getResource("/org/example/courseprojgui/productsTab.fxml"));
-                productsTab.setContent(anch1);
+                AnchorPane anchor1 = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/org/example/courseprojgui/productsTab.fxml")));
+                productsTab.setContent(anchor1);
             } catch (IOException e) {
                 System.out.println("File not found");
             }
 
             try {
-                AnchorPane anch4 = loader.load(getClass().getResource("/org/example/courseprojgui/wareHousesTab.fxml"));
-                wareHousesTab.setContent(anch4);
+                AnchorPane anchor4 = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/org/example/courseprojgui/wareHousesTab.fxml")));
+                wareHousesTab.setContent(anchor4);
             } catch (IOException e) {
                 System.out.println("File not found");
             }

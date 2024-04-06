@@ -3,7 +3,6 @@ package org.example.courseprojgui.fxControllers;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
@@ -12,12 +11,10 @@ import javafx.util.StringConverter;
 import lombok.Getter;
 import org.example.courseprojgui.enums.KitType;
 import org.example.courseprojgui.hibernate.GenericHibernate;
-import org.example.courseprojgui.hibernate.HibernateShop;
 import org.example.courseprojgui.model.*;
 
 import java.net.URL;
 import java.util.Comparator;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class ProductTabController implements Initializable {
@@ -42,12 +39,9 @@ public class ProductTabController implements Initializable {
     public TextField productWheelSizeField;
     public ComboBox productWarehouseComboBox;
     public CheckBox productSoldCheck;
-    private MainController mainController;
     private GenericHibernate genericHibernate;
-    private HibernateShop hibernateShop;
     @Getter
     private static ProductTabController instance;
-    private static ShopTabController shopTabController;
 
     public ProductTabController() {
         instance = this;
@@ -55,10 +49,8 @@ public class ProductTabController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        mainController = MainController.getInstance();
-        shopTabController = ShopTabController.getInstance();
+        MainController mainController = MainController.getInstance();
         genericHibernate = new GenericHibernate(mainController.getEntityManagerFactory());
-        hibernateShop = new HibernateShop(mainController.getEntityManagerFactory());
 
         ObservableList<KitType> kitTypes = FXCollections.observableArrayList(KitType.values());
         productKitTypeComboBox.setItems(kitTypes);

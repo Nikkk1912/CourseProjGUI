@@ -31,7 +31,6 @@ public class ShopTabController implements Initializable {
     public TextField shopAmountInStockField;
     public TextArea shopDescriptionField;
     private UsersTabController usersTabController;
-    private MainController mainController;
     @Getter
     private static ShopTabController instance;
     private HibernateShop hibernateShop;
@@ -42,7 +41,7 @@ public class ShopTabController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        mainController = MainController.getInstance();
+        MainController mainController = MainController.getInstance();
         usersTabController = UsersTabController.getInstance();
         hibernateShop = new HibernateShop(mainController.getEntityManagerFactory());
 
@@ -137,7 +136,7 @@ public class ShopTabController implements Initializable {
         shopCartList.getItems().remove(product);
     }
 
-    public void updateproductList() {
+    public void updateProductList() {
         shopProductList.getItems().setAll(hibernateShop.loadAvailableProducts());
     }
 }

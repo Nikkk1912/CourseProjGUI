@@ -1,6 +1,5 @@
 package org.example.courseprojgui.fxControllers;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -30,7 +29,6 @@ public class OrdersTabController implements Initializable {
     public TextField idField;
     public Button deleteButton;
     public Button refreshButton;
-    private MainController mainController;
     private HibernateShop hibernateShop;
     private GenericHibernate genericHibernate;
     private UsersTabController usersTabController;
@@ -38,7 +36,7 @@ public class OrdersTabController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        mainController = MainController.getInstance();
+        MainController mainController = MainController.getInstance();
         hibernateShop = new HibernateShop(mainController.getEntityManagerFactory());
         genericHibernate = new GenericHibernate(mainController.getEntityManagerFactory());
         usersTabController = UsersTabController.getInstance();
@@ -101,7 +99,7 @@ public class OrdersTabController implements Initializable {
         hibernateShop.deleteCart(cart.getId());
         cartsList.getItems().remove(cart);
         productList.getItems().clear();
-        shopTabController.updateproductList();
+        shopTabController.updateProductList();
         idField.clear();
         managerField.clear();
         ownerField.clear();

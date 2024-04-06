@@ -22,6 +22,7 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Product> itemsToBuy;
     @ManyToOne
     private User customer;

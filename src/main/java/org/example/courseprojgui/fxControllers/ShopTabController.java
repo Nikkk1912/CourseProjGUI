@@ -6,12 +6,16 @@ import javafx.scene.control.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import lombok.Getter;
-import org.example.courseprojgui.hibernate.GenericHibernate;
 import org.example.courseprojgui.hibernate.HibernateShop;
-import org.example.courseprojgui.model.*;
+import org.example.courseprojgui.model.BodyKit;
+import org.example.courseprojgui.model.Product;
+import org.example.courseprojgui.model.Spoiler;
+import org.example.courseprojgui.model.Wheels;
 
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
 
 public class ShopTabController implements Initializable {
     public Text shopUserText;
@@ -24,18 +28,12 @@ public class ShopTabController implements Initializable {
     public Button shopCompleteButton;
     public Button shopRemoveButton;
     public Button shopClearButton;
-    public Button shopShowButton;
     public TextField shopAmountInStockField;
-    public TextField shopPriceField1;
     public TextArea shopDescriptionField;
-    private ProductTabController productTabController;
     private UsersTabController usersTabController;
-    private GenericHibernate genericHibernate;
     private MainController mainController;
     @Getter
     private static ShopTabController instance;
-    private Cart cart;
-    private List<Product> generalListOfProduct = new ArrayList<>();
     private HibernateShop hibernateShop;
 
     public ShopTabController() {
@@ -43,11 +41,9 @@ public class ShopTabController implements Initializable {
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources)
-    {
+    public void initialize(URL location, ResourceBundle resources) {
         mainController = MainController.getInstance();
         usersTabController = UsersTabController.getInstance();
-        genericHibernate = new GenericHibernate(mainController.getEntityManagerFactory());
         hibernateShop = new HibernateShop(mainController.getEntityManagerFactory());
 
         shopCurrentProdField.setEditable(false);
@@ -92,11 +88,7 @@ public class ShopTabController implements Initializable {
 
     }
 
-
-
-
     @FXML private void loadProductData() {
-        //shopUserText.setText("User: "+ usersTabController.getCurrentUser().getName() + " " + usersTabController.getCurrentUser().getSurname());
         if(shopProductList.getItems() ==null) {
             shopProductList.getItems().setAll(hibernateShop.loadAvailableProducts());
         }
@@ -118,14 +110,12 @@ public class ShopTabController implements Initializable {
 
     }
 
-
-    public void addToCart() {
+    @FXML private void addToCart() {
         Product product = shopProductList.getSelectionModel().getSelectedItem();
         shopCartList.getItems().add(product);
         shopProductList.getItems().remove(product);
 
     }
-
 
     @FXML private void clearCart() {
         List<Product> cartItems = new ArrayList<>(shopCartList.getItems());
@@ -145,5 +135,9 @@ public class ShopTabController implements Initializable {
         Product product = shopCartList.getSelectionModel().getSelectedItem();
         shopProductList.getItems().add(product);
         shopCartList.getItems().remove(product);
+    }
+
+    public void updateproductList() {
+        shopProductList.getItems().setAll(hibernateShop.loadAvailableProducts());
     }
 }

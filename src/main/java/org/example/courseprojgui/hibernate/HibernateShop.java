@@ -1,11 +1,9 @@
 package org.example.courseprojgui.hibernate;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.NoResultException;
-import jakarta.persistence.Query;
+import jakarta.persistence.*;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Root;
 import org.example.courseprojgui.model.*;
 
@@ -41,7 +39,6 @@ public class HibernateShop extends GenericHibernate{
     public void createCart(List<Product> products, User user) {
         EntityManager entityManager = getEntityManager();
         try {
-            entityManager = getEntityManager();
             entityManager.getTransaction().begin();
 
             User buyer = entityManager.find(User.class, user.getId());
@@ -49,13 +46,13 @@ public class HibernateShop extends GenericHibernate{
             List<Manager> managers = getAllRecords(Manager.class);
             Optional<Manager> minManager = managers.stream().min(Comparator.comparingInt(manager -> manager.getMyResponsibleCarts().size()));
             Manager managerWhoManageCart = minManager.orElse(null);
+            System.out.println(managerWhoManageCart);
 
             Cart cart = new Cart(buyer, managerWhoManageCart, new ArrayList<>());
             for (Product p : products) {
                 Product product = entityManager.find(Product.class, p.getId());
 
                 product.setCart(cart);
-                product.setSold(true);
                 cart.getItemsToBuy().add(product);
             }
             buyer.getMyPurchases().add(cart);
@@ -73,26 +70,35 @@ public class HibernateShop extends GenericHibernate{
 
     public void deleteCart(int id) {
         EntityManager entityManager = getEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
         try {
-            entityManager = getEntityManager();
-            entityManager.getTransaction().begin();
+            transaction.begin();
 
+            Cart cart = entityManager.find(Cart.class, id);
+            if (cart == null) {
+                throw new IllegalArgumentException("Cart with id " + id + " not found");
+            }
 
-            var cart = entityManager.find(Cart.class, id);
-            Customer customer = entityManager.find(Customer.class, cart.getCustomer().getId());
+            User user = cart.getCustomer();
+            if (user != null) {
+                user.getMyPurchases().remove(cart);
+                entityManager.merge(user);
+            }
 
+            Manager manager = cart.getManager();
+            if (manager != null) {
+                manager.getMyResponsibleCarts().remove(cart);
+                entityManager.merge(manager);
+            }
 
-            customer.getMyPurchases().remove(cart);
-
+            for (Product product : cart.getItemsToBuy()) {
+                product.setCart(null);
+                entityManager.merge(product);
+            }
             cart.getItemsToBuy().clear();
 
-            entityManager.merge(customer);
-            Manager manager = getEntityById(Manager.class, cart.getManager().getId());
-            manager.getMyResponsibleCarts().remove(cart);
-            entityManager.merge(manager);
-
             entityManager.remove(cart);
-            entityManager.getTransaction().commit();
+            transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -115,6 +121,42 @@ public class HibernateShop extends GenericHibernate{
             return null;
         } finally {
             if (em != null) em.close();
+        }
+    }
+
+    public Cart getEntityByCartId(int cartId) {
+        EntityManager entityManager = getEntityManager();
+        try {
+            CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+            CriteriaQuery<Cart> query = cb.createQuery(Cart.class);
+            Root<Cart> root = query.from(Cart.class);
+
+            query.select(root).where(cb.equal(root.get("id"), cartId));
+
+            Query q = entityManager.createQuery(query);
+            return (Cart) q.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        } finally {
+            if (entityManager != null) entityManager.close();
+        }
+    }
+
+    public List<Cart> getCartsByCustomerId(int customerId) {
+        EntityManager entityManager = getEntityManager();
+        try {
+            CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+            CriteriaQuery<Cart> query = cb.createQuery(Cart.class);
+            Root<Cart> root = query.from(Cart.class);
+
+            query.select(root).where(cb.equal(root.get("customer").get("id"), customerId));
+
+            Query q = entityManager.createQuery(query);
+            return q.getResultList();
+        } catch (NoResultException e) {
+            return null;
+        } finally {
+            if (entityManager != null) entityManager.close();
         }
     }
 }

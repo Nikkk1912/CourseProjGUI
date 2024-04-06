@@ -300,7 +300,9 @@ public class ProductTabController implements Initializable {
             productWeightField.setText(String.valueOf(wheels.getWeight()));
             productWarehouseComboBox.setValue(wheels.getWarehouse());
         }
-        productSoldCheck.setSelected(product.isSold());
+        if(product.getCart() != null){
+            productSoldCheck.setSelected(true);
+        }
     }
 
     @FXML private void clearAllFields() {

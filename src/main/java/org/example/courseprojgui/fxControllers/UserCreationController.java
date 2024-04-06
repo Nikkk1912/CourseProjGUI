@@ -8,6 +8,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import org.example.courseprojgui.hibernate.GenericHibernate;
+import org.example.courseprojgui.hibernate.HibernateShop;
 import org.example.courseprojgui.model.Customer;
 import org.example.courseprojgui.model.Manager;
 
@@ -31,11 +33,14 @@ public class UserCreationController implements Initializable {
     public TextField userCreationPasswordField;
     public Text userCreationText1;
     public Text userCreationText2;
+    private GenericHibernate genericHibernate;
+    private HibernateShop hibernateShop;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         usersTabController = UsersTabController.getInstance();
-
+        genericHibernate = new GenericHibernate(usersTabController.getMainController().getEntityManagerFactory());
+        hibernateShop = new HibernateShop(usersTabController.getMainController().getEntityManagerFactory());
     }
 
 
@@ -61,26 +66,31 @@ public class UserCreationController implements Initializable {
         String surname = userCreationSurnameField.getText();
         String login = userCreationLoginField.getText();
         String password = userCreationPasswordField.getText();
-        if (login.isEmpty() && password.isEmpty()) {
-            userCreationText1.setText("Login and password cant be empty");
-            return;
-        }
+        if(hibernateShop.getUserByCredentials(login, password) == null) {
+            if (login.isEmpty() && password.isEmpty()) {
+                userCreationText1.setText("Login and password cant be empty");
+                return;
+            }
 
-        if (userCreationIsAdmin.isSelected()) {
+            if (userCreationIsAdmin.isSelected()) {
 
-            Manager manager = new Manager(login, password, name, surname, true);
-            usersTabController.addNewUserToList(manager);
+                Manager manager = new Manager(login, password, name, surname, true);
+                usersTabController.addNewUserToList(manager);
 
+            } else {
+                String ship = userCreationShippingField.getText();
+                String bill = userCreationBillingField.getText();
+                String card = userCreationCardField.getText();
+                String birth = userCreationBirthField.getText();
+
+                Customer customer = new Customer(name, surname, login, password, card, ship, bill, birth);
+
+                usersTabController.addNewUserToList(customer);
+
+            }
         } else {
-            String ship = userCreationShippingField.getText();
-            String bill = userCreationBillingField.getText();
-            String card = userCreationCardField.getText();
-            String birth = userCreationBirthField.getText();
-
-            Customer customer = new Customer(name, surname, login, password, card, ship, bill, birth);
-
-            usersTabController.addNewUserToList(customer);
-
+            userCreationText1.setText("These credentials already taken");
+            return;
         }
             Stage stage = (Stage) userCreationAddButton.getScene().getWindow();
             stage.close();

@@ -1,5 +1,6 @@
 package org.example.courseprojgui.fxControllers;
 
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
@@ -12,8 +13,7 @@ import org.example.courseprojgui.hibernate.GenericHibernate;
 import org.example.courseprojgui.model.*;
 
 import java.net.URL;
-import java.util.Objects;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class ShopTabController implements Initializable {
     public Text shopUserText;
@@ -38,6 +38,7 @@ public class ShopTabController implements Initializable {
     @Getter
     private static ShopTabController instance;
     private Cart cart;
+    private List<Product> generalListOfProduct = new ArrayList<>();
 
     public ShopTabController() {
         instance = this;
@@ -50,6 +51,20 @@ public class ShopTabController implements Initializable {
         usersTabController = UsersTabController.getInstance();
         genericHibernate = new GenericHibernate(mainController.getEntityManagerFactory());
 
+        shopCurrentProdField.setEditable(false);
+        shopPriceField.setEditable(false);
+        shopAmountInStockField.setEditable(false);
+        shopDescriptionField.setEditable(false);
+        shopTotalPriceField.setEditable(false);
+
+        setCellFactories();
+
+        updateGeneralShopList();
+        shopProductList.getItems().setAll(generalListOfProduct);
+
+    }
+
+    private void setCellFactories() {
         shopProductList.setCellFactory(param -> new ListCell<>() {
             @Override
             protected void updateItem(Product product, boolean empty) {
@@ -76,26 +91,31 @@ public class ShopTabController implements Initializable {
             }
         });
 
-        shopCurrentProdField.setEditable(false);
-        shopPriceField.setEditable(false);
-        shopAmountInStockField.setEditable(false);
-        shopDescriptionField.setEditable(false);
+        shopAmountField.textProperty().addListener((observable, oldValue, newValue) -> {
+            try {
+                double amount = Double.parseDouble(newValue);
+                double availableStock = Double.parseDouble(shopAmountInStockField.getText());
 
-        shopProductList.getItems().setAll(genericHibernate.getAllRecords(Product.class));
+                if(amount > availableStock) {
+                    shopTotalPriceField.setText("Not enough product in stock");
+                } else {
+                    double price = Double.parseDouble(shopPriceField.getText());
+                    double totalPrice = amount * price;
+                    shopTotalPriceField.setText(String.valueOf(totalPrice));
+                }
+            } catch (NumberFormatException e) {
+                shopTotalPriceField.setText("");
+            }
+        });
     }
 
-    public void updateShopList() {
-        if(productTabController == null) {
-            productTabController = ProductTabController.getInstance();
-        }
-        shopProductList.setItems(productTabController.productAdminList.getItems());
+    private void updateGeneralShopList() {
+        generalListOfProduct = genericHibernate.getAllRecords(Product.class);
     }
 
-    public void updateProductList() {
 
-    }
 
-    public void loadProductData() {
+    @FXML private void loadProductData() {
         //shopUserText.setText("User: "+ usersTabController.getCurrentUser().getName() + " " + usersTabController.getCurrentUser().getSurname());
         Product product = shopProductList.getSelectionModel().getSelectedItem();
         shopCurrentProdField.setText(product.getTitle());
@@ -111,41 +131,69 @@ public class ShopTabController implements Initializable {
 
     }
 
-    public void calcTotalPrice() {
-        Product product = shopProductList.getSelectionModel().getSelectedItem();
-        float totalPrice;
-        if (!Objects.equals(shopAmountField.getText(), "")) {
-            totalPrice = product.getPrice() * Float.parseFloat(shopAmountField.getText());
-        } else {
-            return;
-        }
-        shopTotalPriceField.setText(String.valueOf(totalPrice));
-    }
 
     public void addToCart() {
         if(cart == null){
             createCart();
         }
+
+
         Product selectedProduct = shopProductList.getSelectionModel().getSelectedItem();
         Product productToAdd = new Product(selectedProduct);
 
-        productToAdd.setQuantity(Integer.parseInt(shopAmountField.getText()));
-        int quant = (selectedProduct.getQuantity() - productToAdd.getQuantity());
-        System.out.println(selectedProduct.getQuantity());
-        System.out.println(productToAdd.getQuantity());
-        System.out.println(quant);
-        selectedProduct.setQuantity(quant);
+        int amountInStock = selectedProduct.getQuantity();
+        int amountToSet = Integer.parseInt(shopAmountField.getText());
+
+        if (amountToSet < amountInStock) {
+            productToAdd.setQuantity(amountToSet);
+
+            int amountLeft = amountInStock - amountToSet;
+            selectedProduct.setQuantity(amountLeft);
+        } else if (amountToSet == amountInStock) {
+            productToAdd.setQuantity(amountToSet);
+            shopProductList.getItems().remove(selectedProduct);
+        } else if (amountToSet > amountInStock) {
+            return;
+        }
+
 
         cart.addItemToCart(productToAdd);
-        //genericHibernate.update(cart);
-        genericHibernate.update(selectedProduct);
         shopCartList.getItems().setAll(cart.getItemsToBuy());
 
     }
 
+    private Manager findManagerWithLowestCarts() {
+        List<Manager> managers = genericHibernate.getAllRecords(Manager.class);
+        Optional<Manager> minManager = managers.stream().min(Comparator.comparingInt(manager -> manager.getMyResponsibleCarts().size()));
+        return minManager.orElse(null);
+    }
+
     private void createCart() {
-        cart = new Cart();
+        Manager whoWillManage = findManagerWithLowestCarts();
+        User whoWillOwn = usersTabController.getCurrentUser();
+
+        cart = new Cart(whoWillOwn, whoWillManage);
+        //genericHibernate.create(cart);
+
+    }
+
+    @FXML private void clearCart() {
+        updateGeneralShopList();
+        shopProductList.getItems().setAll(generalListOfProduct);
+        shopCartList.getItems().clear();
+    }
+
+    @FXML private void submitCart() {
         genericHibernate.create(cart);
+        cart = null;
+        for(Product p : shopProductList.getItems()) {
+            genericHibernate.update(p);
+        }
+        for (Product p : shopCartList.getItems()) {
+            genericHibernate.create(p);
+        }
+        shopProductList.getItems().setAll(genericHibernate.getAllRecords(Product.class));
+        shopCartList.getItems().clear();
 
     }
 }

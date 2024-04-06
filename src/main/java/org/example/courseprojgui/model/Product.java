@@ -34,6 +34,7 @@ public class Product implements Serializable {
     private Cart cart;
     @ManyToOne
     private Shop shop;
+    private boolean sold;
 
     public Product(String title, String description, int quantity, float price, Warehouse warehouse) {
         this.title = title;

@@ -31,10 +31,10 @@ public class Cart {
 //    @LazyCollection(LazyCollectionOption.FALSE)
 //    private List<Comment> chat;
 
-    public Cart(User customer, Manager manager) {
+    public Cart(User customer, Manager manager, List<Product> items) {
         this.customer = customer;
         this.manager = manager;
-        this.itemsToBuy = new ArrayList<>();
+        this.itemsToBuy = items;
     }
 
     public void addItemToCart(Product product) {

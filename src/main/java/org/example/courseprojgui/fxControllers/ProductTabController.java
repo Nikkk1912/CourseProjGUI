@@ -12,6 +12,7 @@ import javafx.util.StringConverter;
 import lombok.Getter;
 import org.example.courseprojgui.enums.KitType;
 import org.example.courseprojgui.hibernate.GenericHibernate;
+import org.example.courseprojgui.hibernate.HibernateShop;
 import org.example.courseprojgui.model.*;
 
 import java.net.URL;
@@ -40,8 +41,10 @@ public class ProductTabController implements Initializable {
     public TextField productColorField;
     public TextField productWheelSizeField;
     public ComboBox productWarehouseComboBox;
+    public CheckBox productSoldCheck;
     private MainController mainController;
     private GenericHibernate genericHibernate;
+    private HibernateShop hibernateShop;
     @Getter
     private static ProductTabController instance;
     private static ShopTabController shopTabController;
@@ -55,10 +58,13 @@ public class ProductTabController implements Initializable {
         mainController = MainController.getInstance();
         shopTabController = ShopTabController.getInstance();
         genericHibernate = new GenericHibernate(mainController.getEntityManagerFactory());
+        hibernateShop = new HibernateShop(mainController.getEntityManagerFactory());
+
         ObservableList<KitType> kitTypes = FXCollections.observableArrayList(KitType.values());
         productKitTypeComboBox.setItems(kitTypes);
         turnOffAllFields();
         loadWarehousesForComboBox();
+        productSoldCheck.setDisable(true);
 
 
         productAdminList.setCellFactory(param -> new ListCell<>() {
@@ -97,6 +103,7 @@ public class ProductTabController implements Initializable {
             productWheelSizeField.clear();
             productKitTypeComboBox.getSelectionModel().clearSelection();
             productWarehouseComboBox.getSelectionModel().clearSelection();
+            productSoldCheck.setSelected(false);
         } else if (productBodyKitRadio.isSelected()) {
 
             productTitleField.setDisable(false);
@@ -114,6 +121,7 @@ public class ProductTabController implements Initializable {
             productColorField.clear();
             productWheelSizeField.clear();
             productWarehouseComboBox.getSelectionModel().clearSelection();
+            productSoldCheck.setSelected(false);
         } else if (productWheelsRadio.isSelected()) {
 
             productTitleField.setDisable(false);
@@ -131,6 +139,7 @@ public class ProductTabController implements Initializable {
             productWarehouseComboBox.getSelectionModel().clearSelection();
             productMaterialField.clear();
             productWeightField.clear();
+            productSoldCheck.setSelected(false);
         }
     }
 
@@ -251,6 +260,7 @@ public class ProductTabController implements Initializable {
             product = genericHibernate.getEntityById(product.getClass(), product.getId());
         }
 
+
         if (product instanceof Spoiler) {
             productSpoilerRadio.setSelected(true);
             neededFieldsForProducts();
@@ -290,6 +300,7 @@ public class ProductTabController implements Initializable {
             productWeightField.setText(String.valueOf(wheels.getWeight()));
             productWarehouseComboBox.setValue(wheels.getWarehouse());
         }
+        productSoldCheck.setSelected(product.isSold());
     }
 
     @FXML private void clearAllFields() {
@@ -312,6 +323,7 @@ public class ProductTabController implements Initializable {
         productWarehouseComboBox.setPromptText("Warehouse");
         productKitTypeComboBox.setValue(null);
         productKitTypeComboBox.setPromptText("Kit type");
+        productSoldCheck.setSelected(false);
     }
 
     private void turnOffAllFields() {
@@ -328,6 +340,7 @@ public class ProductTabController implements Initializable {
         productKitTypeComboBox.setDisable(true);
         productWheelSizeField.setDisable(true);
         productWarehouseComboBox.setDisable(true);
+        productSoldCheck.setDisable(true);
     }
 
     private boolean allFieldsFilled() {

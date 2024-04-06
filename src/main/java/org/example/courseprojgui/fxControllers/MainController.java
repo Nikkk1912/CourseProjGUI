@@ -56,6 +56,24 @@ public class MainController implements Initializable {
 
         FXMLLoader loader = new FXMLLoader();
 
+        stopTab.setDisable(false);
+        ordersTab.setDisable(false);
+
+        try {
+            AnchorPane anch3 = loader.load(getClass().getResource("/org/example/courseprojgui/shopTab.fxml"));
+            stopTab.setContent(anch3);
+        } catch (IOException e) {
+            System.out.println("File not found");
+        }
+
+        try {
+            AnchorPane anch5 = loader.load(getClass().getResource("/org/example/courseprojgui/ordersTab.fxml"));
+            ordersTab.setContent(anch5);
+        } catch (IOException e) {
+            System.out.println("File not found");
+        }
+
+
         if(isAdminNow) {
             productsTab.setDisable(false);
             wareHousesTab.setDisable(false);
@@ -70,23 +88,6 @@ public class MainController implements Initializable {
             try {
                 AnchorPane anch4 = loader.load(getClass().getResource("/org/example/courseprojgui/wareHousesTab.fxml"));
                 wareHousesTab.setContent(anch4);
-            } catch (IOException e) {
-                System.out.println("File not found");
-            }
-        } else {
-            stopTab.setDisable(false);
-            ordersTab.setDisable(false);
-
-            try {
-                AnchorPane anch3 = loader.load(getClass().getResource("/org/example/courseprojgui/shopTab.fxml"));
-                stopTab.setContent(anch3);
-            } catch (IOException e) {
-                System.out.println("File not found");
-            }
-
-            try {
-                AnchorPane anch5 = loader.load(getClass().getResource("/org/example/courseprojgui/ordersTab.fxml"));
-                ordersTab.setContent(anch5);
             } catch (IOException e) {
                 System.out.println("File not found");
             }

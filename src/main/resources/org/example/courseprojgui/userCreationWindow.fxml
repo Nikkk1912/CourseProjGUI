@@ -13,7 +13,7 @@
       <TextField fx:id="userCreationSurnameField" layoutX="307.0" layoutY="157.0" prefHeight="40.0" prefWidth="170.0" promptText="Surname:" />
       <TextField fx:id="userCreationBillingField" layoutX="50.0" layoutY="250.0" prefHeight="40.0" prefWidth="170.0" promptText="Billing address:" />
       <TextField fx:id="userCreationShippingField" layoutX="307.0" layoutY="250.0" prefHeight="40.0" prefWidth="170.0" promptText="Shipping address:" />
-      <TextField fx:id="userCreationBirthField" layoutX="50.0" layoutY="360.0" prefHeight="40.0" prefWidth="170.0" promptText="Birth date(yyyy-mm-dd):" />
+      <TextField fx:id="userCreationBirthField" layoutX="50.0" layoutY="360.0" prefHeight="40.0" prefWidth="170.0" promptText="Birth date(dd MM yyyy):" />
       <TextField fx:id="userCreationCardField" layoutX="307.0" layoutY="360.0" prefHeight="40.0" prefWidth="170.0" promptText="Card number:" />
       <Text fx:id="userCreationText1" layoutX="50.0" layoutY="102.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fill customers information fields" wrappingWidth="429.13671875">
          <font>

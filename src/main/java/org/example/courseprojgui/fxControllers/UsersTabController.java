@@ -3,6 +3,7 @@ package org.example.courseprojgui.fxControllers;
 import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -10,11 +11,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import javafx.util.Duration;
 import lombok.Getter;
 import lombok.Setter;
@@ -54,6 +56,7 @@ public class UsersTabController implements Initializable {
     public Button removeMyWarehouseButton;
     public Text myWarehouseText;
     public TextField myWarehouseTextField;
+    public TableColumn deleteColumn;
     private ObservableList<ManagerTableParameters> data = FXCollections.observableArrayList();
     public TableView<ManagerTableParameters> managerTable;
     public TableColumn<ManagerTableParameters, Integer> idCol;
@@ -95,23 +98,136 @@ public class UsersTabController implements Initializable {
         openLoginFields(true);
 
         managerTable.setEditable(true);
-        idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
-        loginCol.setCellValueFactory(new PropertyValueFactory<>("login"));
-        nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-        surnameCol.setCellValueFactory(new PropertyValueFactory<>("surname"));
-        shippingCol.setCellValueFactory(new PropertyValueFactory<>("shippingAddress"));
-        billingCol.setCellValueFactory(new PropertyValueFactory<>("billingAddress"));
-        birthdayCol.setCellValueFactory(new PropertyValueFactory<>("birthDate"));
-        statusCol.setCellValueFactory(new PropertyValueFactory<>("status"));
+        setAllCellFactories();
         fillManagerTable();
+
         myWarehouseTextField.setEditable(false);
         loadMyWarehouse();
 
     }
 
+    private void setAllCellFactories() {
+        idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        loginCol.setCellValueFactory(new PropertyValueFactory<>("login"));
+        statusCol.setCellValueFactory(new PropertyValueFactory<>("status"));
+
+
+        nameCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        nameCol.setOnEditCommit(event -> {
+            event.getTableView().getItems().get(event.getTablePosition().getRow()).setName(event.getNewValue());
+            String status = String.valueOf(event.getRowValue().status.getValue());
+            if (status.equals("Manager")) {
+                Manager manager = genericHibernate.getEntityById(Manager.class, event.getTableView().getItems().get(event.getTablePosition().getRow()).getId());
+                manager.setName(event.getNewValue());
+                genericHibernate.update(manager);
+            } else if (status.equals("Customer")) {
+                Customer customer = genericHibernate.getEntityById(Customer.class, event.getTableView().getItems().get(event.getTablePosition().getRow()).getId());
+                customer.setName(event.getNewValue());
+                genericHibernate.update(customer);
+            }
+        });
+        nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+
+        surnameCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        surnameCol.setOnEditCommit(event -> {
+            event.getTableView().getItems().get(event.getTablePosition().getRow()).setName(event.getNewValue());
+            String status = String.valueOf(event.getRowValue().status.getValue());
+            if (status.equals("Manager")) {
+                Manager manager = genericHibernate.getEntityById(Manager.class, event.getTableView().getItems().get(event.getTablePosition().getRow()).getId());
+                manager.setSurname(event.getNewValue());
+                genericHibernate.update(manager);
+            } else if (status.equals("Customer")) {
+                Customer customer = genericHibernate.getEntityById(Customer.class, event.getTableView().getItems().get(event.getTablePosition().getRow()).getId());
+                customer.setSurname(event.getNewValue());
+                genericHibernate.update(customer);
+            }
+        });
+        surnameCol.setCellValueFactory(new PropertyValueFactory<>("surname"));
+
+
+        shippingCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        shippingCol.setOnEditCommit(event -> {
+            event.getTableView().getItems().get(event.getTablePosition().getRow()).setName(event.getNewValue());
+            String status = String.valueOf(event.getRowValue().status.getValue());
+            if (status.equals("Manager")) {
+                return;
+            } else if (status.equals("Customer")) {
+                Customer customer = genericHibernate.getEntityById(Customer.class, event.getTableView().getItems().get(event.getTablePosition().getRow()).getId());
+                customer.setShippingAddress(event.getNewValue());
+                genericHibernate.update(customer);
+            }
+        });
+        shippingCol.setCellValueFactory(new PropertyValueFactory<>("shippingAddress"));
+
+
+        billingCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        billingCol.setOnEditCommit(event -> {
+            event.getTableView().getItems().get(event.getTablePosition().getRow()).setName(event.getNewValue());
+            String status = String.valueOf(event.getRowValue().status.getValue());
+            if (status.equals("Manager")) {
+                return;
+            } else if (status.equals("Customer")) {
+                Customer customer = genericHibernate.getEntityById(Customer.class, event.getTableView().getItems().get(event.getTablePosition().getRow()).getId());
+                customer.setBillingAddress(event.getNewValue());
+                genericHibernate.update(customer);
+            }
+        });
+        billingCol.setCellValueFactory(new PropertyValueFactory<>("billingAddress"));
+
+
+        birthdayCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        birthdayCol.setOnEditCommit(event -> {
+            event.getTableView().getItems().get(event.getTablePosition().getRow()).setName(event.getNewValue());
+            String status = String.valueOf(event.getRowValue().status.getValue());
+            if (status.equals("Manager")) {
+                return;
+            } else if (status.equals("Customer")) {
+                Customer customer = genericHibernate.getEntityById(Customer.class, event.getTableView().getItems().get(event.getTablePosition().getRow()).getId());
+                customer.setBirthDate(event.getNewValue());
+                genericHibernate.update(customer);
+            }
+        });
+        birthdayCol.setCellValueFactory(new PropertyValueFactory<>("birthDate"));
+
+
+        Callback<TableColumn<ManagerTableParameters, Void>, TableCell<ManagerTableParameters, Void>> callback = param -> {
+            final TableCell<ManagerTableParameters, Void> cell = new TableCell<>() {
+                private final Button deleteButton = new Button("Delete");
+
+                {
+                    deleteButton.setOnAction(event -> {
+                        ManagerTableParameters row = getTableView().getItems().get(getIndex());
+
+                        String status = String.valueOf(row.getStatus());
+                        if (status.equals("Manager")) {
+                            genericHibernate.delete(Manager.class, row.getId());
+                        } else if (status.equals("Customer")) {
+                            genericHibernate.delete(Customer.class, row.getId());
+                        }
+                        fillManagerTable();
+
+                    });
+                }
+
+                @Override
+                protected void updateItem(Void item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty) {
+                        setGraphic(null);
+                    } else {
+                        setGraphic(deleteButton);
+                    }
+                }
+            };
+            return cell;
+        };
+        deleteColumn.setCellFactory(callback);
+    }
+
 
     @FXML private void fillManagerTable() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd LLLL yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MM yyyy");
         List<User> userList = genericHibernate.getAllRecords(User.class);
         data.clear();
         for (User m:userList) {

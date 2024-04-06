@@ -27,16 +27,17 @@
             </font>
         </Text>
         <Button fx:id="createNewUserButton" layoutX="270.0" layoutY="20.0" mnemonicParsing="false" onAction="#openCreateNewUserMenu" prefHeight="41.0" prefWidth="133.0" text="Create new user" />
-        <TableView fx:id="managerTable" layoutX="19.0" layoutY="81.0" prefHeight="453.0" prefWidth="945.0">
+        <TableView fx:id="managerTable" layoutX="19.0" layoutY="81.0" prefHeight="433.0" prefWidth="948.0">
             <columns>
                 <TableColumn fx:id="idCol" prefWidth="64.36993408203125" text="Id" />
                 <TableColumn fx:id="loginCol" prefWidth="114.86712646484375" text="Login" />
                 <TableColumn fx:id="nameCol" prefWidth="119.0" text="Name" />
                 <TableColumn fx:id="surnameCol" prefWidth="95.0" text="Surname" />
-                <TableColumn fx:id="statusCol" prefWidth="132.0" text="Status" />
-                <TableColumn fx:id="shippingCol" prefWidth="140.0" text="Shipping Addr" />
-                <TableColumn fx:id="billingCol" prefWidth="131.0" text="Billing Addr" />
-                <TableColumn fx:id="birthdayCol" prefWidth="146.0" text="Birthday" />
+                <TableColumn fx:id="statusCol" prefWidth="87.0" text="Status" />
+                <TableColumn fx:id="shippingCol" prefWidth="114.0" text="Shipping Addr" />
+                <TableColumn fx:id="billingCol" prefWidth="119.0" text="Billing Addr" />
+                <TableColumn fx:id="birthdayCol" prefWidth="115.0" text="Birthday" />
+            <TableColumn fx:id="deleteColumn" prefWidth="96.0" text="Delete" />
             </columns>
         </TableView>
         <PasswordField fx:id="passwordTextField" layoutX="667.0" layoutY="20.0" prefHeight="41.0" prefWidth="172.0" promptText="Password" />

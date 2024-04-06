@@ -233,6 +233,7 @@ public class ProductTabController implements Initializable {
             wheels.setWarehouse((Warehouse) productWarehouseComboBox.getSelectionModel().getSelectedItem());
             genericHibernate.update(wheels);
         }
+        productAdminList.getItems().setAll(genericHibernate.getAllRecords(Product.class));
     }
 
     @FXML private void deleteRecord() {
@@ -246,6 +247,9 @@ public class ProductTabController implements Initializable {
 
     @FXML private void loadProductData() {
         Product product = productAdminList.getSelectionModel().getSelectedItem();
+        if(product != null) {
+            product = genericHibernate.getEntityById(product.getClass(), product.getId());
+        }
 
         if (product instanceof Spoiler) {
             productSpoilerRadio.setSelected(true);

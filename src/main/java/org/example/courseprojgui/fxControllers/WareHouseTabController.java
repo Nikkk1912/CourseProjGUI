@@ -14,6 +14,7 @@ import org.example.courseprojgui.model.Product;
 import org.example.courseprojgui.model.Warehouse;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class WareHouseTabController implements Initializable {
@@ -88,8 +89,23 @@ public class WareHouseTabController implements Initializable {
 
     public void deleteWarehouse() {
         Warehouse warehouse = warehouseListOfWarehouses.getSelectionModel().getSelectedItem();
+
+        List<Manager> adminsOfWarehouse = genericHibernate.getEntityByWarehouseId(Manager.class, warehouse.getId());
+        for(Manager m:adminsOfWarehouse) {
+            m.setWarehouse(null);
+            genericHibernate.update(m);
+        }
+        List<Product> productsOfWarehouse = genericHibernate.getEntityByWarehouseId(Product.class, warehouse.getId());
+        for(Product p:productsOfWarehouse) {
+            p.setWarehouse(null);
+            genericHibernate.update(p);
+        }
+        warehouse.setManagers(null);
+        warehouse.setStock(null);
+        genericHibernate.update(warehouse);
+
         warehouseListOfWarehouses.getItems().remove(warehouse);
-        genericHibernate.delete(warehouse);
+        genericHibernate.delete(warehouse.getClass(), warehouse.getId());
         warehouseListProducts.getItems().clear();
         warehouseListAdmins.getItems().clear();
     }
@@ -137,10 +153,11 @@ public class WareHouseTabController implements Initializable {
             return;
         }
         warehouseAssignStatusText.setVisible(false);
-
-        manager.setWarehouse(warehouse);
-        genericHibernate.update(manager);
-        warehouseListAdmins.getItems().add(manager);
+        if (manager.getWarehouse() == null || manager.getWarehouse().getId() != warehouse.getId()) {
+            manager.setWarehouse(warehouse);
+            genericHibernate.update(manager);
+            warehouseListAdmins.getItems().add(manager);
+        }
         warehouseAdminLogField.clear();
         warehouseAdminPassFiled.clear();
     }

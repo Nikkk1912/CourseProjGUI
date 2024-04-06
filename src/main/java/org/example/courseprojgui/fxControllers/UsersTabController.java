@@ -225,7 +225,6 @@ public class UsersTabController implements Initializable {
         deleteColumn.setCellFactory(callback);
     }
 
-
     @FXML private void fillManagerTable() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MM yyyy");
         List<User> userList = genericHibernate.getAllRecords(User.class);
@@ -308,8 +307,11 @@ public class UsersTabController implements Initializable {
     }
 
     @FXML private void loadMyWarehouse() {
-        Manager manager = (Manager) currentUser;
-        if (manager != null && manager.getWarehouse() != null) {
+        myWarehouseTextField.clear();
+        if(currentUser != null) {
+            currentUser = genericHibernate.getEntityById(currentUser.getClass(), currentUser.getId());
+        }
+        if (currentUser != null && ((Manager) currentUser).getWarehouse() != null) {
             myWarehouseTextField.setText("Id: " + ((Manager) currentUser).getWarehouse().getId() + " | " + ((Manager) currentUser).getWarehouse().getAddress());
         }
     }

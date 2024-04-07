@@ -165,35 +165,36 @@ public class HibernateShop extends GenericHibernate {
         try {
             em.getTransaction().begin();
             var comment = em.find(Comment.class, id);
-            if (comment != null) {
-                Product product = em.find(Product.class, comment.getWhichProductCommented().getId());
-                if (product != null) {
+
+
+                for (Comment reply : comment.getReplies()) {
+                    deleteComment(reply.getId());
+                }
+
+                if(comment.getWhichProductCommented() != null) {
+                    Product product = em.find(Product.class, comment.getWhichProductCommented().getId());
                     product.getComments().remove(comment);
-                    comment.setParentComment(null);
                     em.merge(product);
                 }
 
                 User user = getUserByCredentials(comment.getCommentOwner().getLogin(), comment.getCommentOwner().getPassword());
-                if (user != null) {
-                    user.getComments().remove(comment);
-                    comment.setCommentOwner(null);
-                    em.merge(user);
-                }
+                user.getComments().remove(comment);
 
+                comment.setCommentOwner(null);
+                comment.setParentComment(null);
                 comment.getReplies().clear();
 
+                em.merge(user);
                 em.remove(comment);
 
                 em.getTransaction().commit();
             }
-        } catch (Exception e) {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
-            e.printStackTrace();
+         catch (Exception e) {
+             e.printStackTrace();
         } finally {
             if (em != null) em.close();
         }
     }
 }
+
 

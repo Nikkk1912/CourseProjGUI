@@ -141,7 +141,6 @@ public class CommentsWindowController implements Initializable {
     public void delete() {
         currentUser = usersTabController.getCurrentUser();
         if (currentUser == commentsTreeList.getSelectionModel().getSelectedItem().getValue().getCommentOwner() || currentUser instanceof Manager) {
-            System.out.println(commentsTreeList.getSelectionModel().getSelectedItem().getValue().getId());
             hibernateShop.deleteComment(commentsTreeList.getSelectionModel().getSelectedItem().getValue().getId());
         }
     }

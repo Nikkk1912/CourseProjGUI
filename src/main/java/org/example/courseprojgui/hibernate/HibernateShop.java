@@ -12,7 +12,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
-public class HibernateShop extends GenericHibernate{
+public class HibernateShop extends GenericHibernate {
     public HibernateShop(EntityManagerFactory entityManagerFactory) {
         super(entityManagerFactory);
     }
@@ -106,7 +106,7 @@ public class HibernateShop extends GenericHibernate{
         }
     }
 
-    public List<Product> loadAvailableProducts(){
+    public List<Product> loadAvailableProducts() {
         EntityManager em = getEntityManager();
         try {
             CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -159,4 +159,41 @@ public class HibernateShop extends GenericHibernate{
             if (entityManager != null) entityManager.close();
         }
     }
+
+    public void deleteComment(int id) {
+        EntityManager em = getEntityManager();
+        try {
+            em.getTransaction().begin();
+            var comment = em.find(Comment.class, id);
+            if (comment != null) {
+                Product product = em.find(Product.class, comment.getWhichProductCommented().getId());
+                if (product != null) {
+                    product.getComments().remove(comment);
+                    comment.setParentComment(null);
+                    em.merge(product);
+                }
+
+                User user = getUserByCredentials(comment.getCommentOwner().getLogin(), comment.getCommentOwner().getPassword());
+                if (user != null) {
+                    user.getComments().remove(comment);
+                    comment.setCommentOwner(null);
+                    em.merge(user);
+                }
+
+                comment.getReplies().clear();
+
+                em.remove(comment);
+
+                em.getTransaction().commit();
+            }
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            if (em != null) em.close();
+        }
+    }
 }
+

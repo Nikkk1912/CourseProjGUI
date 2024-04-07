@@ -23,11 +23,10 @@ public class Comment {
     private int id;
     private String commentTitle;
     private String commentBody;
-    private LocalDate dateCreated;
     @ManyToOne()
     private Product whichProductCommented;
     @ManyToOne()
-    private Customer commentOwner;
+    private User commentOwner;
     @OneToMany(mappedBy = "parentComment", cascade = CascadeType.ALL, orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Comment> replies;
@@ -36,4 +35,31 @@ public class Comment {
     private float rating;
     @ManyToOne
     private Cart chat;
+
+    public Comment(String commentTitle, String commentBody, float rating) {
+        this.commentTitle = commentTitle;
+        this.commentBody = commentBody;
+        this.rating = rating;
+    }
+
+    public Comment(String commentTitle, String commentBody, Product whichProductCommented, User commentOwner, float rating) {
+        this.commentTitle = commentTitle;
+        this.commentBody = commentBody;
+        this.whichProductCommented = whichProductCommented;
+        this.commentOwner = commentOwner;
+        this.rating = rating;
+    }
+
+    public Comment(String commentTitle, String commentBody, User commentOwner, Comment parentComment, float rating) {
+        this.commentTitle = commentTitle;
+        this.commentBody = commentBody;
+        this.commentOwner = commentOwner;
+        this.parentComment = parentComment;
+        this.rating = rating;
+    }
+
+    public String genText() {
+        String result = "Rating: "  + rating + "\nReview: " + commentBody;
+        return result;
+    }
 }

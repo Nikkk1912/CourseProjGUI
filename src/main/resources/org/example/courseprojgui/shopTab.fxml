@@ -3,12 +3,12 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<?import javafx.scene.control.TextArea?>
 <AnchorPane prefHeight="660.0" prefWidth="980.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.courseprojgui.fxControllers.ShopTabController">
    <children>
       <Text layoutX="20.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Shop">
@@ -21,7 +21,7 @@
             <Font size="24.0" />
          </font>
       </Text>
-      <ListView fx:id="shopProductList" layoutX="27.0" layoutY="115.0" onMouseClicked="#loadProductData" prefHeight="513.0" prefWidth="220.0" />
+      <ListView fx:id="shopProductList" layoutX="27.0" layoutY="115.0" onMouseClicked="#loadProductData" prefHeight="467.0" prefWidth="220.0" />
       <Text layoutX="91.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Products">
          <font>
             <Font size="24.0" />
@@ -104,5 +104,10 @@
             <Font size="14.0" />
          </font>
       </TextArea>
+      <Button fx:id="commentsWindowButton" onAction="#openCommentsWindow" layoutX="82.0" layoutY="600.0" mnemonicParsing="false" text="Comments">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

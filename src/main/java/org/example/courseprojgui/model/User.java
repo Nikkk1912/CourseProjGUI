@@ -30,6 +30,9 @@ public abstract class User implements Serializable {
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Cart> myPurchases;
+    @OneToMany(mappedBy = "commentOwner", cascade = CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    protected List<Comment> comments;
 
 
     public User(String name, String surname, String login, String password) {

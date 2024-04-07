@@ -1,10 +1,15 @@
 package org.example.courseprojgui.fxControllers;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import lombok.Getter;
 import org.example.courseprojgui.hibernate.HibernateShop;
 import org.example.courseprojgui.model.BodyKit;
@@ -12,6 +17,7 @@ import org.example.courseprojgui.model.Product;
 import org.example.courseprojgui.model.Spoiler;
 import org.example.courseprojgui.model.Wheels;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +36,7 @@ public class ShopTabController implements Initializable {
     public Button shopClearButton;
     public TextField shopAmountInStockField;
     public TextArea shopDescriptionField;
+    public Button commentsWindowButton;
     private UsersTabController usersTabController;
     @Getter
     private static ShopTabController instance;
@@ -138,5 +145,20 @@ public class ShopTabController implements Initializable {
 
     public void updateProductList() {
         shopProductList.getItems().setAll(hibernateShop.loadAvailableProducts());
+    }
+
+    @FXML private void openCommentsWindow() {
+        try {
+            FXMLLoader loader = new FXMLLoader(UserCreationController.class.getResource("/org/example/courseprojgui/commentsWindow.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Comments");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            System.out.println("File not found");
+        }
     }
 }

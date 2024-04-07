@@ -23,14 +23,15 @@ public class MainController implements Initializable {
     @Getter
     @Setter
     private static MainController instance;
-
-    @FXML Tab ordersTab;
-    @FXML Tab productsTab;
-    @FXML Tab stopTab;
-    @FXML Tab usersTab;
-    @FXML Tab wareHousesTab;
-
     private EntityManagerFactory entityManagerFactory;
+
+    @FXML private Tab ordersTab;
+    @FXML private Tab productsTab;
+    @FXML private Tab stopTab;
+    @FXML private Tab usersTab;
+    @FXML private Tab wareHousesTab;
+
+
 
     public MainController() {
         instance = this;

@@ -73,7 +73,6 @@ public class UsersTabController implements Initializable {
     public Button logOffButton;
     public Button editButton;
     public Button saveChangesButton;
-
     @Getter
     private MainController mainController;
     @Getter
@@ -225,7 +224,7 @@ public class UsersTabController implements Initializable {
         deleteColumn.setCellFactory(callback);
     }
 
-    @FXML private void fillManagerTable() {
+    public void fillManagerTable() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MM yyyy");
         List<User> userList = genericHibernate.getAllRecords(User.class);
         data.clear();
@@ -251,7 +250,7 @@ public class UsersTabController implements Initializable {
         managerTable.setItems(data);
     }
 
-    @FXML private void openCreateNewUserMenu() {
+    public void openCreateNewUserMenu() {
         try {
 
             FXMLLoader loader = new FXMLLoader(UserCreationController.class.getResource("/org/example/courseprojgui/userCreationWindow.fxml"));
@@ -267,7 +266,7 @@ public class UsersTabController implements Initializable {
         }
     }
 
-    @FXML private void deleteMeFromWarehouse() {
+    public void deleteMeFromWarehouse() {
         Manager manager = (Manager) currentUser;
         manager.setWarehouse(null);
         genericHibernate.update(manager);
@@ -275,7 +274,7 @@ public class UsersTabController implements Initializable {
         myWarehouseTextField.clear();
     }
 
-    @FXML private void logOff() {
+    public void logOff() {
         mainController.closeAllTabs();
         openLoginFields(true);
         currentUser=null;
@@ -283,13 +282,13 @@ public class UsersTabController implements Initializable {
         passwordTextField.clear();
     }
 
-    @FXML private void startEditInfo() {
+    public void startEditInfo() {
         userEditingStatusText.setVisible(true);
         userEditingStatusText.setText("You can change user info");
         isEditable(true);
     }
 
-    @FXML private void saveEditInfo() {
+    public void saveEditInfo() {
 
         isEditable(false);
         currentUser.setName(userNameField.getText());
@@ -306,7 +305,7 @@ public class UsersTabController implements Initializable {
         pause.play();
     }
 
-    @FXML private void loadMyWarehouse() {
+    public void loadMyWarehouse() {
         myWarehouseTextField.clear();
         if(currentUser != null) {
             currentUser = genericHibernate.getEntityById(currentUser.getClass(), currentUser.getId());

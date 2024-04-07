@@ -61,7 +61,7 @@ public class ShopTabController implements Initializable {
         setCellFactories();
 
         shopProductList.getItems().setAll(hibernateShop.loadAvailableProducts());
-
+        updateProductList();
     }
 
     private void setCellFactories() {
@@ -94,7 +94,7 @@ public class ShopTabController implements Initializable {
 
     }
 
-    @FXML private void loadProductData() {
+    public void loadProductData() {
         if(shopProductList.getItems() ==null) {
             shopProductList.getItems().setAll(hibernateShop.loadAvailableProducts());
         }
@@ -116,14 +116,14 @@ public class ShopTabController implements Initializable {
 
     }
 
-    @FXML private void addToCart() {
+    public void addToCart() {
         Product product = shopProductList.getSelectionModel().getSelectedItem();
         shopCartList.getItems().add(product);
         shopProductList.getItems().remove(product);
 
     }
 
-    @FXML private void clearCart() {
+    public void clearCart() {
         List<Product> cartItems = new ArrayList<>(shopCartList.getItems());
         for(Product p : cartItems) {
             shopProductList.getItems().add(p);
@@ -131,13 +131,13 @@ public class ShopTabController implements Initializable {
         }
     }
 
-    @FXML private void submitCart() {
+    public void submitCart() {
         hibernateShop.createCart(shopCartList.getItems(), usersTabController.getCurrentUser());
         shopCartList.getItems().clear();
         shopProductList.getItems().setAll(hibernateShop.loadAvailableProducts());
     }
 
-    @FXML private void removeFromCart(){
+    public void removeFromCart(){
         Product product = shopCartList.getSelectionModel().getSelectedItem();
         shopProductList.getItems().add(product);
         shopCartList.getItems().remove(product);
@@ -147,7 +147,7 @@ public class ShopTabController implements Initializable {
         shopProductList.getItems().setAll(hibernateShop.loadAvailableProducts());
     }
 
-    @FXML private void openCommentsWindow() {
+    public void openCommentsWindow() {
         try {
             FXMLLoader loader = new FXMLLoader(UserCreationController.class.getResource("/org/example/courseprojgui/commentsWindow.fxml"));
             Parent root = loader.load();

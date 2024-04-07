@@ -18,7 +18,6 @@ import java.util.ResourceBundle;
 
 public class UserCreationController implements Initializable {
     public RadioButton userCreationIsAdmin;
-    private UsersTabController usersTabController;
     public AnchorPane userCreationAncrPane;
     public Button userCreationAddButton;
     public Button userCreationClearButton;
@@ -35,6 +34,7 @@ public class UserCreationController implements Initializable {
     public Text userCreationText2;
     private GenericHibernate genericHibernate;
     private HibernateShop hibernateShop;
+    private UsersTabController usersTabController;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -43,8 +43,7 @@ public class UserCreationController implements Initializable {
         hibernateShop = new HibernateShop(usersTabController.getMainController().getEntityManagerFactory());
     }
 
-
-    @FXML private void clearFields() {
+    public void clearFields() {
           userCreationNameField.clear();
           userCreationSurnameField.clear();
           userCreationBillingField.clear();
@@ -56,12 +55,12 @@ public class UserCreationController implements Initializable {
           userCreationIsAdmin.setSelected(false);
     }
 
-    @FXML private void closeWindow() {
+    public void closeWindow() {
         Stage stage = (Stage) userCreationBackButton.getScene().getWindow();
         stage.close();
     }
 
-    @FXML private void saveUser() {
+    public void saveUser() {
         String name = userCreationNameField.getText();
         String surname = userCreationSurnameField.getText();
         String login = userCreationLoginField.getText();
@@ -97,7 +96,7 @@ public class UserCreationController implements Initializable {
 
     }
 
-    @FXML private void hideNonAdminFields() {
+    public void hideNonAdminFields() {
         if(userCreationIsAdmin.isSelected()) {
             userCreationShippingField.clear();
             userCreationBillingField.clear();

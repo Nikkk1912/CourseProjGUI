@@ -17,7 +17,8 @@ public class GenericHibernate {
     public GenericHibernate(EntityManagerFactory entityManagerFactory) {
         this.entityManagerFactory = entityManagerFactory;
     }
-    EntityManager getEntityManager() {
+
+    public EntityManager getEntityManager() {
         return entityManagerFactory.createEntityManager();
     }
 

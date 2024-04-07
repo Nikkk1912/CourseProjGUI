@@ -1,6 +1,6 @@
 
 Link to class diagram:
-https://mermaid.live/edit#pako:eNqFVW1v2jAQ_iuWP0MVCuWtqFJfNlVau1WlU6WJLyYxYNWxs7MtljL623dOHIqh6kAC57nzc5fnzucNTXXG6Zi22-2ZssJKPibXDAx5ckqoJXlgYA2ZrnQxU5VPKpkxN4ItgeUzNVMPoDOXWjL5226TK52V34Q9QKeFFpLDAfq84lwaT4HxLNEIBbvHfhoOtd89U2zpd79D185YnXsMN4d1sCCVR8OmirXBQnK1Iy6eyoJ7HDl0nnNV5xDWMehDe8dnBvxWO8MrdJdZDO-9hf9WgjW-ZDNTBD_tudaSCHOZ5UIF6BKAlXfC2Def8RvJy0duCq2MmEvuIRRr-85YydHQCUxUZOFhasGXTrGcx4hxcAxKvdylEKAC-dcasijeTuhN7JwyyL67fO6FiIKtRHGZZcCNiQ1zISX-x7Y7nTJ5wyxHM9hVhqs4eqjGZy-c1j5Pvos_tPgOOIrnQ10Dx9-GrlI2bPmxVhzOm01YnEnI5IIAL6TgpjEupGaWALMY8DzK_b09NkelDs3yRlDc9OXIHNoGm6FeHEjJGg33lfKn6UOZPogqLM-DdVffdHe69libo_uZ_vZY-IynIAortNrb99sxP2rKSLgCRBqXvDmvB_12BUwdF75A3etj0khU-aHJKQsl6ugWLLUOdm0aJgB5aSbBXugwsQ5D59gkIJiMEl9zsVzZuODVaIu0WntoKl6PGlNq-B9dk2ngm0y-KIf1YV7Wi4savHJ50bzaMzIHFR61XtSrW62Dal-dlNWQxhC0RZEpZyLDO6Din1G74jgj6BiXGYOXGUVP9GPO6mmpUjpeMGl4i7rCH51wFezQgqlfWuOzBVc_0vGG_qHjUXLSO-t3O6NOMuwmw1GLlnTc7iW9k-GwNxiOut3TQa_T729b9LUi6JwMe51hMkqS037S7Q0GZy3KM2E13Nd3VnV1bf8BMBBMtQ
+https://mermaid.live/edit#pako:eNq9Gmtv2zjyrwj65GLtoG3WbZIGAZJscy22SYvExQILf1hGoiOiEqkjqTjeXPvbb_gUqYfXuQaXAI40MxwO5z2MH9OM5Tg9Smez2ZJKIkt8lJwjLpJFQwm9S74gLkVyU7B6STVNViIhfiPojqNqSZf0C2d5k8nk-D-zWXLG8s3vRHagNzUjJeYd6B8FxqVogUzBEMcfWCNwDD5nVYWp7ABBshhipFxShdEAiwwgX4WSw79eIoruFGRJFcYI5oEt6LwRklUe1m7vX83eLdZJrH4tw2DZklpNGfbwsNjU2FDbpTGbENieKgDag4Vr7U5L6rUanzkGe65Lqs4SMPWvAYn61Z7g2CWPS5rAz-yWsTIh4jSvCLWgdqN1a1-N-USE_KEE_ZFUm2ssakYFuS2xAoFrfG-30Zp1exA4Isnty43kylEpqnAMEQ3vA0t25-WyoBr4rxn3_NRxhTZnX8YvDc8K1JHfKP1HkpmHWHDnOl54u2uGeH7VVLdKw5HUBalP85xjIWLELSlL-BvjPrEMlb8hiQHNZZHDU7y7dYhtmrNiL1TwD2KUr1qEC7d1QbLCvtg9sGOrTWWXfl5Tf8BYWRzXJcHuHE7OGhyESu_2GrcqGZIJRxJEeufoVQSDJWR02tbRBs-rBbBC_0jALNm3EGM9GcxsHjr6R07xoXqVGDvsRSSuxIKdNZtIRz6raJiLpMoFaLCR0_s2O8q-AXOccVJLwmiw7t8NUpl-E6m35iTDQbwWPl6LXrx2_T02Cny864bSu-gwGjyuNaUbMM9GqAfPvGO8jbDPIubt8mon2s44on23r8GnTLZxttZ0gGqo5BswSLNCmWy4t5HN1Mk3l7EV9BfL8Q7TBX6QkxfxaU3160pUQahygsrICmtM7gq5C1dTPSMtrhXohvzdC-KS8Sfv4vZxB7YbHR-_pw24LFI-dXJigGdNVTsN_QHMrDKvGVuZpw-MWeVfNGWpGwS7yb8w5AeSfSCQB6lKY6rO-DdX0I0oPVp3-PfanW34XIDBGN8keABoj3y8OEnuGQE7cwx8JgtL_KKLb-p8DK_cUf29w_K0LK9xBgVETM6VoAqsJb6C6tPjmeMSb9vT4j0nQ6Zfp4kJlhdJsGihRDAaONt8zLcvHD6AW-3jfiubdUsVu2RkNmecX3Smg03U37PNOce54ohKMQkr8jTpFGMnamAnlV4mWmwb-ieQtUwOmJr-AITi0UKjTL0w1kDMBqIiP71HpESQDVxemThandYCNal30JBimOnHiKnCaq3qHgaobZJ3K_zrkKAmobayau1-wGXJTqFaZjrqXJNKoNuDLMVK3Vp3iVQc_QVRKUAmTDO891CVf5lmNFxomOlEu0C3IcMhOmXYHcg-83w3flbVO1D6yr6dVp-6AhikoZyt91bu1KY1j2Vqz36u_Au0FnIeo7cZZaFdBcEQBHZT5WOAXkvTWHgrS0-Ldsaw1dSIHorSX6A5CwNuGY9xiPi7s_a3GV2ud8sibG_TMbbR4pio5THgMGYdc4iWdshnrLfbwI3Ih83bmmZMpGGHM-v8FBNvFc5EkVc--gYvAhMqJKK-63piFZvB3onXTwAL1BBAIevUMcQ5ZgCKDrakYYIilKisDd3F5Ov1J8iYJs9ME5jaGAxF-KyheYmhrTevIkpvrMYUyiRwFRM1IGJE3Yx4xdZxri-ZwI72RW8G7HjJiGqrTnb0PXdneccEfdEsotd63HUAQcMb7yD6KTMcALgad8yY_XzaFronOYeKYDwGxqxJRLCCUTLMYxPfUXhr6bjAV3ithLvEtJkM1KtLfMFZ5duGmATq-ufVKoaBtrl8nxP5ka5YB4Xu8TBGVefLTW-XmZfVhQfBZe7d6x6VPUJXi_-Z8pNqSjSZGKCznlrg7NspzTVtLBUR6ihatWOrYZy02l0w1Tgkk7CF6fn9QA57fKJzxv1ZETfZYxHSDLQGWzy14eWok5rXTrBjxK2a-1nA5OS-mygxY2hBcnzFqI7alt333i1Vp2r7JvWGVHWJP1KJgQgqDDROcuPHUos2HarHgi_LRmyjCO6ahgna66mRLcIbrBGSgtR191pomHToAmmMkstC3yolSW9yH07AO7rOSJbs5OGtnvoceXLm8uSWJKnSjm02QBVo0o3eBdNzRZw6tUMbeOS1zW1FZB_OccXudRLt48zwaSVQGWLSK6lxx9Zx-dF27ik18_-eW0aKY3hJ2D9R6z7Pl5pqju8JXlv996x_rbF9j3EyxvVAuQvH-KPE1cRdddqeeJo4zLHFnMS3oBEjrX5Q7CkcW070557-1Jc0yD35cbrACDpE_yrxgxxwMjd3dnyzLjdDVX8ypKeAxZAXjo4HP9nAjbrQro7bsUbnmrt2__HY5pZt1_i1znuc-96ajQ56z-e9kNp00vI9xTTpnGmQvOebP7e-V7nHvGRoAHzcObXsauufq1EDnfzz2UunDigBYaWZDZYhf8n-hFIWXIN1QnwFMhX6pspVmKF_O_QM80TFD7LZKWk_cfKhGOc4Nx3gBeO9q7zgNtFc2Q6V3CGM0eAQZmuboNsBmMXiFteYTEJzBwNSH-vyCXKYC2jc8MC2fiRSZ4XQumVn7KH7f4Lhe4z_pW17pn7h-axtjDIyfmIYwEZQxgFGx9ZAsZ2yLwS5c9PmgkVUWunpNIXpEhSTp0epVvEylQWGDj49gscc8W_LFCiBDjWS3Wxolh6tUCnwNDW-Z79Y4aE1on8yBu-SN-Y1PXpMH9Kj2eu9-cHbV_P528PDw9cH88P5fJpu0qNXb1_v7R-8ejnfP5gfHOz_un_wfZr-rVm83Duc__py_ubtfP9w__WrN2_2p6nSEuOX5jsg-qsg3_8L0y_zvQ
 
 Code for mermaid diagram:
 
@@ -12,13 +12,21 @@ classDiagram
 Product <|-- BodyKit
 Product <|-- Spoiler
 Product <|-- Wheels
+Product o-- WareHouse
+Product o-- Comment
+Product o-- Cart
+Product o-- Shop
 
 Cart o-- Product
+Cart o-- User
+Cart o-- Manager
 
 User <|-- Manager
 User <|-- Customer
+User o-- Cart
+User o-- Shop
+User o-- Comment
 
-Customer <|-- Cart
 
 Manager o-- Cart
 
@@ -26,16 +34,23 @@ BodyKit <|-- KitType
 
 
 Comment o-- Comment
+Comment o-- Product
 Comment o-- User
+Comment o-- Cart
+
 
 WareHouse o-- Manager
 WareHouse o-- Product
+
+Shop o-- User
+Shop o-- Product
 
 
 
 class Manager {
     -bool isAdmin
-    -ArrayList~Cart~ myResponsibleCarts
+    -WareHouse wareHouse
+    -List~Cart~ myResponsibleCarts
 }
 
 class User {
@@ -44,6 +59,9 @@ class User {
     -String surname
     -String login
     -String password
+    -Shop shop
+    -List~Cart~ myPurchase
+    -List~Comment~ comments
 }
 
 class Customer {
@@ -57,22 +75,26 @@ class Comment {
     -int id
     -String commentTitle
     -String commentBody
-    -LocalDate dateCreated
-    -User commentOwner;
-    -List<Comment> replies;
+    -Product whichProductCommented
+    -User commentOwner
+    -List~Comment~ replies
+    -Comment parentComment
     -float rating;
+    -Cart chat
 }
 
 class WareHouse {
-    -ArrayList~Product~ stock
-    -ArrayList~Manager~ managers
+    -int id
+    -List~Product~ stock
+    -List~Manager~ managers
     -String address
 }
 
 class Cart {
     -int id
-    -ArrayList~Product~ item
-    -Customer customer
+    -List~Product~ itemsToBuy
+    -User customer
+    -Manager manager
 }
 
 class Product {
@@ -81,6 +103,16 @@ class Product {
     -String decription
     -int quantity
     -float price
+    -Warehouse warehouse
+    -List~Comment~ comments;
+    -Cart cart;
+    -Shop shop;
+}
+
+class Shop {
+    -int id
+    -List~User~ sysUsers;
+    -List~Product~ sysProducts;
 }
 
 class BodyKit {
@@ -88,18 +120,22 @@ class BodyKit {
     -String compatibleCars
     -Brand countryManufacturer
     -KitType kitType
+    +String genText()
 }
 
 class Spoiler {
     -String material
     -float weight
+    +String genText()
 }
 
 class Wheels {
     -int wheelSize
     -String color
     -float weight
+    +String genText()
 }
+
 
 class KitType {
     <<Enumeration>>
@@ -109,3 +145,225 @@ class KitType {
     Hood
     FullKit
 }
+
+
+GenericHibernate o-- HibernateShop
+
+class GenericHibernate {
+    -EntityManagerFactory entityManagerFactory
+    +<T> void create(T entity)
+    +<T> void update(T entity)
+    +<T> List<T> getAllRecords(Class<T> className)
+    +<T> void delete(T entity)
+    +<T> void delete(Class<T> entityClass, int id)
+    +<T> T getEntityById(Class<T> entityClass, int id)
+    +<T> List<T> getEntityByWarehouseId(Class<T> entityClass, int warehouseId)
+}
+
+class HibernateShop {
+    +User getUserByCredentials(String login, String password)
+    +void createCart(List<Product> products, User user)
+    +void deleteCart(int id)
+    +List<Product> loadAvailableProducts()
+    +Cart getEntityByCartId(int cartId)
+    +List<Cart> getCartsByCustomerId(int customerId)
+    +void deleteComment(int id)
+}
+
+HelloAplication <|-- MainController
+HelloAplication o-- `persistence.xml`
+
+MainController <|-- UsersTabController
+MainController <|-- ShopTabController
+MainController <|-- OrdersTabController
+MainController <|-- ProductTabController
+MainController <|-- WareHouseTabController
+MainController o-- `mainWindow.fxml`
+
+
+UsersTabController <|-- UserCreationController
+UsersTabController <|-- ManagerTableParameters
+UsersTabController o-- `usersTab.fxml`
+
+ShopTabController <|-- CommentsWindowController
+ShopTabController o-- `shopTab.fxml`
+
+CommentsWindowController <|-- CommentCreationWindowController
+CommentsWindowController o-- `commentsWindow.fxml`
+
+CommentCreationWindowController o-- `commentCreationWindow.fxml`
+
+OrdersTabController o-- `ordersTab.fxml`
+
+ProductTabController o-- `productsTab.fxml`
+
+UserCreationController o-- `userCreationWindow.fxml`
+
+WareHouseTabController o-- `wareHousesTab.fxml`
+
+
+
+class MainController {
+    -MainController instance
+    -EntityManagerFactory entityManagerFactory
+    -Tab ordersTab
+    -Tab productsTab
+    -Tab stopTab
+    -Tab usersTab
+    -Tab wareHousesTab
+
+    +void initialize(URL location, ResourceBundle resources)
+    +void openAllTabs(boolean isAdminNow)
+    +void closeAllTabs()
+}
+
+class UsersTabController {
+    -MainController mainController
+    -UsersTabController instance
+    -boolean isAdminNow
+    -GenericHibernate genericHibernate
+    -ShopTabController shopTabController
+    -User currentUser
+
+    +void initialize(URL location, ResourceBundle resources)
+    +void setAllCellFactories()
+    +void fillManagerTable()
+    +void openCreateNewUserMenu()
+    +void deleteMeFromWarehouse()
+    +void logOff()
+    +void startEditInfo()
+    +void saveEditInfo()
+    +void loadMyWarehouse()
+    -void openManagerField(boolean val)
+    -void openCustomerField(boolean val)
+    -void openLoginFields(boolean val)
+    +void checkAndLogin()
+    -void isEditable(boolean val)
+    +void addNewUserToList (User user)
+
+}
+
+class UserCreationController {
+    -GenericHibernate genericHibernate
+    -HibernateShop hibernateShop
+    -UsersTabController usersTabController
+
+    +void initialize(URL url, ResourceBundle resourceBundle)
+    +void clearFields()
+    +void closeWindow()
+    +void saveUser()
+    +void hideNonAdminFields()
+}
+
+class ManagerTableParameters {
+    +SimpleIntegerProperty id
+    +SimpleStringProperty status
+    +SimpleStringProperty login
+    +SimpleStringProperty name
+    +SimpleStringProperty surname
+    +SimpleStringProperty shippingAddress
+    +SimpleStringProperty billingAddress
+    +SimpleStringProperty birthDate
+}
+
+class ShopTabController {
+    -UsersTabController usersTabController
+    -ShopTabController instance
+    -HibernateShop hibernateShop
+
+    +void initialize(URL location, ResourceBundle resources)
+    -void setCellFactories()
+    +void loadProductData()
+    +void addToCart()
+    +void clearCart()
+    +void submitCart()
+    +void removeFromCart()
+    +void updateProductList()
+    +void openCommentsWindow()
+}
+
+class CommentsWindowController {
+    -MainController mainController
+    -GenericHibernate genericHibernate
+    -HibernateShop hibernateShop
+    -UsersTabController usersTabController
+    -User currentUser
+    -CommentsWindowController instance
+
+    +void initialize(URL url, ResourceBundle resourceBundle)
+    +void previewProduct()
+    +void addReview()
+    +void loadComments()
+    -void addTreeItem(Comment comment, TreeItem<Comment> parentComment)
+    -void generateAlert(Alert.AlertType alertType, String header, String text)
+    +void updateComment()
+    +void reply()
+    +void delete()
+    +void previewComment()
+
+}
+
+class CommentCreationWindowController {
+    -MainController mainController
+    -UsersTabController usersTabController
+    -GenericHibernate genericHibernate
+    -Comment comment
+    -Product product
+    -User currentUser
+    -boolean isUpdate
+    -CommentsWindowController commentsWindowController
+
+    +void initialize(URL url, ResourceBundle resourceBundle)
+    +void setData(User user, Product product)
+    +void setData(Comment comment, User user, Product product)
+    +void setData(Comment comment)
+    +void saveComment()
+
+}
+
+class OrdersTabController {
+    -HibernateShop hibernateShop
+    -GenericHibernate genericHibernate
+    -UsersTabController usersTabController
+    -ShopTabController shopTabController
+
+    +void initialize(URL url, ResourceBundle resourceBundle)
+    +void loadCartData()
+    -void loadProductData(Cart cart)
+    -void setCellFactories()
+    +void deleteCart()
+    +void refreshCartsList()
+
+}
+
+class ProductTabController {
+
+    -GenericHibernate genericHibernate
+    -ProductTabController instance
+
+    +void initialize(URL location, ResourceBundle resources)
+    +void neededFieldsForProducts()
+    +void createRecord()
+    +void updateRecord()
+    +void deleteRecord()
+    +void loadProductData()
+    +void clearAllFields()
+    -void turnOffAllFields()
+    -boolean allFieldsFilled()
+    +void loadWarehousesForComboBox()
+}
+
+class WareHouseTabController {
+    -UsersTabController usersTabController
+    -MainController mainController
+    -GenericHibernate genericHibernate
+
+    +void initialize(URL location, ResourceBundle resources)
+    +void deleteWarehouse()
+    +void editWarehouse()
+    +void createWarehouse()
+    +void loadWarehouse()
+    +void assignManagerToWarehouse()
+
+}
+

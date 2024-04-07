@@ -75,8 +75,7 @@ public class ProductTabController implements Initializable {
         productAdminList.getItems().setAll(genericHibernate.getAllRecords(Product.class));
     }
 
-
-    @FXML private void neededFieldsForProducts() {
+    public void neededFieldsForProducts() {
         turnOffAllFields();
         if (productSpoilerRadio.isSelected()) {
 
@@ -135,7 +134,7 @@ public class ProductTabController implements Initializable {
         }
     }
 
-    @FXML private void createRecord() {
+    public void createRecord() {
         if (!allFieldsFilled()) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("System message");
@@ -188,7 +187,7 @@ public class ProductTabController implements Initializable {
         productAdminList.getItems().sort(Comparator.comparing(Product::getTitle));
     }
 
-    @FXML private void updateRecord() {
+    public void updateRecord() {
         if (!allFieldsFilled()) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("System message");
@@ -237,7 +236,7 @@ public class ProductTabController implements Initializable {
         productAdminList.getItems().setAll(genericHibernate.getAllRecords(Product.class));
     }
 
-    @FXML private void deleteRecord() {
+    public void deleteRecord() {
 
         Product product = productAdminList.getSelectionModel().getSelectedItem();
         productAdminList.getItems().remove(product);
@@ -246,7 +245,7 @@ public class ProductTabController implements Initializable {
 
     }
 
-    @FXML private void loadProductData() {
+    public void loadProductData() {
         Product product = productAdminList.getSelectionModel().getSelectedItem();
         if(product != null) {
             product = genericHibernate.getEntityById(product.getClass(), product.getId());
@@ -297,7 +296,7 @@ public class ProductTabController implements Initializable {
         }
     }
 
-    @FXML private void clearAllFields() {
+    public void clearAllFields() {
         productSpoilerRadio.setSelected(false);
         productWheelsRadio.setSelected(false);
         productBodyKitRadio.setSelected(false);
@@ -371,7 +370,7 @@ public class ProductTabController implements Initializable {
         }
     }
 
-    @FXML private void loadWarehousesForComboBox() {
+    public void loadWarehousesForComboBox() {
         ObservableList<Warehouse> warehouses = FXCollections.observableArrayList(genericHibernate.getAllRecords(Warehouse.class));
         productWarehouseComboBox.setConverter(new StringConverter<Warehouse>() {
             @Override

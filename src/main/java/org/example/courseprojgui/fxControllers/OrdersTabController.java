@@ -49,7 +49,7 @@ public class OrdersTabController implements Initializable {
         idField.setEditable(false);
     }
 
-    @FXML private void loadCartData() {
+    public void loadCartData() {
         User currentUser = genericHibernate.getEntityById(usersTabController.getCurrentUser().getClass(), usersTabController.getCurrentUser().getId());
         Cart cart = cartsList.getSelectionModel().getSelectedItem();
 
@@ -94,7 +94,7 @@ public class OrdersTabController implements Initializable {
         });
     }
 
-    @FXML private void deleteCart() {
+    public void deleteCart() {
         Cart cart = cartsList.getSelectionModel().getSelectedItem();
         hibernateShop.deleteCart(cart.getId());
         cartsList.getItems().remove(cart);
@@ -106,7 +106,7 @@ public class OrdersTabController implements Initializable {
 
     }
 
-    @FXML private void refreshCartsList() {
+    public void refreshCartsList() {
         User currentUser = genericHibernate.getEntityById(usersTabController.getCurrentUser().getClass(), usersTabController.getCurrentUser().getId());
         List<Cart> carts = hibernateShop.getCartsByCustomerId(currentUser.getId());
         cartsList.getItems().setAll(carts);

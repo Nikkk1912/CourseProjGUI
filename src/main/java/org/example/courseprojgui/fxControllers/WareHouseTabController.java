@@ -35,7 +35,7 @@ public class WareHouseTabController implements Initializable {
     public TextField warehouseIdField;
     private UsersTabController usersTabController;
     private MainController mainController;
-    GenericHibernate genericHibernate;
+    private GenericHibernate genericHibernate;
 
     @Override
     public void initialize(URL location, ResourceBundle resources)

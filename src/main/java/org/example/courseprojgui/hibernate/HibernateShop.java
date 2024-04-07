@@ -68,7 +68,6 @@ public class HibernateShop extends GenericHibernate {
         }
     }
 
-
     public void deleteCart(int id) {
         EntityManager entityManager = getEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();

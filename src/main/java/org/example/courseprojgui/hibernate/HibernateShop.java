@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.CompletionException;
 
 public class HibernateShop extends GenericHibernate {
     public HibernateShop(EntityManagerFactory entityManagerFactory) {
@@ -166,35 +167,38 @@ public class HibernateShop extends GenericHibernate {
             em.getTransaction().begin();
             var comment = em.find(Comment.class, id);
 
-
-                for (Comment reply : comment.getReplies()) {
-                    deleteComment(reply.getId());
-                }
-
-                if(comment.getWhichProductCommented() != null) {
-                    Product product = em.find(Product.class, comment.getWhichProductCommented().getId());
-                    product.getComments().remove(comment);
-                    em.merge(product);
-                }
-
-                User user = getUserByCredentials(comment.getCommentOwner().getLogin(), comment.getCommentOwner().getPassword());
-                user.getComments().remove(comment);
-
-                comment.setCommentOwner(null);
-                comment.setParentComment(null);
-                comment.getReplies().clear();
-
-                em.merge(user);
-                em.remove(comment);
-
-                em.getTransaction().commit();
+            for (Comment reply : comment.getReplies()) {
+                deleteComment(reply.getId());
             }
-         catch (Exception e) {
-             e.printStackTrace();
+
+            if(comment.getWhichProductCommented() != null) {
+                Product product = em.find(Product.class, comment.getWhichProductCommented().getId());
+                product.getComments().remove(comment);
+                update(product);
+            }
+
+            User user = getUserByCredentials(comment.getCommentOwner().getLogin(), comment.getCommentOwner().getPassword());
+            user.getComments().remove(comment);
+            update(user);
+
+            comment.setWhichProductCommented(null);
+            comment.setCommentOwner(null);
+            comment.setParentComment(null);
+            comment.getReplies().clear();
+
+
+            em.remove(comment);
+
+
+            em.getTransaction().commit();
+
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             if (em != null) em.close();
         }
     }
+
 }
 
 

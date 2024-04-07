@@ -12,6 +12,7 @@ import org.example.courseprojgui.model.Comment;
 import org.example.courseprojgui.model.Product;
 import org.example.courseprojgui.model.User;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -27,10 +28,11 @@ public class CommentCreationWindowController implements Initializable {
     private Product product;
     private User currentUser;
     private boolean isUpdate = false;
+    private CommentsWindowController commentsWindowController;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        commentsWindowController = CommentsWindowController.getInstance();
     }
 
     public void setData(User user, Product product) {
@@ -63,7 +65,7 @@ public class CommentCreationWindowController implements Initializable {
         reviewField.setText(commentToUpdate.getCommentBody());
     }
 
-    public void saveComment() {
+    public void saveComment() throws IOException {
         if(product != null && comment == null && !isUpdate) {
             Comment commentToSave = new Comment(commentTitleField.getText(), reviewField.getText(), product, currentUser, (float) ratingSlider.getValue());
             Product productToUpdate = genericHibernate.getEntityById(Product.class, product.getId());

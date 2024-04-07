@@ -10,6 +10,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import lombok.Getter;
 import org.example.courseprojgui.HelloApplication;
 import org.example.courseprojgui.hibernate.GenericHibernate;
 import org.example.courseprojgui.hibernate.HibernateShop;
@@ -28,6 +29,8 @@ public class CommentsWindowController implements Initializable {
     private User currentUser;
     public ListView<Product> productListView;
     public TreeView<Comment> commentsTreeList;
+    @Getter
+    private static CommentsWindowController instance;
 
 
     @Override
@@ -66,6 +69,10 @@ public class CommentsWindowController implements Initializable {
         productListView.getItems().addAll(genericHibernate.getAllRecords(Product.class));
     }
 
+    public CommentsWindowController() {
+        instance = this;
+    }
+
     public void previewProduct() {
         Product product = genericHibernate.getEntityById(Product.class, productListView.getSelectionModel().getSelectedItem().getId());
         if (product instanceof Spoiler spoiler) {
@@ -95,6 +102,7 @@ public class CommentsWindowController implements Initializable {
         commentsTreeList.setShowRoot(false);
         commentsTreeList.getRoot().setExpanded(true);
         product.getComments().forEach(comment -> addTreeItem(comment, commentsTreeList.getRoot()));
+
     }
 
     private void addTreeItem(Comment comment, TreeItem<Comment> parentComment) {
@@ -141,7 +149,8 @@ public class CommentsWindowController implements Initializable {
     public void delete() {
         currentUser = usersTabController.getCurrentUser();
         if (currentUser == commentsTreeList.getSelectionModel().getSelectedItem().getValue().getCommentOwner() || currentUser instanceof Manager) {
-            hibernateShop.deleteComment(commentsTreeList.getSelectionModel().getSelectedItem().getValue().getId());
+           hibernateShop.deleteComment(commentsTreeList.getSelectionModel().getSelectedItem().getValue().getId());
+           loadComments();
         }
     }
 

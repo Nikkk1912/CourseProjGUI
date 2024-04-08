@@ -3,7 +3,6 @@ package org.example.courseprojgui.hibernate;
 import jakarta.persistence.*;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Root;
 import org.example.courseprojgui.model.*;
 
@@ -11,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.CompletionException;
 
 public class HibernateShop extends GenericHibernate {
     public HibernateShop(EntityManagerFactory entityManagerFactory) {
@@ -187,7 +185,6 @@ public class HibernateShop extends GenericHibernate {
 
 
             em.remove(comment);
-
 
             em.getTransaction().commit();
 

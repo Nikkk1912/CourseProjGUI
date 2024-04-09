@@ -1,6 +1,5 @@
 package org.example.courseprojgui.fxControllers;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
@@ -85,7 +84,7 @@ public class CommentCreationWindowController implements Initializable {
             genericHibernate.update(commentToUpdate);
         }
 
-
+        commentsWindowController.loadComments();
         Stage stage = (Stage) submitButton.getScene().getWindow();
         stage.close();
     }

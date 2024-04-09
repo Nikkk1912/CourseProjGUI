@@ -1,6 +1,5 @@
 package org.example.courseprojgui.fxControllers;
 
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -95,7 +94,7 @@ public class ShopTabController implements Initializable {
     }
 
     public void loadProductData() {
-        if(shopProductList.getItems() ==null) {
+        if(shopProductList.getItems() == null) {
             shopProductList.getItems().setAll(hibernateShop.loadAvailableProducts());
         }
         Product product = shopProductList.getSelectionModel().getSelectedItem();
@@ -135,6 +134,8 @@ public class ShopTabController implements Initializable {
         hibernateShop.createCart(shopCartList.getItems(), usersTabController.getCurrentUser());
         shopCartList.getItems().clear();
         shopProductList.getItems().setAll(hibernateShop.loadAvailableProducts());
+        OrdersTabController ordersTabController = OrdersTabController.getInstance();
+        ordersTabController.refreshCartsList();
     }
 
     public void removeFromCart(){

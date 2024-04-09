@@ -171,12 +171,12 @@ public class HibernateShop extends GenericHibernate {
             if(comment.getWhichProductCommented() != null) {
                 Product product = em.find(Product.class, comment.getWhichProductCommented().getId());
                 product.getComments().remove(comment);
-                update(product);
+                em.merge(product);
             }
 
             User user = getUserByCredentials(comment.getCommentOwner().getLogin(), comment.getCommentOwner().getPassword());
             user.getComments().remove(comment);
-            update(user);
+            em.merge(user);
 
             comment.setWhichProductCommented(null);
             comment.setCommentOwner(null);
@@ -195,6 +195,35 @@ public class HibernateShop extends GenericHibernate {
         }
     }
 
+    public void deleteProductById(int id) {
+        EntityManager entityManager = getEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+            Product product = entityManager.find(Product.class, id);
+
+            for(Comment c : product.getComments()){
+                deleteComment(c.getId());
+            }
+            product.getComments().clear();
+
+            Warehouse warehouse = entityManager.find(Warehouse.class, product.getWarehouse().getId());
+            warehouse.getStock().remove(product);
+
+            if(product.getCart() != null) {
+                Cart cart = entityManager.find(Cart.class, product.getCart().getId());
+                cart.getItemsToBuy().remove(product);
+                entityManager.merge(cart);
+            }
+            entityManager.merge(warehouse);
+            entityManager.remove(product);
+
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (entityManager != null) entityManager.close();
+        }
+    }
 }
 
 

@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,11 +24,12 @@ public class MainController implements Initializable {
     @Getter
     @Setter
     private static MainController instance;
+    public TabPane tabsPane;
     private EntityManagerFactory entityManagerFactory;
 
     @FXML private Tab ordersTab;
     @FXML private Tab productsTab;
-    @FXML private Tab stopTab;
+    @FXML private Tab shopTab;
     @FXML private Tab usersTab;
     @FXML private Tab wareHousesTab;
 
@@ -44,6 +46,7 @@ public class MainController implements Initializable {
 
 
         closeAllTabs();
+        tabsPane.getSelectionModel().select(usersTab);
         try {
             AnchorPane anchor2 = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/org/example/courseprojgui/usersTab.fxml")));
             usersTab.setContent(anchor2);
@@ -55,12 +58,12 @@ public class MainController implements Initializable {
 
     public void openAllTabs(boolean isAdminNow) {
 
-        stopTab.setDisable(false);
+        shopTab.setDisable(false);
         ordersTab.setDisable(false);
 
         try {
             AnchorPane anchor3 = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/org/example/courseprojgui/shopTab.fxml")));
-            stopTab.setContent(anchor3);
+            shopTab.setContent(anchor3);
         } catch (IOException e) {
             System.out.println("File not found");
         }
@@ -96,10 +99,10 @@ public class MainController implements Initializable {
     }
 
     public void closeAllTabs() {
-        stopTab.setContent(null);
+        shopTab.setContent(null);
         productsTab.setContent(null);
         wareHousesTab.setContent(null);
-        stopTab.setDisable(true);
+        shopTab.setDisable(true);
         productsTab.setDisable(true);
         wareHousesTab.setDisable(true);
         ordersTab.setDisable(true);

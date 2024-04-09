@@ -8,7 +8,6 @@ import lombok.Setter;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
@@ -69,7 +68,7 @@ public class Comment {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Comment comment = (Comment) o;
-        return id == comment.id; // Assuming id is unique for each comment
+        return id == comment.id;
     }
 
     @Override

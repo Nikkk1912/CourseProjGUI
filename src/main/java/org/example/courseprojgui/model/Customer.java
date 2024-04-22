@@ -64,6 +64,15 @@ public class Customer extends User {
 
     }
 
+    public Customer(String name, String surname, String login, String password, String cardNumber, String shippingAddress, String billingAddress, LocalDate birthDate) {
+        super(name, surname, login, password);
+        this.cardNumber = cardNumber;
+        this.shippingAddress = shippingAddress;
+        this.billingAddress = billingAddress;
+        this.birthDate = birthDate;
+
+    }
+
     public void setBirthDate(String birthDate) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MM yyyy");
         this.birthDate = LocalDate.parse(birthDate, formatter);

@@ -3,6 +3,7 @@ package org.example.courseprojgui.fxControllers;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -14,6 +15,7 @@ import org.example.courseprojgui.model.Customer;
 import org.example.courseprojgui.model.Manager;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class UserCreationController implements Initializable {
@@ -26,12 +28,12 @@ public class UserCreationController implements Initializable {
     public TextField userCreationSurnameField;
     public TextField userCreationBillingField;
     public TextField userCreationShippingField;
-    public TextField userCreationBirthField;
     public TextField userCreationCardField;
     public TextField userCreationLoginField;
     public TextField userCreationPasswordField;
     public Text userCreationText1;
     public Text userCreationText2;
+    public DatePicker userCreationBirthField;
     private GenericHibernate genericHibernate;
     private HibernateShop hibernateShop;
     private UsersTabController usersTabController;
@@ -48,7 +50,7 @@ public class UserCreationController implements Initializable {
           userCreationSurnameField.clear();
           userCreationBillingField.clear();
           userCreationShippingField.clear();
-          userCreationBirthField.clear();
+          userCreationBirthField.setValue(null);
           userCreationCardField.clear();
           userCreationLoginField.clear();
           userCreationPasswordField.clear();
@@ -80,9 +82,9 @@ public class UserCreationController implements Initializable {
                 String ship = userCreationShippingField.getText();
                 String bill = userCreationBillingField.getText();
                 String card = userCreationCardField.getText();
-                String birth = userCreationBirthField.getText();
+                LocalDate birthday = userCreationBirthField.getValue();
 
-                Customer customer = new Customer(name, surname, login, password, card, ship, bill, birth);
+                Customer customer = new Customer(name, surname, login, password, card, ship, bill, birthday);
 
                 usersTabController.addNewUserToList(customer);
 
@@ -101,7 +103,7 @@ public class UserCreationController implements Initializable {
             userCreationShippingField.clear();
             userCreationBillingField.clear();
             userCreationCardField.clear();
-            userCreationBirthField.clear();
+            userCreationBirthField.setValue(null);
             userCreationShippingField.setDisable(true);
             userCreationBillingField.setDisable(true);
             userCreationCardField.setDisable(true);

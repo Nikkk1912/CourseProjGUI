@@ -57,6 +57,15 @@ public class Comment {
         this.parentComment = parentComment;
         this.rating = rating;
     }
+    public Comment(String commentTitle, String commentBody, User commentOwner, Cart chat, float rating) {
+        this.commentTitle = commentTitle;
+        this.commentBody = commentBody;
+        this.commentOwner = commentOwner;
+        this.chat = chat;
+        this.rating = rating;
+    }
+
+
 
     public String genText() {
         String result = "Rating: "  + rating + "\nReview: " + commentBody;

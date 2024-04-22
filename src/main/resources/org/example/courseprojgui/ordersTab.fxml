@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ContextMenu?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TreeView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
@@ -14,44 +17,44 @@
             <Font size="30.0" />
          </font>
       </Text>
-      <ListView fx:id="cartsList" layoutX="24.0" layoutY="136.0" onMouseClicked="#loadCartData" prefHeight="486.0" prefWidth="245.0" />
-      <ListView fx:id="productList" layoutX="697.0" layoutY="136.0" prefHeight="486.0" prefWidth="245.0" />
+      <ListView fx:id="cartsList" layoutX="24.0" layoutY="136.0" onMouseClicked="#loadCartData" prefHeight="445.0" prefWidth="245.0" />
+      <ListView fx:id="productList" layoutX="697.0" layoutY="136.0" prefHeight="445.0" prefWidth="245.0" />
       <Text layoutX="756.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Products in cart:">
          <font>
             <Font size="18.0" />
          </font>
       </Text>
-      <TextField fx:id="ownerField" layoutX="414.0" layoutY="169.0" promptText="Owner">
+      <TextField fx:id="ownerField" layoutX="217.0" layoutY="67.0" promptText="Owner">
          <font>
             <Font size="14.0" />
          </font>
       </TextField>
-      <TextField fx:id="managerField" layoutX="414.0" layoutY="264.0" promptText="Manager">
+      <TextField fx:id="managerField" layoutX="399.0" layoutY="67.0" promptText="Manager">
          <font>
             <Font size="14.0" />
          </font>
       </TextField>
-      <Text layoutX="439.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Owner of cart">
+      <Text layoutX="242.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Owner of cart">
          <font>
             <Font size="18.0" />
          </font>
       </Text>
-      <Text layoutX="458.0" layoutY="247.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Manager">
+      <Text layoutX="450.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Manager">
          <font>
             <Font size="18.0" />
          </font>
       </Text>
-      <Text layoutX="485.0" layoutY="332.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Id">
+      <Text layoutX="634.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Id">
          <font>
             <Font size="18.0" />
          </font>
       </Text>
-      <TextField fx:id="idField" layoutX="414.0" layoutY="349.0" promptText="Id">
+      <TextField fx:id="idField" layoutX="582.0" layoutY="67.0" prefHeight="30.0" prefWidth="120.0" promptText="Id">
          <font>
             <Font size="14.0" />
          </font>
       </TextField>
-      <Button fx:id="deleteButton" layoutX="437.0" layoutY="583.0" mnemonicParsing="false" onAction="#deleteCart" text="Delete cart">
+      <Button fx:id="deleteButton" layoutX="764.0" layoutY="603.0" mnemonicParsing="false" onAction="#deleteCart" text="Delete cart">
          <font>
             <Font size="18.0" />
          </font>
@@ -61,10 +64,26 @@
             <Font size="18.0" />
          </font>
       </Text>
-      <Button fx:id="refreshButton" layoutX="417.0" layoutY="516.0" mnemonicParsing="false" onAction="#refreshCartsList" text="Refresh carts list">
+      <Button fx:id="refreshButton" layoutX="67.0" layoutY="603.0" mnemonicParsing="false" onAction="#refreshCartsList" prefHeight="30.0" prefWidth="160.0" text="Refresh carts list">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
+      <TreeView fx:id="commentsTreeList" layoutX="302.0" layoutY="394.0" prefHeight="175.0" prefWidth="367.0">
+         <contextMenu>
+            <ContextMenu>
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#addReview" text="Write comment" />
+                  <MenuItem mnemonicParsing="false" onAction="#previewComment" text="Preview Comment" />
+                  <MenuItem mnemonicParsing="false" onAction="#delete" text="Delete comment" />
+               </items>
+            </ContextMenu>
+         </contextMenu>
+      </TreeView>
+      <Text layoutX="415.0" layoutY="372.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Chat with manager">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

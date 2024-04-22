@@ -158,6 +158,24 @@ public class HibernateShop extends GenericHibernate {
         }
     }
 
+    public List<Cart> getCartsByManagerId(int managerId){
+        EntityManager entityManager = getEntityManager();
+        try {
+            CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+            CriteriaQuery<Cart> query = cb.createQuery(Cart.class);
+            Root<Cart> root = query.from(Cart.class);
+
+            query.select(root).where(cb.equal(root.get("manager").get("id"), managerId));
+
+            Query q = entityManager.createQuery(query);
+            return q.getResultList();
+        } catch (NoResultException e) {
+            return null;
+        } finally {
+            if (entityManager != null) entityManager.close();
+        }
+    }
+
     public void deleteComment(int id) {
         EntityManager em = getEntityManager();
         try {
@@ -183,6 +201,35 @@ public class HibernateShop extends GenericHibernate {
             comment.setParentComment(null);
             comment.getReplies().clear();
 
+
+            em.remove(comment);
+
+            em.getTransaction().commit();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (em != null) em.close();
+        }
+    }
+
+    public void deleteMessageFromChat(int id){
+        EntityManager em = getEntityManager();
+        try {
+            em.getTransaction().begin();
+            var comment = em.find(Comment.class, id);
+
+            Cart cart = getEntityById(Cart.class, comment.getChat().getId());
+            cart.getChat().remove(comment);
+            em.merge(cart);
+
+            User user = getUserByCredentials(comment.getCommentOwner().getLogin(), comment.getCommentOwner().getPassword());
+            user.getComments().remove(comment);
+            em.merge(user);
+
+
+            comment.setCommentOwner(null);
+            comment.setChat(null);
 
             em.remove(comment);
 

@@ -27,7 +27,7 @@ public class Product implements Serializable {
     protected float price;
     @ManyToOne()
     private Warehouse warehouse;
-    @OneToMany(mappedBy = "whichProductCommented", cascade = CascadeType.ALL )
+    @OneToMany(mappedBy = "whichProductCommented", cascade = CascadeType.ALL, orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.FALSE)
     protected List<Comment> comments;
     @ManyToOne
@@ -50,4 +50,5 @@ public class Product implements Serializable {
         this.price = toCopy.getPrice();
         this.warehouse = toCopy.getWarehouse();
     }
+
 }

@@ -3,8 +3,6 @@ package org.example.courseprojgui.fxControllers;
 import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -409,6 +407,8 @@ public class UsersTabController implements Initializable {
                 openCustomerField(true);
                 mainController.openAllTabs(false);
             }
+            OrdersTabController ordersTabController = OrdersTabController.getInstance();
+            ordersTabController.refreshCartsList();
         } else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("System message");

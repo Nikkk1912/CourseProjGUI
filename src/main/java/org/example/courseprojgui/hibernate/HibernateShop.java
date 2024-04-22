@@ -3,7 +3,6 @@ package org.example.courseprojgui.hibernate;
 import jakarta.persistence.*;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Root;
 import org.example.courseprojgui.model.*;
 
@@ -11,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.CompletionException;
 
 public class HibernateShop extends GenericHibernate {
     public HibernateShop(EntityManagerFactory entityManagerFactory) {
@@ -173,12 +171,12 @@ public class HibernateShop extends GenericHibernate {
             if(comment.getWhichProductCommented() != null) {
                 Product product = em.find(Product.class, comment.getWhichProductCommented().getId());
                 product.getComments().remove(comment);
-                update(product);
+                em.merge(product);
             }
 
             User user = getUserByCredentials(comment.getCommentOwner().getLogin(), comment.getCommentOwner().getPassword());
             user.getComments().remove(comment);
-            update(user);
+            em.merge(user);
 
             comment.setWhichProductCommented(null);
             comment.setCommentOwner(null);
@@ -187,7 +185,6 @@ public class HibernateShop extends GenericHibernate {
 
 
             em.remove(comment);
-
 
             em.getTransaction().commit();
 
@@ -198,6 +195,35 @@ public class HibernateShop extends GenericHibernate {
         }
     }
 
+    public void deleteProductById(int id) {
+        EntityManager entityManager = getEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+            Product product = entityManager.find(Product.class, id);
+
+            for(Comment c : product.getComments()){
+                deleteComment(c.getId());
+            }
+            product.getComments().clear();
+
+            Warehouse warehouse = entityManager.find(Warehouse.class, product.getWarehouse().getId());
+            warehouse.getStock().remove(product);
+
+            if(product.getCart() != null) {
+                Cart cart = entityManager.find(Cart.class, product.getCart().getId());
+                cart.getItemsToBuy().remove(product);
+                entityManager.merge(cart);
+            }
+            entityManager.merge(warehouse);
+            entityManager.remove(product);
+
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (entityManager != null) entityManager.close();
+        }
+    }
 }
 
 

@@ -8,7 +8,7 @@
       <TabPane fx:id="tabsPane" prefHeight="700.0" prefWidth="980.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
 
-          <Tab fx:id="stopTab" text="Shop">
+          <Tab fx:id="shopTab" text="Shop">
               <fx:include  source="shopTab.fxml"/>
           </Tab>
 

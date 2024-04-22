@@ -1,6 +1,5 @@
 package org.example.courseprojgui.fxControllers;
 
-import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
@@ -8,6 +7,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import lombok.Getter;
 import org.example.courseprojgui.hibernate.GenericHibernate;
 import org.example.courseprojgui.hibernate.HibernateShop;
 import org.example.courseprojgui.model.Cart;
@@ -33,6 +33,12 @@ public class OrdersTabController implements Initializable {
     private GenericHibernate genericHibernate;
     private UsersTabController usersTabController;
     private ShopTabController shopTabController;
+    @Getter
+    private static OrdersTabController instance;
+
+    public OrdersTabController() {
+        instance = this;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

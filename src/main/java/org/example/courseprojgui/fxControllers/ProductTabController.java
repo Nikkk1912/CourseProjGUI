@@ -2,7 +2,6 @@ package org.example.courseprojgui.fxControllers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
@@ -11,6 +10,7 @@ import javafx.util.StringConverter;
 import lombok.Getter;
 import org.example.courseprojgui.enums.KitType;
 import org.example.courseprojgui.hibernate.GenericHibernate;
+import org.example.courseprojgui.hibernate.HibernateShop;
 import org.example.courseprojgui.model.*;
 
 import java.net.URL;
@@ -40,8 +40,10 @@ public class ProductTabController implements Initializable {
     public ComboBox productWarehouseComboBox;
     public CheckBox productSoldCheck;
     private GenericHibernate genericHibernate;
+    private HibernateShop hibernateShop;
     @Getter
     private static ProductTabController instance;
+    private ShopTabController shopTabController;
 
     public ProductTabController() {
         instance = this;
@@ -50,7 +52,9 @@ public class ProductTabController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         MainController mainController = MainController.getInstance();
+        shopTabController = ShopTabController.getInstance();
         genericHibernate = new GenericHibernate(mainController.getEntityManagerFactory());
+        hibernateShop = new HibernateShop(mainController.getEntityManagerFactory());
 
         ObservableList<KitType> kitTypes = FXCollections.observableArrayList(KitType.values());
         productKitTypeComboBox.setItems(kitTypes);
@@ -185,6 +189,7 @@ public class ProductTabController implements Initializable {
             productAdminList.getItems().add(wheels);
         }
         productAdminList.getItems().sort(Comparator.comparing(Product::getTitle));
+        shopTabController.updateProductList();
     }
 
     public void updateRecord() {
@@ -234,15 +239,21 @@ public class ProductTabController implements Initializable {
             genericHibernate.update(wheels);
         }
         productAdminList.getItems().setAll(genericHibernate.getAllRecords(Product.class));
+        shopTabController.updateProductList();
     }
 
     public void deleteRecord() {
 
         Product product = productAdminList.getSelectionModel().getSelectedItem();
+        if(product == null ){
+            return;
+        }
         productAdminList.getItems().remove(product);
-        genericHibernate.delete(product);
-        clearAllFields();
+        hibernateShop.deleteProductById(product.getId());
 
+        clearAllFields();
+        productAdminList.getItems().setAll(genericHibernate.getAllRecords(Product.class));
+        shopTabController.updateProductList();
     }
 
     public void loadProductData() {
@@ -291,7 +302,7 @@ public class ProductTabController implements Initializable {
             productWeightField.setText(String.valueOf(wheels.getWeight()));
             productWarehouseComboBox.setValue(wheels.getWarehouse());
         }
-        if(product.getCart() != null){
+        if(product != null && product.getCart() != null){
             productSoldCheck.setSelected(true);
         }
     }

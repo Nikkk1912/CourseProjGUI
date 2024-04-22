@@ -5,7 +5,6 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Root;
-import org.example.courseprojgui.model.User;
 import org.example.courseprojgui.model.Warehouse;
 
 import java.util.ArrayList;
@@ -143,4 +142,6 @@ public class GenericHibernate {
             if (entityManager != null) entityManager.close();
         }
     }
+
+
 }

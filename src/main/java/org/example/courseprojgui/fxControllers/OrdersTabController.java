@@ -126,15 +126,19 @@ public class OrdersTabController implements Initializable {
     }
 
     public void deleteCart() {
-        Cart cart = cartsList.getSelectionModel().getSelectedItem();
-        hibernateShop.deleteCart(cart.getId());
-        cartsList.getItems().remove(cart);
-        productList.getItems().clear();
-        shopTabController.updateProductList();
-        idField.clear();
-        managerField.clear();
-        ownerField.clear();
-
+        User currentUser = usersTabController.getCurrentUser();
+        if(currentUser instanceof Manager) {
+            Cart cart = cartsList.getSelectionModel().getSelectedItem();
+            if (cart.getOrderStatus() != OrderStatus.Payment_received || cart.getOrderStatus() != OrderStatus.shipping || cart.getOrderStatus() != OrderStatus.delivered) {
+                hibernateShop.deleteCart(cart.getId());
+                cartsList.getItems().remove(cart);
+                productList.getItems().clear();
+                shopTabController.updateProductList();
+                idField.clear();
+                managerField.clear();
+                ownerField.clear();
+            }
+        }
     }
 
     public void refreshCartsList() {
@@ -183,11 +187,15 @@ public class OrdersTabController implements Initializable {
         alert.showAndWait();
     }
 
-    public void delete() {
+    public void deleteComment() {
         User currentUser = usersTabController.getCurrentUser();
         if (currentUser == commentsTreeList.getSelectionModel().getSelectedItem().getValue().getCommentOwner() || currentUser instanceof Manager) {
-            hibernateShop.deleteMessageFromChat(commentsTreeList.getSelectionModel().getSelectedItem().getValue().getId());
-            loadComments();
+            Comment comment = commentsTreeList.getSelectionModel().getSelectedItem().getValue();
+            if (comment != null) {
+                hibernateShop.deleteMessageFromChat(comment.getId());
+                genericHibernate.delete(Comment.class, comment.getId());
+                loadComments();
+            }
         }
     }
 

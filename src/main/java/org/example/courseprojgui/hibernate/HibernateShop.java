@@ -232,6 +232,9 @@ public class HibernateShop extends GenericHibernate {
 
             comment.setCommentOwner(null);
             comment.setChat(null);
+            comment.setParentComment(null);
+            comment.getReplies().clear();
+            em.merge(comment);
 
             em.remove(comment);
 

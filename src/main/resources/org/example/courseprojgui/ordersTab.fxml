@@ -75,7 +75,7 @@
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#addReview" text="Write comment" />
                   <MenuItem mnemonicParsing="false" onAction="#previewComment" text="Preview Comment" />
-                  <MenuItem mnemonicParsing="false" onAction="#delete" text="Delete comment" />
+                  <MenuItem mnemonicParsing="false" onAction="#deleteComment" text="Delete comment" />
                </items>
             </ContextMenu>
          </contextMenu>

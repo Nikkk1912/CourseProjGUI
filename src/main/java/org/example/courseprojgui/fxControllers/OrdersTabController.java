@@ -11,6 +11,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import lombok.Getter;
 import org.example.courseprojgui.HelloApplication;
+import org.example.courseprojgui.enums.OrderStatus;
 import org.example.courseprojgui.hibernate.GenericHibernate;
 import org.example.courseprojgui.hibernate.HibernateShop;
 import org.example.courseprojgui.model.*;
@@ -33,6 +34,8 @@ public class OrdersTabController implements Initializable {
     public Button deleteButton;
     public Button refreshButton;
     public TreeView<Comment> commentsTreeList;
+    public TextField statusField;
+    public Button changeOrderStatusButton;
     private HibernateShop hibernateShop;
     private GenericHibernate genericHibernate;
     private UsersTabController usersTabController;
@@ -57,18 +60,9 @@ public class OrdersTabController implements Initializable {
         ownerField.setEditable(false);
         managerField.setEditable(false);
         idField.setEditable(false);
+        statusField.setEditable(false);
 
-        commentsTreeList.setCellFactory(param -> new TreeCell<>() {
-            @Override
-            protected void updateItem(Comment comment, boolean empty) {
-                super.updateItem(comment, empty);
-                if (empty || comment == null) {
-                    setText(null);
-                } else {
-                    setText("- " + comment.getCommentOwner().getClass().getSimpleName() + " | " + comment.getCommentBody());
-                }
-            }
-        });
+
     }
 
     public void loadCartData() {
@@ -80,6 +74,7 @@ public class OrdersTabController implements Initializable {
         if(cart != null) {
             managerField.setText(cart.getManager().getName() + " " + cart.getManager().getSurname());
             idField.setText(String.valueOf(cart.getId()));
+            statusField.setText(String.valueOf(cart.getOrderStatus()));
             loadProductData(cart);
         }
     }
@@ -113,6 +108,18 @@ public class OrdersTabController implements Initializable {
                 } else {
                     setFont(Font.font(16));
                     setText("Id: " + product.getId() + " | " + product.getClass().getSimpleName() + " | " + product.getTitle() + " : " + product.getQuantity());
+                }
+            }
+        });
+
+        commentsTreeList.setCellFactory(param -> new TreeCell<>() {
+            @Override
+            protected void updateItem(Comment comment, boolean empty) {
+                super.updateItem(comment, empty);
+                if (empty || comment == null) {
+                    setText(null);
+                } else {
+                    setText("- " + comment.getCommentOwner().getClass().getSimpleName() + " | " + comment.getCommentBody());
                 }
             }
         });
@@ -187,5 +194,28 @@ public class OrdersTabController implements Initializable {
     public void previewComment() {
         Comment comment = genericHibernate.getEntityById(Comment.class, commentsTreeList.getSelectionModel().getSelectedItem().getValue().getId());
         generateAlert(Alert.AlertType.INFORMATION,"Title: " + comment.getCommentTitle(), comment.genText());
+    }
+
+    public void changeOrderStatus() {
+        User user = usersTabController.getCurrentUser();
+        if(user instanceof Manager) {
+            Cart cart = cartsList.getSelectionModel().getSelectedItem();
+            if (cart != null) {
+                if (cart.getOrderStatus() != null) {
+                    OrderStatus nextStatus = cart.getOrderStatus().getNextStatus();
+                    if (nextStatus != null) {
+                        cart.setOrderStatus(nextStatus);
+                        genericHibernate.update(cart);
+                    } else {
+                        cart.setOrderStatus(OrderStatus.Received);
+                        genericHibernate.update(cart);
+                    }
+                } else {
+                    cart.setOrderStatus(OrderStatus.Received);
+                    genericHibernate.update(cart);
+                }
+                statusField.setText(String.valueOf(cart.getOrderStatus()));
+            }
+        }
     }
 }

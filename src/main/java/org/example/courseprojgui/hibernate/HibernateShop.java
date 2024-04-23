@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
+import org.example.courseprojgui.enums.OrderStatus;
 import org.example.courseprojgui.model.*;
 
 import java.util.ArrayList;
@@ -48,6 +49,7 @@ public class HibernateShop extends GenericHibernate {
             System.out.println(managerWhoManageCart);
 
             Cart cart = new Cart(buyer, managerWhoManageCart, new ArrayList<>());
+            cart.setOrderStatus(OrderStatus.Received);
             for (Product p : products) {
                 Product product = entityManager.find(Product.class, p.getId());
 

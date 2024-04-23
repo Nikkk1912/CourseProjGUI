@@ -5,10 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.example.courseprojgui.enums.OrderStatus;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Setter
@@ -31,6 +31,8 @@ public class Cart {
     @OneToMany(mappedBy = "chat", cascade = CascadeType.ALL)
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Comment> chat;
+    @Enumerated(EnumType.STRING)
+    private OrderStatus orderStatus;
 
     public Cart(User customer, Manager manager, List<Product> items) {
         this.customer = customer;

@@ -12,44 +12,44 @@
 
 <AnchorPane prefHeight="660.0" prefWidth="980.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.courseprojgui.fxControllers.OrdersTabController">
    <children>
-      <Text fx:id="myCartsText" layoutX="14.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Orders">
+      <Text fx:id="myCartsText" layoutX="14.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Orders" wrappingWidth="94.5435791015625">
          <font>
             <Font size="30.0" />
          </font>
       </Text>
-      <ListView fx:id="cartsList" layoutX="24.0" layoutY="136.0" onMouseClicked="#loadCartData" prefHeight="445.0" prefWidth="245.0" />
-      <ListView fx:id="productList" layoutX="697.0" layoutY="136.0" prefHeight="445.0" prefWidth="245.0" />
-      <Text layoutX="756.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Products in cart:">
+      <ListView fx:id="cartsList" layoutX="24.0" layoutY="155.0" onMouseClicked="#loadCartData" prefHeight="426.0" prefWidth="245.0" />
+      <ListView fx:id="productList" layoutX="697.0" layoutY="155.0" prefHeight="426.0" prefWidth="245.0" />
+      <Text layoutX="755.0" layoutY="138.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Products in cart:">
          <font>
             <Font size="18.0" />
          </font>
       </Text>
-      <TextField fx:id="ownerField" layoutX="217.0" layoutY="67.0" promptText="Owner">
+      <TextField fx:id="ownerField" layoutX="189.0" layoutY="45.0" promptText="Owner">
          <font>
             <Font size="14.0" />
          </font>
       </TextField>
-      <TextField fx:id="managerField" layoutX="399.0" layoutY="67.0" promptText="Manager">
+      <TextField fx:id="managerField" layoutX="398.0" layoutY="45.0" promptText="Manager">
          <font>
             <Font size="14.0" />
          </font>
       </TextField>
-      <Text layoutX="242.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Owner of cart">
+      <Text layoutX="214.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Owner of cart">
          <font>
             <Font size="18.0" />
          </font>
       </Text>
-      <Text layoutX="450.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Manager">
+      <Text layoutX="449.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Manager">
          <font>
             <Font size="18.0" />
          </font>
       </Text>
-      <Text layoutX="634.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Id">
+      <Text layoutX="670.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Id">
          <font>
             <Font size="18.0" />
          </font>
       </Text>
-      <TextField fx:id="idField" layoutX="582.0" layoutY="67.0" prefHeight="30.0" prefWidth="120.0" promptText="Id">
+      <TextField fx:id="idField" layoutX="618.0" layoutY="44.0" prefHeight="30.0" prefWidth="120.0" promptText="Id">
          <font>
             <Font size="14.0" />
          </font>
@@ -59,7 +59,7 @@
             <Font size="18.0" />
          </font>
       </Button>
-      <Text layoutX="111.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="My carts:">
+      <Text layoutX="111.0" layoutY="139.0" strokeType="OUTSIDE" strokeWidth="0.0" text="My carts:">
          <font>
             <Font size="18.0" />
          </font>
@@ -85,5 +85,20 @@
             <Font size="18.0" />
          </font>
       </Text>
+      <TextField fx:id="statusField" layoutX="764.0" layoutY="43.0" promptText="Status">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </TextField>
+      <Text layoutX="809.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Order status">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Button fx:id="changeOrderStatusButton" layoutX="409.0" layoutY="603.0" mnemonicParsing="false" onAction="#changeOrderStatus" prefHeight="30.0" prefWidth="160.0" text="Change order status">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

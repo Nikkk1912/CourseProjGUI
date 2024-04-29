@@ -24,11 +24,14 @@ import org.example.courseprojgui.model.Customer;
 import org.example.courseprojgui.model.Manager;
 import org.example.courseprojgui.model.User;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 
 
 @Getter
@@ -90,6 +93,7 @@ public class UsersTabController implements Initializable {
         mainController = MainController.getInstance();
         shopTabController = ShopTabController.getInstance();
         genericHibernate = new GenericHibernate(mainController.getEntityManagerFactory());
+        HibernateShop hibernateShop = new HibernateShop(mainController.getEntityManagerFactory());
 
         isEditable(false);
         openLoginFields(true);
@@ -101,6 +105,31 @@ public class UsersTabController implements Initializable {
         myWarehouseTextField.setEditable(false);
         loadMyWarehouse();
 
+        String logAndPass = getLogAndPassSupper();
+        String[] arr = logAndPass.split(" ");
+        User test = hibernateShop.getUserByCredentials(arr[0], arr[1]);
+        if(test == null) {
+            Manager superMgr = new Manager(arr[0], arr[1], "SuperAdmin", "SuperAdmin", true, true);
+            genericHibernate.create(superMgr);
+        }
+
+    }
+
+    private String getLogAndPassSupper() {
+        String loginAndPass = "";
+        try {
+            File myObj = new File("src/main/java/org/example/courseprojgui/credentials.txt");
+            Scanner myReader = new Scanner(myObj);
+            while (myReader.hasNextLine()) {
+                loginAndPass = myReader.nextLine();
+
+            }
+            myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+        return loginAndPass;
     }
 
     private void setAllCellFactories() {
@@ -324,6 +353,9 @@ public class UsersTabController implements Initializable {
         submitEnterInfoButton.setVisible(!val);
         userEditingStatusText.setVisible(!val);
 
+        if(currentUser instanceof Manager && ((Manager) currentUser).isSuper()){
+            createNewUserButton.setVisible(val);
+        }
         managerTable.setVisible(val);
         logOffButton.setVisible(val);
         removeMyWarehouseButton.setVisible(val);

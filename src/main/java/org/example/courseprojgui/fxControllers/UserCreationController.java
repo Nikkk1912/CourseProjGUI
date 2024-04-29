@@ -43,6 +43,12 @@ public class UserCreationController implements Initializable {
         usersTabController = UsersTabController.getInstance();
         genericHibernate = new GenericHibernate(usersTabController.getMainController().getEntityManagerFactory());
         hibernateShop = new HibernateShop(usersTabController.getMainController().getEntityManagerFactory());
+
+        if(usersTabController.getCurrentUser() instanceof Manager && ((Manager) usersTabController.getCurrentUser()).isSuper()){
+            userCreationIsAdmin.setVisible(true);
+        } else {
+            userCreationIsAdmin.setVisible(false);
+        }
     }
 
     public void clearFields() {

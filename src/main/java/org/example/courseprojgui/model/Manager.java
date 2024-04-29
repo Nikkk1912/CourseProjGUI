@@ -21,6 +21,7 @@ import java.util.List;
 @Entity
 public class Manager extends User {
     private boolean isAdmin;
+    private boolean isSuper;
     @ManyToOne
     private Warehouse warehouse;
     @OneToMany(mappedBy = "manager", cascade = CascadeType.ALL)
@@ -30,6 +31,12 @@ public class Manager extends User {
     public Manager(String login, String password, String name, String surname, boolean isAdmin) {
         super(name, surname, login, password);
         this.isAdmin = isAdmin;
+    }
+
+    public Manager(String login, String password, String name, String surname, boolean isAdmin, boolean isSuper) {
+        super(name, surname, login, password);
+        this.isAdmin = isAdmin;
+        this.isSuper = isSuper;
     }
 
 

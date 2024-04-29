@@ -44,9 +44,12 @@ public class HibernateShop extends GenericHibernate {
             User buyer = entityManager.find(User.class, user.getId());
 
             List<Manager> managers = getAllRecords(Manager.class);
-            Optional<Manager> minManager = managers.stream().min(Comparator.comparingInt(manager -> manager.getMyResponsibleCarts().size()));
+            Optional<Manager> minManager = managers.stream()
+                    .filter(manager -> !manager.isSuper()) // Filter out super managers
+                    .min(Comparator
+                            .comparingInt(manager -> manager.getMyResponsibleCarts().size()));
+
             Manager managerWhoManageCart = minManager.orElse(null);
-            System.out.println(managerWhoManageCart);
 
             Cart cart = new Cart(buyer, managerWhoManageCart, new ArrayList<>());
             cart.setOrderStatus(OrderStatus.Received);
